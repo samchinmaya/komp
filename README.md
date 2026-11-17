@@ -13,6 +13,8 @@
 
 # комп (komp)
 
+**Website:** https://samchinmaya.github.io/komp
+
 Compress DevOps and Kubernetes logs into a short, meaningful summary, so Claude
 spends a few hundred tokens reading them instead of tens of thousands.
 
