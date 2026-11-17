@@ -1,4 +1,15 @@
-<p align="center"><img src="brand/logo-light.svg" width="260" alt="комп"></p>
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="brand/logo-dark.svg">
+    <img src="brand/logo-light.svg" width="260" alt="комп">
+  </picture>
+</p>
+
+<p align="center">
+  <a href="https://github.com/samchinmaya/komp/actions/workflows/ci.yml"><img src="https://github.com/samchinmaya/komp/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/samchinmaya/komp/releases/latest"><img src="https://img.shields.io/github/v/release/samchinmaya/komp" alt="Latest release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT license"></a>
+</p>
 
 # комп (komp)
 
@@ -11,6 +22,40 @@ spends a few hundred tokens reading them instead of tens of thousands.
 1,200 lines of Node JSON logs    ~60,000 tokens  →  10 lines   ~310 tokens
   700 lines of kubelet logs      ~39,000 tokens  →   7 lines   ~320 tokens
 ```
+
+## Install
+
+**macOS and Linux**, one line:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/samchinmaya/komp/master/install.sh | sh
+```
+
+It downloads the right binary for your machine from the
+[latest release](https://github.com/samchinmaya/komp/releases/latest), checks
+its SHA-256 checksum and puts `komp` in `~/.local/bin`.
+
+**Windows**: download `komp-x86_64-pc-windows-msvc.zip` from the
+[latest release](https://github.com/samchinmaya/komp/releases/latest) and put
+`komp.exe` somewhere on your `PATH`.
+
+**From source** (needs [Rust](https://rustup.rs)):
+
+```bash
+cargo install --git https://github.com/samchinmaya/komp
+```
+
+Then connect it to Claude Code:
+
+```bash
+claude mcp add --scope user komp -- komp serve
+```
+
+Copy some logs and ask Claude *"what's wrong in the logs I copied?"*.
+
+> If macOS says the binary "cannot be opened" (only happens when you download
+> the release file with a browser instead of the install script), run
+> `xattr -d com.apple.quarantine ~/.local/bin/komp`.
 
 ## The idea
 
@@ -83,12 +128,6 @@ Rules that keep the meaning:
 
 ## Use it
 
-Install the `komp` command (into `~/.cargo/bin`):
-
-```bash
-cargo install --path .
-```
-
 From the terminal:
 
 ```bash
@@ -97,16 +136,12 @@ komp app.log               # compress a file
 kubectl logs api | komp -  # compress stdin
 ```
 
-After changing the code, run `cargo build --release` (that's the binary
-Claude Code uses) and `cargo install --path .` again (that's the terminal command).
+For a whole team: commit this as `.mcp.json` in your repo and everyone who
+opens it in Claude Code (with komp installed) gets the tools automatically:
 
-Connect it to Claude Code as an MCP server:
-
-```bash
-claude mcp add komp -- "$PWD/target/release/komp" serve
+```json
+{ "mcpServers": { "komp": { "command": "komp", "args": ["serve"] } } }
 ```
-
-Then copy some logs and ask Claude *"what's wrong in the logs I copied?"*.
 
 ### MCP tools
 
@@ -151,8 +186,18 @@ Colours: ink `#0F1419`, noise `#6B7684`, signal `#3EE08F`.
 <link rel="manifest" href="/site.webmanifest">
 ```
 
-## Test
+## Develop
 
 ```bash
-cargo test
+cargo test                 # unit tests + fixture tests
+cargo build --release      # build target/release/komp
+cargo install --path .     # install your local build as `komp`
 ```
+
+Releases: push a tag like `v0.2.0`. The Release workflow builds macOS
+(Apple Silicon + Intel), Linux (x86_64 + arm64, static musl) and Windows
+binaries and attaches them to the GitHub release that `install.sh` reads.
+
+## License
+
+MIT

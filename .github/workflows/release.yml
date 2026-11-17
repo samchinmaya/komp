@@ -1,0 +1,77 @@
+# Push a tag like v0.1.0 → builds komp for every platform and attaches the
+# binaries to a GitHub release, where install.sh downloads them from.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: gh release create "$GITHUB_REF_NAME" --title "komp $GITHUB_REF_NAME" --generate-notes
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+  build:
+    needs: create-release
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { target: aarch64-apple-darwin, os: macos-14 }
+          - { target: x86_64-apple-darwin, os: macos-14 }
+          - { target: x86_64-unknown-linux-musl, os: ubuntu-latest }
+          - { target: aarch64-unknown-linux-musl, os: ubuntu-24.04-arm }
+          - { target: x86_64-pc-windows-msvc, os: windows-latest }
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust if missing
+        shell: bash
+        run: |
+          if ! command -v rustup >/dev/null; then
+            curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal
+            echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+          fi
+
+      - name: Add target
+        shell: bash
+        run: rustup target add ${{ matrix.target }}
+
+      - name: musl tools
+        if: contains(matrix.target, 'musl')
+        run: sudo apt-get update && sudo apt-get install -y musl-tools
+
+      - run: cargo build --release --locked --target ${{ matrix.target }}
+
+      - name: Package (macOS / Linux)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          asset="komp-${{ matrix.target }}.tar.gz"
+          tar -czf "$asset" -C "target/${{ matrix.target }}/release" komp
+          shasum -a 256 "$asset" > "$asset.sha256"
+          echo "ASSET=$asset" >> "$GITHUB_ENV"
+
+      - name: Package (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $asset = "komp-${{ matrix.target }}.zip"
+          Compress-Archive -Path "target/${{ matrix.target }}/release/komp.exe" -DestinationPath $asset
+          $hash = (Get-FileHash $asset -Algorithm SHA256).Hash.ToLower()
+          "$hash  $asset" | Out-File -Encoding ascii "$asset.sha256"
+          "ASSET=$asset" | Out-File -Append -Encoding utf8 $env:GITHUB_ENV
+
+      - name: Upload to the release
+        shell: bash
+        run: gh release upload "$GITHUB_REF_NAME" "$ASSET" "$ASSET.sha256" --clobber
+        env:
+          GH_TOKEN: ${{ github.token }}
