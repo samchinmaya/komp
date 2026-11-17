@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>комп brand</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style>
+  :root { --ink:#0F1419; --paper:#F6F7F9; --muted:#6B7684; --signal:#3EE08F; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:14px/1.5 ui-monospace, Menlo, monospace; background:var(--paper); color:var(--ink); }
+  main { max-width:880px; margin:0 auto; padding:32px 16px; }
+  h2 { font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:32px 0 12px; }
+  .row { display:flex; gap:16px; flex-wrap:wrap; }
+  .card { flex:1 1 300px; border-radius:12px; padding:32px; display:flex; align-items:center; justify-content:center; min-height:160px; }
+  .light { background:#fff; border:1px solid #E3E6EA; }
+  .dark { background:var(--ink); }
+  .sizes { display:flex; gap:24px; align-items:flex-end; }
+  .sizes figure { margin:0; text-align:center; font-size:11px; color:var(--muted); }
+  .tab { display:inline-flex; align-items:center; gap:8px; background:#fff; border:1px solid #E3E6EA; border-radius:8px 8px 0 0; padding:8px 14px; }
+  .tab.d { background:#202124; color:#E8EAED; border-color:#202124; }
+  .sw { display:flex; gap:12px; flex-wrap:wrap; }
+  .sw div { width:120px; }
+  .sw span { display:block; height:48px; border-radius:8px; border:1px solid #E3E6EA; }
+  .pix { image-rendering:pixelated; }
+</style>
+</head>
+<body>
+<main>
+  <h2>Logo</h2>
+  <div class="row">
+    <div class="card light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 64" width="330" style="height:auto;display:block">
+  
+  <rect width="64" height="64" rx="15" fill="#0F1419"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M19 52V43L32 32M32 52V32M45 52V43L32 32" stroke="#6B7684" stroke-width="4"/>
+    <path d="M32 32V14" stroke="#3EE08F" stroke-width="8"/>
+  </g>
+  <g stroke="#0F1419"><g fill="none" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M88 18V46M90 32L104 18M90 32L105 46"/>
+    <ellipse cx="132" cy="32" rx="13" ry="14"/>
+    <path d="M158 46V18L169 38L180 18V46"/>
+    <path d="M194 46V18H214V46"/>
+  </g></g>
+</svg>
+</div>
+    <div class="card dark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 64" width="330" style="height:auto;display:block">
+  
+  <rect width="64" height="64" rx="15" fill="#0F1419"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M19 52V43L32 32M32 52V32M45 52V43L32 32" stroke="#6B7684" stroke-width="4"/>
+    <path d="M32 32V14" stroke="#3EE08F" stroke-width="8"/>
+  </g>
+  <g stroke="#E8ECF1"><g fill="none" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M88 18V46M90 32L104 18M90 32L105 46"/>
+    <ellipse cx="132" cy="32" rx="13" ry="14"/>
+    <path d="M158 46V18L169 38L180 18V46"/>
+    <path d="M194 46V18H214V46"/>
+  </g></g>
+</svg>
+</div>
+  </div>
+
+  <h2>Mark</h2>
+  <div class="row">
+    <div class="card light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="128" style="height:auto;display:block">
+  
+  <rect width="64" height="64" rx="15" fill="#0F1419"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M19 52V43L32 32M32 52V32M45 52V43L32 32" stroke="#6B7684" stroke-width="4"/>
+    <path d="M32 32V14" stroke="#3EE08F" stroke-width="8"/>
+  </g>
+</svg>
+</div>
+    <div class="card light"><svg xmlns="http://www.w3.org/2000/svg" viewBox="82 12 138 40" width="230" style="height:auto;display:block">
+  
+  <g stroke="#0F1419"><g fill="none" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M88 18V46M90 32L104 18M90 32L105 46"/>
+    <ellipse cx="132" cy="32" rx="13" ry="14"/>
+    <path d="M158 46V18L169 38L180 18V46"/>
+    <path d="M194 46V18H214V46"/>
+  </g></g>
+</svg>
+</div>
+  </div>
+
+  <h2>Favicon at real size (and 16px zoomed ×4)</h2>
+  <div class="sizes">
+    <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" style="height:auto;display:block">
+  <rect width="32" height="32" rx="7" fill="#0F1419"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8.5 27V22.5L16 17M23.5 27V22.5L16 17" stroke="#6B7684" stroke-width="3"/>
+    <path d="M16 17V7" stroke="#3EE08F" stroke-width="6"/>
+  </g>
+</svg>
+<br>16</figure>
+    <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" style="height:auto;display:block">
+  <rect width="32" height="32" rx="7" fill="#0F1419"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8.5 27V22.5L16 17M23.5 27V22.5L16 17" stroke="#6B7684" stroke-width="3"/>
+    <path d="M16 17V7" stroke="#3EE08F" stroke-width="6"/>
+  </g>
+</svg>
+<br>32</figure>
+    <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" style="height:auto;display:block">
+  
+  <rect width="64" height="64" rx="15" fill="#0F1419"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M19 52V43L32 32M32 52V32M45 52V43L32 32" stroke="#6B7684" stroke-width="4"/>
+    <path d="M32 32V14" stroke="#3EE08F" stroke-width="8"/>
+  </g>
+</svg>
+<br>64</figure>
+    <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="180" style="height:auto;display:block">
+  
+  <rect width="64" height="64" rx="15" fill="#0F1419"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M19 52V43L32 32M32 52V32M45 52V43L32 32" stroke="#6B7684" stroke-width="4"/>
+    <path d="M32 32V14" stroke="#3EE08F" stroke-width="8"/>
+  </g>
+</svg>
+<br>180</figure>
+    <figure><br>16 ×4</figure>
+  </div>
+
+  <h2>In a browser tab</h2>
+  <div class="row" style="gap:8px">
+    <div class="tab"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" style="height:auto;display:block">
+  <rect width="32" height="32" rx="7" fill="#0F1419"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8.5 27V22.5L16 17M23.5 27V22.5L16 17" stroke="#6B7684" stroke-width="3"/>
+    <path d="M16 17V7" stroke="#3EE08F" stroke-width="6"/>
+  </g>
+</svg>
+ комп — logs</div>
+    <div class="tab d"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="16" style="height:auto;display:block">
+  <rect width="32" height="32" rx="7" fill="#0F1419"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8.5 27V22.5L16 17M23.5 27V22.5L16 17" stroke="#6B7684" stroke-width="3"/>
+    <path d="M16 17V7" stroke="#3EE08F" stroke-width="6"/>
+  </g>
+</svg>
+ комп — logs</div>
+  </div>
+
+  <h2>Colours</h2>
+  <div class="sw">
+    <div><span style="background:#0F1419"></span>Ink #0F1419</div>
+    <div><span style="background:#6B7684"></span>Noise #6B7684</div>
+    <div><span style="background:#3EE08F"></span>Signal #3EE08F</div>
+    <div><span style="background:#E8ECF1"></span>Paper #E8ECF1</div>
+  </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,1350 @@
+2026-11-18 10:00:00.503  WARN 1 --- [nio-8080-exec-6] c.shop.orders.InventoryClient          : Inventory call took 1680ms for sku 13645
+2026-11-18 10:00:01.193  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 180334 checked out by user 2098 in 295ms
+2026-11-18 10:00:01.636  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 461698 checked out by user 476 in 283ms
+2026-11-18 10:00:02.068  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 887616 checked out by user 1258 in 213ms
+2026-11-18 10:00:02.630  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 259408 checked out by user 1853 in 68ms
+2026-11-18 10:00:03.252  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 892621 checked out by user 1712 in 90ms
+2026-11-18 10:00:03.653  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 975821 checked out by user 1605 in 284ms
+2026-11-18 10:00:04.344  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 863456 checked out by user 630 in 77ms
+2026-11-18 10:00:04.877  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 430780 checked out by user 3601 in 45ms
+2026-11-18 10:00:05.565  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 896594 checked out by user 4697 in 224ms
+2026-11-18 10:00:06.205  WARN 1 --- [nio-8080-exec-4] c.shop.orders.InventoryClient          : Inventory call took 923ms for sku 65643
+2026-11-18 10:00:06.609 ERROR 1 --- [nio-8080-exec-8] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:00:06.820  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 462146 checked out by user 4865 in 173ms
+2026-11-18 10:00:07.226  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 977970 checked out by user 3252 in 233ms
+2026-11-18 10:00:07.777  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 357492 checked out by user 1122 in 156ms
+2026-11-18 10:00:08.088  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 162144 checked out by user 240 in 282ms
+2026-11-18 10:00:08.343  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 648316 checked out by user 73 in 43ms
+2026-11-18 10:00:08.839  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 168892 checked out by user 2248 in 54ms
+2026-11-18 10:00:09.325  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 307513 checked out by user 2046 in 123ms
+2026-11-18 10:00:09.635  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 325960 checked out by user 251 in 237ms
+2026-11-18 10:00:10.007  WARN 1 --- [nio-8080-exec-9] c.shop.orders.InventoryClient          : Inventory call took 2393ms for sku 74345
+2026-11-18 10:00:10.357  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 829646 checked out by user 4438 in 299ms
+2026-11-18 10:00:10.839  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 753316 checked out by user 1402 in 154ms
+2026-11-18 10:00:11.278  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 728913 checked out by user 43 in 282ms
+2026-11-18 10:00:11.573  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 650081 checked out by user 2663 in 102ms
+2026-11-18 10:00:12.124  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 677146 checked out by user 2767 in 170ms
+2026-11-18 10:00:12.506  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 218037 checked out by user 1734 in 88ms
+2026-11-18 10:00:13.163  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 541272 checked out by user 197 in 139ms
+2026-11-18 10:00:13.833  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 644609 checked out by user 1353 in 150ms
+2026-11-18 10:00:14.252  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 669021 checked out by user 4595 in 135ms
+2026-11-18 10:00:14.732  WARN 1 --- [nio-8080-exec-8] c.shop.orders.InventoryClient          : Inventory call took 1200ms for sku 61954
+2026-11-18 10:00:15.381  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 982049 checked out by user 1578 in 104ms
+2026-11-18 10:00:16.068  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 657726 checked out by user 140 in 46ms
+2026-11-18 10:00:16.400  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 531168 checked out by user 2092 in 254ms
+2026-11-18 10:00:16.786  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 426317 checked out by user 3386 in 245ms
+2026-11-18 10:00:17.446  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 642387 checked out by user 3529 in 275ms
+2026-11-18 10:00:18.129  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 203038 checked out by user 3219 in 148ms
+2026-11-18 10:00:18.580  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 236597 checked out by user 317 in 234ms
+2026-11-18 10:00:18.896  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 579585 checked out by user 2728 in 206ms
+2026-11-18 10:00:19.551  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 703022 checked out by user 3624 in 276ms
+2026-11-18 10:00:19.955  WARN 1 --- [nio-8080-exec-1] c.shop.orders.InventoryClient          : Inventory call took 1049ms for sku 44098
+2026-11-18 10:00:20.338 ERROR 1 --- [nio-8080-exec-9] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:00:20.692  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 637784 checked out by user 848 in 86ms
+2026-11-18 10:00:21.275  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 365354 checked out by user 652 in 219ms
+2026-11-18 10:00:21.699  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 670477 checked out by user 924 in 189ms
+2026-11-18 10:00:22.263  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 837198 checked out by user 3107 in 65ms
+2026-11-18 10:00:22.500  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 665198 checked out by user 3123 in 90ms
+2026-11-18 10:00:22.752  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 505495 checked out by user 255 in 131ms
+2026-11-18 10:00:23.401  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 179826 checked out by user 732 in 294ms
+2026-11-18 10:00:23.912  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 519082 checked out by user 182 in 200ms
+2026-11-18 10:00:24.286  WARN 1 --- [nio-8080-exec-6] c.shop.orders.InventoryClient          : Inventory call took 2252ms for sku 92653
+2026-11-18 10:00:24.624  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 467666 checked out by user 2116 in 119ms
+2026-11-18 10:00:25.203  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 625101 checked out by user 2022 in 224ms
+2026-11-18 10:00:25.662  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 990548 checked out by user 1897 in 285ms
+2026-11-18 10:00:26.093  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 379883 checked out by user 224 in 131ms
+2026-11-18 10:00:26.441  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 762577 checked out by user 2579 in 173ms
+2026-11-18 10:00:26.814  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 471376 checked out by user 3361 in 247ms
+2026-11-18 10:00:27.028  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 342081 checked out by user 57 in 74ms
+2026-11-18 10:00:27.275  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 533756 checked out by user 1128 in 107ms
+2026-11-18 10:00:27.729  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 331259 checked out by user 4282 in 222ms
+2026-11-18 10:00:28.338  WARN 1 --- [nio-8080-exec-10] c.shop.orders.InventoryClient          : Inventory call took 1765ms for sku 45003
+2026-11-18 10:00:28.889  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 824005 checked out by user 811 in 257ms
+2026-11-18 10:00:29.469  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 509551 checked out by user 4345 in 148ms
+2026-11-18 10:00:29.942  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 790089 checked out by user 454 in 196ms
+2026-11-18 10:00:30.570  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 122519 checked out by user 4797 in 129ms
+2026-11-18 10:00:30.902  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 918825 checked out by user 4953 in 73ms
+2026-11-18 10:00:31.310  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 134756 checked out by user 4454 in 88ms
+2026-11-18 10:00:31.545  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 531869 checked out by user 2127 in 39ms
+2026-11-18 10:00:31.868  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 955896 checked out by user 4323 in 158ms
+2026-11-18 10:00:32.355  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 297991 checked out by user 3882 in 267ms
+2026-11-18 10:00:32.572  WARN 1 --- [nio-8080-exec-1] c.shop.orders.InventoryClient          : Inventory call took 2215ms for sku 65046
+2026-11-18 10:00:32.860 ERROR 1 --- [nio-8080-exec-8] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:00:33.535  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 446784 checked out by user 4722 in 201ms
+2026-11-18 10:00:34.183  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 419690 checked out by user 1485 in 211ms
+2026-11-18 10:00:34.513  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 742836 checked out by user 3172 in 249ms
+2026-11-18 10:00:35.007  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 407949 checked out by user 1133 in 73ms
+2026-11-18 10:00:35.586  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 983498 checked out by user 2898 in 252ms
+2026-11-18 10:00:35.852  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 459446 checked out by user 1381 in 286ms
+2026-11-18 10:00:36.055  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 217698 checked out by user 3399 in 64ms
+2026-11-18 10:00:36.586  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 314636 checked out by user 2220 in 186ms
+2026-11-18 10:00:37.022  WARN 1 --- [nio-8080-exec-10] c.shop.orders.InventoryClient          : Inventory call took 2156ms for sku 47298
+2026-11-18 10:00:37.578  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 713496 checked out by user 1509 in 149ms
+2026-11-18 10:00:37.938  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 955758 checked out by user 3353 in 138ms
+2026-11-18 10:00:38.420  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 963305 checked out by user 1330 in 246ms
+2026-11-18 10:00:38.762  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 735478 checked out by user 3985 in 76ms
+2026-11-18 10:00:39.313  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 155596 checked out by user 742 in 257ms
+2026-11-18 10:00:39.519  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 683202 checked out by user 848 in 94ms
+2026-11-18 10:00:40.068  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 397659 checked out by user 2768 in 259ms
+2026-11-18 10:00:40.475  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 873499 checked out by user 1962 in 50ms
+2026-11-18 10:00:41.113  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 915987 checked out by user 4639 in 184ms
+2026-11-18 10:00:41.599  WARN 1 --- [nio-8080-exec-5] c.shop.orders.InventoryClient          : Inventory call took 984ms for sku 47803
+2026-11-18 10:00:41.887  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 428601 checked out by user 2873 in 106ms
+2026-11-18 10:00:42.490  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 311805 checked out by user 1748 in 277ms
+2026-11-18 10:00:42.776  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 949008 checked out by user 3866 in 213ms
+2026-11-18 10:00:43.416  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 790419 checked out by user 4030 in 93ms
+2026-11-18 10:00:43.953  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 150622 checked out by user 1135 in 242ms
+2026-11-18 10:00:44.606  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 496736 checked out by user 2244 in 263ms
+2026-11-18 10:00:45.292  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 200512 checked out by user 679 in 204ms
+2026-11-18 10:00:45.757  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 236204 checked out by user 531 in 298ms
+2026-11-18 10:00:46.400  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 139341 checked out by user 4275 in 172ms
+2026-11-18 10:00:46.637  WARN 1 --- [nio-8080-exec-1] c.shop.orders.InventoryClient          : Inventory call took 1798ms for sku 85609
+2026-11-18 10:00:46.898 ERROR 1 --- [nio-8080-exec-2] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:00:47.311  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 179761 checked out by user 2464 in 235ms
+2026-11-18 10:00:47.642  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 500372 checked out by user 670 in 82ms
+2026-11-18 10:00:48.140  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 352829 checked out by user 495 in 264ms
+2026-11-18 10:00:48.525  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 280839 checked out by user 2474 in 280ms
+2026-11-18 10:00:48.833  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 673172 checked out by user 2757 in 124ms
+2026-11-18 10:00:49.156  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 856665 checked out by user 3956 in 179ms
+2026-11-18 10:00:49.642  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 580762 checked out by user 39 in 58ms
+2026-11-18 10:00:50.082  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 687736 checked out by user 992 in 105ms
+2026-11-18 10:00:50.456  WARN 1 --- [nio-8080-exec-4] c.shop.orders.InventoryClient          : Inventory call took 1153ms for sku 53821
+2026-11-18 10:00:51.132  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 264442 checked out by user 709 in 45ms
+2026-11-18 10:00:51.613  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 891624 checked out by user 1360 in 237ms
+2026-11-18 10:00:52.060  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 713999 checked out by user 495 in 239ms
+2026-11-18 10:00:52.600  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 531944 checked out by user 160 in 105ms
+2026-11-18 10:00:53.077  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 478101 checked out by user 1666 in 140ms
+2026-11-18 10:00:53.701  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 777995 checked out by user 2958 in 265ms
+2026-11-18 10:00:53.933  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 422373 checked out by user 3298 in 98ms
+2026-11-18 10:00:54.632  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 905868 checked out by user 10 in 37ms
+2026-11-18 10:00:54.928  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 110093 checked out by user 4864 in 40ms
+2026-11-18 10:00:55.356  WARN 1 --- [nio-8080-exec-1] c.shop.orders.InventoryClient          : Inventory call took 2460ms for sku 42239
+2026-11-18 10:00:55.805  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 914441 checked out by user 498 in 300ms
+2026-11-18 10:00:56.328  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 888334 checked out by user 3416 in 252ms
+2026-11-18 10:00:56.912  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 335715 checked out by user 1346 in 48ms
+2026-11-18 10:00:57.367  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 698358 checked out by user 4218 in 150ms
+2026-11-18 10:00:57.706  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 384499 checked out by user 4865 in 109ms
+2026-11-18 10:00:58.250  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 615593 checked out by user 2495 in 255ms
+2026-11-18 10:00:58.892  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 817346 checked out by user 1442 in 239ms
+2026-11-18 10:00:59.269  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 993829 checked out by user 3890 in 176ms
+2026-11-18 10:00:59.813  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 951521 checked out by user 2788 in 232ms
+2026-11-18 10:01:00.175  WARN 1 --- [nio-8080-exec-8] c.shop.orders.InventoryClient          : Inventory call took 1072ms for sku 65976
+2026-11-18 10:01:00.616 ERROR 1 --- [nio-8080-exec-7] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:01:01.000  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 194174 checked out by user 4900 in 291ms
+2026-11-18 10:01:01.282  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 207964 checked out by user 3660 in 168ms
+2026-11-18 10:01:01.737  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 705442 checked out by user 2868 in 31ms
+2026-11-18 10:01:02.376  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 303246 checked out by user 2518 in 200ms
+2026-11-18 10:01:02.967  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 891461 checked out by user 1222 in 61ms
+2026-11-18 10:01:03.262  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 288273 checked out by user 3254 in 145ms
+2026-11-18 10:01:03.491  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 231079 checked out by user 3187 in 160ms
+2026-11-18 10:01:03.867  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 489249 checked out by user 3632 in 144ms
+2026-11-18 10:01:04.190  WARN 1 --- [nio-8080-exec-1] c.shop.orders.InventoryClient          : Inventory call took 2052ms for sku 14326
+2026-11-18 10:01:04.626  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 913233 checked out by user 322 in 225ms
+2026-11-18 10:01:04.942  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 190745 checked out by user 3545 in 293ms
+2026-11-18 10:01:05.317  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 778739 checked out by user 1217 in 169ms
+2026-11-18 10:01:05.755  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 880802 checked out by user 3921 in 218ms
+2026-11-18 10:01:06.017  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 459240 checked out by user 4571 in 132ms
+2026-11-18 10:01:06.463  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 722387 checked out by user 203 in 61ms
+2026-11-18 10:01:07.031  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 981393 checked out by user 1720 in 234ms
+2026-11-18 10:01:07.601  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 729648 checked out by user 1712 in 129ms
+2026-11-18 10:01:07.870  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 555580 checked out by user 1889 in 141ms
+2026-11-18 10:01:08.202  WARN 1 --- [nio-8080-exec-3] c.shop.orders.InventoryClient          : Inventory call took 1106ms for sku 79833
+2026-11-18 10:01:08.885  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 831016 checked out by user 3279 in 111ms
+2026-11-18 10:01:09.480  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 342092 checked out by user 3813 in 101ms
+2026-11-18 10:01:10.138  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 621448 checked out by user 1448 in 125ms
+2026-11-18 10:01:10.510  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 317996 checked out by user 836 in 48ms
+2026-11-18 10:01:10.829  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 852312 checked out by user 3863 in 57ms
+2026-11-18 10:01:11.032  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 826585 checked out by user 4785 in 189ms
+2026-11-18 10:01:11.304  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 363175 checked out by user 279 in 134ms
+2026-11-18 10:01:11.884  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 111681 checked out by user 2189 in 131ms
+2026-11-18 10:01:12.181  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 898661 checked out by user 1611 in 93ms
+2026-11-18 10:01:12.704  WARN 1 --- [nio-8080-exec-9] c.shop.orders.InventoryClient          : Inventory call took 2460ms for sku 77454
+2026-11-18 10:01:13.011 ERROR 1 --- [nio-8080-exec-9] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:01:13.354  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 517987 checked out by user 676 in 95ms
+2026-11-18 10:01:13.738  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 674016 checked out by user 104 in 167ms
+2026-11-18 10:01:14.175  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 561256 checked out by user 828 in 298ms
+2026-11-18 10:01:14.785  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 889306 checked out by user 932 in 274ms
+2026-11-18 10:01:15.471  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 699121 checked out by user 3160 in 38ms
+2026-11-18 10:01:16.128  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 410160 checked out by user 3028 in 212ms
+2026-11-18 10:01:16.485  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 863265 checked out by user 1181 in 79ms
+2026-11-18 10:01:16.873  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 798024 checked out by user 4419 in 143ms
+2026-11-18 10:01:17.310  WARN 1 --- [nio-8080-exec-10] c.shop.orders.InventoryClient          : Inventory call took 2169ms for sku 30623
+2026-11-18 10:01:17.732  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 131580 checked out by user 2648 in 135ms
+2026-11-18 10:01:18.297  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 759804 checked out by user 3689 in 131ms
+2026-11-18 10:01:18.828  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 549499 checked out by user 4280 in 215ms
+2026-11-18 10:01:19.343  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 375853 checked out by user 1088 in 299ms
+2026-11-18 10:01:19.827  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 766537 checked out by user 4688 in 49ms
+2026-11-18 10:01:20.140  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 579004 checked out by user 4975 in 269ms
+2026-11-18 10:01:20.807  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 328267 checked out by user 1731 in 71ms
+2026-11-18 10:01:21.362  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 123967 checked out by user 1950 in 114ms
+2026-11-18 10:01:21.610  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 634573 checked out by user 3065 in 245ms
+2026-11-18 10:01:22.303  WARN 1 --- [nio-8080-exec-6] c.shop.orders.InventoryClient          : Inventory call took 2434ms for sku 57553
+2026-11-18 10:01:22.902  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 814012 checked out by user 245 in 95ms
+2026-11-18 10:01:23.271  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 515364 checked out by user 3571 in 252ms
+2026-11-18 10:01:23.919  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 524449 checked out by user 302 in 236ms
+2026-11-18 10:01:24.449  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 333993 checked out by user 2439 in 283ms
+2026-11-18 10:01:24.862  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 198168 checked out by user 2440 in 249ms
+2026-11-18 10:01:25.188  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 686692 checked out by user 4781 in 213ms
+2026-11-18 10:01:25.758  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 193351 checked out by user 8 in 148ms
+2026-11-18 10:01:26.228  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 294194 checked out by user 2543 in 105ms
+2026-11-18 10:01:26.866  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 499647 checked out by user 1384 in 108ms
+2026-11-18 10:01:27.118  WARN 1 --- [nio-8080-exec-6] c.shop.orders.InventoryClient          : Inventory call took 1521ms for sku 84184
+2026-11-18 10:01:27.706 ERROR 1 --- [nio-8080-exec-7] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:01:28.029  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 409284 checked out by user 1687 in 242ms
+2026-11-18 10:01:28.345  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 733043 checked out by user 2107 in 202ms
+2026-11-18 10:01:29.014  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 403070 checked out by user 60 in 132ms
+2026-11-18 10:01:29.498  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 464764 checked out by user 2625 in 176ms
+2026-11-18 10:01:29.910  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 556633 checked out by user 3015 in 131ms
+2026-11-18 10:01:30.148  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 161035 checked out by user 4207 in 281ms
+2026-11-18 10:01:30.459  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 156177 checked out by user 1226 in 76ms
+2026-11-18 10:01:30.667  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 872067 checked out by user 3832 in 134ms
+2026-11-18 10:01:31.061  WARN 1 --- [nio-8080-exec-7] c.shop.orders.InventoryClient          : Inventory call took 1253ms for sku 99508
+2026-11-18 10:01:31.641  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 467970 checked out by user 3200 in 266ms
+2026-11-18 10:01:31.945  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 278270 checked out by user 1676 in 175ms
+2026-11-18 10:01:32.615  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 573974 checked out by user 2195 in 139ms
+2026-11-18 10:01:33.121  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 546782 checked out by user 3207 in 32ms
+2026-11-18 10:01:33.729  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 708447 checked out by user 1015 in 47ms
+2026-11-18 10:01:34.237  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 417051 checked out by user 4496 in 295ms
+2026-11-18 10:01:34.657  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 854972 checked out by user 188 in 256ms
+2026-11-18 10:01:34.963  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 533429 checked out by user 2536 in 185ms
+2026-11-18 10:01:35.636  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 911125 checked out by user 4569 in 131ms
+2026-11-18 10:01:36.176  WARN 1 --- [nio-8080-exec-8] c.shop.orders.InventoryClient          : Inventory call took 1852ms for sku 56845
+2026-11-18 10:01:36.690  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 760708 checked out by user 2289 in 76ms
+2026-11-18 10:01:37.137  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 933575 checked out by user 478 in 41ms
+2026-11-18 10:01:37.643  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 619725 checked out by user 793 in 242ms
+2026-11-18 10:01:37.992  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 769516 checked out by user 4582 in 85ms
+2026-11-18 10:01:38.199  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 467074 checked out by user 4021 in 156ms
+2026-11-18 10:01:38.765  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 538794 checked out by user 3567 in 183ms
+2026-11-18 10:01:39.095  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 931284 checked out by user 1749 in 149ms
+2026-11-18 10:01:39.571  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 905425 checked out by user 4499 in 59ms
+2026-11-18 10:01:40.152  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 237120 checked out by user 4106 in 45ms
+2026-11-18 10:01:40.689  WARN 1 --- [nio-8080-exec-6] c.shop.orders.InventoryClient          : Inventory call took 1596ms for sku 67244
+2026-11-18 10:01:41.065 ERROR 1 --- [nio-8080-exec-2] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:01:41.548  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 563997 checked out by user 4443 in 185ms
+2026-11-18 10:01:42.126  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 564039 checked out by user 742 in 300ms
+2026-11-18 10:01:42.798  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 626864 checked out by user 1937 in 257ms
+2026-11-18 10:01:43.138  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 954891 checked out by user 2163 in 211ms
+2026-11-18 10:01:43.360  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 959214 checked out by user 3304 in 290ms
+2026-11-18 10:01:43.723  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 324732 checked out by user 4124 in 50ms
+2026-11-18 10:01:44.125  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 883188 checked out by user 2650 in 59ms
+2026-11-18 10:01:44.401  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 147268 checked out by user 4191 in 229ms
+2026-11-18 10:01:44.744  WARN 1 --- [nio-8080-exec-7] c.shop.orders.InventoryClient          : Inventory call took 2442ms for sku 89725
+2026-11-18 10:01:45.431  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 378100 checked out by user 1822 in 182ms
+2026-11-18 10:01:46.027  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 475733 checked out by user 2058 in 300ms
+2026-11-18 10:01:46.434  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 446005 checked out by user 1449 in 87ms
+2026-11-18 10:01:46.729  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 819353 checked out by user 2914 in 229ms
+2026-11-18 10:01:46.945  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 628905 checked out by user 3702 in 62ms
+2026-11-18 10:01:47.147  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 672419 checked out by user 369 in 137ms
+2026-11-18 10:01:47.516  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 539990 checked out by user 2382 in 225ms
+2026-11-18 10:01:47.934  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 414210 checked out by user 4813 in 60ms
+2026-11-18 10:01:48.242  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 521906 checked out by user 2127 in 255ms
+2026-11-18 10:01:48.583  WARN 1 --- [nio-8080-exec-8] c.shop.orders.InventoryClient          : Inventory call took 1681ms for sku 86393
+2026-11-18 10:01:48.845  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 546724 checked out by user 665 in 125ms
+2026-11-18 10:01:49.135  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 951957 checked out by user 2770 in 52ms
+2026-11-18 10:01:49.721  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 862340 checked out by user 4707 in 237ms
+2026-11-18 10:01:50.278  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 468205 checked out by user 4516 in 239ms
+2026-11-18 10:01:50.841  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 845492 checked out by user 575 in 52ms
+2026-11-18 10:01:51.062  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 228579 checked out by user 2572 in 296ms
+2026-11-18 10:01:51.570  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 325294 checked out by user 1776 in 220ms
+2026-11-18 10:01:51.837  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 536190 checked out by user 3286 in 30ms
+2026-11-18 10:01:52.088  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 640671 checked out by user 2571 in 191ms
+2026-11-18 10:01:52.671  WARN 1 --- [nio-8080-exec-1] c.shop.orders.InventoryClient          : Inventory call took 2369ms for sku 13396
+2026-11-18 10:01:52.956 ERROR 1 --- [nio-8080-exec-10] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:01:53.329  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 302399 checked out by user 4249 in 35ms
+2026-11-18 10:01:53.583  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 171911 checked out by user 1511 in 180ms
+2026-11-18 10:01:54.198  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 997738 checked out by user 3815 in 78ms
+2026-11-18 10:01:54.891  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 197142 checked out by user 3071 in 58ms
+2026-11-18 10:01:55.288  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 726773 checked out by user 2419 in 89ms
+2026-11-18 10:01:55.585  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 755855 checked out by user 3062 in 48ms
+2026-11-18 10:01:56.234  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 452366 checked out by user 990 in 78ms
+2026-11-18 10:01:56.777  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 333424 checked out by user 4722 in 240ms
+2026-11-18 10:01:57.249  WARN 1 --- [nio-8080-exec-8] c.shop.orders.InventoryClient          : Inventory call took 966ms for sku 75754
+2026-11-18 10:01:57.670  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 180533 checked out by user 3957 in 33ms
+2026-11-18 10:01:58.144  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 773196 checked out by user 2550 in 105ms
+2026-11-18 10:01:58.649  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 841485 checked out by user 1335 in 217ms
+2026-11-18 10:01:58.857  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 836094 checked out by user 831 in 246ms
+2026-11-18 10:01:59.099  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 719699 checked out by user 1803 in 136ms
+2026-11-18 10:01:59.715  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 177831 checked out by user 1596 in 173ms
+2026-11-18 10:02:00.210  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 271120 checked out by user 1105 in 51ms
+2026-11-18 10:02:00.698  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 143357 checked out by user 428 in 139ms
+2026-11-18 10:02:01.142  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 594072 checked out by user 4064 in 215ms
+2026-11-18 10:02:01.609  WARN 1 --- [nio-8080-exec-9] c.shop.orders.InventoryClient          : Inventory call took 1514ms for sku 60509
+2026-11-18 10:02:01.888  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 367267 checked out by user 4432 in 33ms
+2026-11-18 10:02:02.286  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 211376 checked out by user 560 in 122ms
+2026-11-18 10:02:02.949  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 927319 checked out by user 1076 in 46ms
+2026-11-18 10:02:03.481  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 162438 checked out by user 3182 in 219ms
+2026-11-18 10:02:04.163  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 550181 checked out by user 2606 in 281ms
+2026-11-18 10:02:04.707  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 276179 checked out by user 903 in 90ms
+2026-11-18 10:02:05.190  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 150401 checked out by user 520 in 71ms
+2026-11-18 10:02:05.850  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 799636 checked out by user 1080 in 147ms
+2026-11-18 10:02:06.497  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 984742 checked out by user 4987 in 143ms
+2026-11-18 10:02:06.797  WARN 1 --- [nio-8080-exec-1] c.shop.orders.InventoryClient          : Inventory call took 1172ms for sku 52538
+2026-11-18 10:02:07.179 ERROR 1 --- [nio-8080-exec-10] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:02:07.826  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 906340 checked out by user 4058 in 99ms
+2026-11-18 10:02:08.056  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 926309 checked out by user 1235 in 143ms
+2026-11-18 10:02:08.314  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 955631 checked out by user 2793 in 250ms
+2026-11-18 10:02:08.798  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 835171 checked out by user 4959 in 83ms
+2026-11-18 10:02:09.431  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 710980 checked out by user 3170 in 85ms
+2026-11-18 10:02:09.923  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 674171 checked out by user 397 in 177ms
+2026-11-18 10:02:10.306  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 460479 checked out by user 1338 in 75ms
+2026-11-18 10:02:10.539  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 891186 checked out by user 402 in 141ms
+2026-11-18 10:02:11.144  WARN 1 --- [nio-8080-exec-7] c.shop.orders.InventoryClient          : Inventory call took 812ms for sku 78008
+2026-11-18 10:02:11.406  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 924205 checked out by user 2246 in 82ms
+2026-11-18 10:02:12.088  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 906018 checked out by user 110 in 159ms
+2026-11-18 10:02:12.418  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 980630 checked out by user 349 in 68ms
+2026-11-18 10:02:12.972  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 623829 checked out by user 838 in 161ms
+2026-11-18 10:02:13.191  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 981621 checked out by user 1935 in 169ms
+2026-11-18 10:02:13.608  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 441503 checked out by user 2160 in 173ms
+2026-11-18 10:02:14.097  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 131286 checked out by user 3310 in 35ms
+2026-11-18 10:02:14.599  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 968886 checked out by user 4109 in 47ms
+2026-11-18 10:02:15.010  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 825940 checked out by user 3742 in 164ms
+2026-11-18 10:02:15.384  WARN 1 --- [nio-8080-exec-7] c.shop.orders.InventoryClient          : Inventory call took 1685ms for sku 87872
+2026-11-18 10:02:15.869  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 817495 checked out by user 4476 in 208ms
+2026-11-18 10:02:16.361  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 610773 checked out by user 2113 in 102ms
+2026-11-18 10:02:16.872  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 181971 checked out by user 2499 in 103ms
+2026-11-18 10:02:17.412  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 789884 checked out by user 132 in 178ms
+2026-11-18 10:02:17.929  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 576369 checked out by user 3630 in 250ms
+2026-11-18 10:02:18.220  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 989163 checked out by user 1561 in 177ms
+2026-11-18 10:02:18.652  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 889314 checked out by user 3200 in 73ms
+2026-11-18 10:02:19.301  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 945594 checked out by user 2830 in 129ms
+2026-11-18 10:02:19.523  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 509726 checked out by user 2341 in 283ms
+2026-11-18 10:02:19.794  WARN 1 --- [nio-8080-exec-9] c.shop.orders.InventoryClient          : Inventory call took 2090ms for sku 62540
+2026-11-18 10:02:20.057 ERROR 1 --- [nio-8080-exec-8] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:02:20.407  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 643951 checked out by user 2623 in 37ms
+2026-11-18 10:02:20.675  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 235766 checked out by user 4987 in 258ms
+2026-11-18 10:02:21.365  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 188921 checked out by user 991 in 229ms
+2026-11-18 10:02:21.763  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 906069 checked out by user 4425 in 234ms
+2026-11-18 10:02:22.185  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 905299 checked out by user 1554 in 187ms
+2026-11-18 10:02:22.690  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 233666 checked out by user 2213 in 234ms
+2026-11-18 10:02:23.338  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 723374 checked out by user 3384 in 277ms
+2026-11-18 10:02:23.871  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 231004 checked out by user 3243 in 219ms
+2026-11-18 10:02:24.264  WARN 1 --- [nio-8080-exec-3] c.shop.orders.InventoryClient          : Inventory call took 1819ms for sku 74365
+2026-11-18 10:02:24.884  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 146981 checked out by user 1296 in 62ms
+2026-11-18 10:02:25.543  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 961782 checked out by user 4074 in 97ms
+2026-11-18 10:02:25.848  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 851617 checked out by user 1209 in 195ms
+2026-11-18 10:02:26.123  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 288021 checked out by user 1664 in 204ms
+2026-11-18 10:02:26.400  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 968015 checked out by user 3198 in 47ms
+2026-11-18 10:02:26.600  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 436623 checked out by user 4281 in 188ms
+2026-11-18 10:02:27.107  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 165555 checked out by user 3708 in 122ms
+2026-11-18 10:02:27.362  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 990476 checked out by user 464 in 203ms
+2026-11-18 10:02:27.957  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 108655 checked out by user 2949 in 146ms
+2026-11-18 10:02:28.326  WARN 1 --- [nio-8080-exec-4] c.shop.orders.InventoryClient          : Inventory call took 2371ms for sku 21489
+2026-11-18 10:02:28.622  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 640053 checked out by user 2230 in 220ms
+2026-11-18 10:02:29.292  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 117467 checked out by user 2699 in 147ms
+2026-11-18 10:02:29.639  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 353965 checked out by user 1225 in 94ms
+2026-11-18 10:02:30.210  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 106950 checked out by user 4953 in 73ms
+2026-11-18 10:02:30.862  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 706760 checked out by user 2219 in 162ms
+2026-11-18 10:02:31.517  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 860781 checked out by user 893 in 171ms
+2026-11-18 10:02:32.182  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 394689 checked out by user 254 in 278ms
+2026-11-18 10:02:32.644  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 378123 checked out by user 1613 in 268ms
+2026-11-18 10:02:33.292  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 720485 checked out by user 4457 in 107ms
+2026-11-18 10:02:33.844  WARN 1 --- [nio-8080-exec-5] c.shop.orders.InventoryClient          : Inventory call took 892ms for sku 29475
+2026-11-18 10:02:34.093 ERROR 1 --- [nio-8080-exec-2] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:02:34.511  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 254426 checked out by user 1869 in 77ms
+2026-11-18 10:02:34.822  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 752957 checked out by user 4636 in 294ms
+2026-11-18 10:02:35.063  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 214346 checked out by user 127 in 51ms
+2026-11-18 10:02:35.674  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 501464 checked out by user 1234 in 189ms
+2026-11-18 10:02:35.957  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 460504 checked out by user 3795 in 295ms
+2026-11-18 10:02:36.552  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 891486 checked out by user 3566 in 141ms
+2026-11-18 10:02:37.099  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 479188 checked out by user 4129 in 272ms
+2026-11-18 10:02:37.530  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 914011 checked out by user 2842 in 95ms
+2026-11-18 10:02:37.943  WARN 1 --- [nio-8080-exec-4] c.shop.orders.InventoryClient          : Inventory call took 2371ms for sku 49388
+2026-11-18 10:02:38.400  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 659086 checked out by user 1178 in 130ms
+2026-11-18 10:02:38.983  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 963989 checked out by user 1222 in 191ms
+2026-11-18 10:02:39.342  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 884179 checked out by user 1522 in 95ms
+2026-11-18 10:02:39.869  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 312440 checked out by user 2679 in 89ms
+2026-11-18 10:02:40.103  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 651956 checked out by user 4564 in 125ms
+2026-11-18 10:02:40.586  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 447203 checked out by user 378 in 157ms
+2026-11-18 10:02:40.914  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 483279 checked out by user 1888 in 299ms
+2026-11-18 10:02:41.209  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 594641 checked out by user 1302 in 33ms
+2026-11-18 10:02:41.543  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 515980 checked out by user 3874 in 252ms
+2026-11-18 10:02:41.937  WARN 1 --- [nio-8080-exec-7] c.shop.orders.InventoryClient          : Inventory call took 2251ms for sku 15801
+2026-11-18 10:02:42.409  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 666582 checked out by user 4473 in 283ms
+2026-11-18 10:02:42.762  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 841101 checked out by user 4101 in 258ms
+2026-11-18 10:02:43.002  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 158317 checked out by user 3872 in 190ms
+2026-11-18 10:02:43.308  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 817241 checked out by user 1763 in 229ms
+2026-11-18 10:02:43.792  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 733525 checked out by user 1554 in 82ms
+2026-11-18 10:02:44.182  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 515374 checked out by user 1052 in 78ms
+2026-11-18 10:02:44.718  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 604118 checked out by user 2422 in 72ms
+2026-11-18 10:02:45.049  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 330548 checked out by user 32 in 92ms
+2026-11-18 10:02:45.256  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 185584 checked out by user 2273 in 176ms
+2026-11-18 10:02:45.638  WARN 1 --- [nio-8080-exec-3] c.shop.orders.InventoryClient          : Inventory call took 2010ms for sku 88315
+2026-11-18 10:02:46.033 ERROR 1 --- [nio-8080-exec-5] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:02:46.413  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 427038 checked out by user 2222 in 134ms
+2026-11-18 10:02:46.722  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 724069 checked out by user 3923 in 79ms
+2026-11-18 10:02:47.337  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 816728 checked out by user 2969 in 146ms
+2026-11-18 10:02:47.653  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 390064 checked out by user 4757 in 260ms
+2026-11-18 10:02:47.937  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 553127 checked out by user 3829 in 44ms
+2026-11-18 10:02:48.184  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 886437 checked out by user 375 in 135ms
+2026-11-18 10:02:48.789  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 337278 checked out by user 2413 in 184ms
+2026-11-18 10:02:49.296  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 620444 checked out by user 2985 in 212ms
+2026-11-18 10:02:49.912  WARN 1 --- [nio-8080-exec-9] c.shop.orders.InventoryClient          : Inventory call took 2268ms for sku 64179
+2026-11-18 10:02:50.432  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 869300 checked out by user 4348 in 298ms
+2026-11-18 10:02:50.891  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 978569 checked out by user 3901 in 292ms
+2026-11-18 10:02:51.297  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 845070 checked out by user 1072 in 89ms
+2026-11-18 10:02:51.684  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 719460 checked out by user 1258 in 285ms
+2026-11-18 10:02:52.194  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 327908 checked out by user 3739 in 253ms
+2026-11-18 10:02:52.894  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 639984 checked out by user 1046 in 281ms
+2026-11-18 10:02:53.556  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 711709 checked out by user 369 in 137ms
+2026-11-18 10:02:53.865  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 267958 checked out by user 1372 in 125ms
+2026-11-18 10:02:54.182  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 437109 checked out by user 2164 in 50ms
+2026-11-18 10:02:54.857  WARN 1 --- [nio-8080-exec-8] c.shop.orders.InventoryClient          : Inventory call took 828ms for sku 47989
+2026-11-18 10:02:55.287  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 819073 checked out by user 964 in 189ms
+2026-11-18 10:02:55.861  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 328949 checked out by user 3247 in 267ms
+2026-11-18 10:02:56.219  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 594507 checked out by user 4067 in 160ms
+2026-11-18 10:02:56.422  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 118873 checked out by user 1812 in 236ms
+2026-11-18 10:02:56.819  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 899350 checked out by user 2894 in 235ms
+2026-11-18 10:02:57.025  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 804863 checked out by user 3681 in 223ms
+2026-11-18 10:02:57.717  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 269926 checked out by user 4503 in 109ms
+2026-11-18 10:02:57.978  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 925694 checked out by user 4414 in 95ms
+2026-11-18 10:02:58.239  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 969262 checked out by user 1742 in 287ms
+2026-11-18 10:02:58.651  WARN 1 --- [nio-8080-exec-9] c.shop.orders.InventoryClient          : Inventory call took 1137ms for sku 73014
+2026-11-18 10:02:59.135 ERROR 1 --- [nio-8080-exec-5] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:02:59.725  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 240156 checked out by user 3496 in 163ms
+2026-11-18 10:03:00.287  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 727779 checked out by user 1688 in 131ms
+2026-11-18 10:03:00.922  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 413906 checked out by user 2951 in 250ms
+2026-11-18 10:03:01.413  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 794427 checked out by user 301 in 235ms
+2026-11-18 10:03:01.818  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 134038 checked out by user 2238 in 210ms
+2026-11-18 10:03:02.136  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 290530 checked out by user 1658 in 159ms
+2026-11-18 10:03:02.670  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 315570 checked out by user 2786 in 296ms
+2026-11-18 10:03:03.285  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 706368 checked out by user 4608 in 76ms
+2026-11-18 10:03:03.542  WARN 1 --- [nio-8080-exec-9] c.shop.orders.InventoryClient          : Inventory call took 2147ms for sku 50538
+2026-11-18 10:03:04.182  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 468557 checked out by user 804 in 108ms
+2026-11-18 10:03:04.877  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 290123 checked out by user 970 in 44ms
+2026-11-18 10:03:05.523  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 885762 checked out by user 1926 in 269ms
+2026-11-18 10:03:06.008  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 596856 checked out by user 156 in 187ms
+2026-11-18 10:03:06.494  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 927624 checked out by user 3083 in 159ms
+2026-11-18 10:03:07.014  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 199454 checked out by user 682 in 240ms
+2026-11-18 10:03:07.586  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 707528 checked out by user 2865 in 215ms
+2026-11-18 10:03:08.163  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 945666 checked out by user 3050 in 162ms
+2026-11-18 10:03:08.448  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 752911 checked out by user 2022 in 285ms
+2026-11-18 10:03:08.941  WARN 1 --- [nio-8080-exec-4] c.shop.orders.InventoryClient          : Inventory call took 1013ms for sku 37338
+2026-11-18 10:03:09.531  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 302816 checked out by user 3227 in 202ms
+2026-11-18 10:03:10.026  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 285876 checked out by user 4005 in 234ms
+2026-11-18 10:03:10.462  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 644910 checked out by user 4034 in 273ms
+2026-11-18 10:03:10.911  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 695545 checked out by user 1718 in 214ms
+2026-11-18 10:03:11.514  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 545797 checked out by user 590 in 136ms
+2026-11-18 10:03:12.140  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 193636 checked out by user 3978 in 161ms
+2026-11-18 10:03:12.644  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 713232 checked out by user 2835 in 142ms
+2026-11-18 10:03:13.240  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 124627 checked out by user 4487 in 182ms
+2026-11-18 10:03:13.531  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 924833 checked out by user 4026 in 96ms
+2026-11-18 10:03:13.829  WARN 1 --- [nio-8080-exec-4] c.shop.orders.InventoryClient          : Inventory call took 2044ms for sku 89551
+2026-11-18 10:03:14.035 ERROR 1 --- [nio-8080-exec-8] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:03:14.669  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 220566 checked out by user 2977 in 44ms
+2026-11-18 10:03:14.885  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 178638 checked out by user 672 in 144ms
+2026-11-18 10:03:15.397  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 450551 checked out by user 2523 in 299ms
+2026-11-18 10:03:16.092  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 422770 checked out by user 2319 in 123ms
+2026-11-18 10:03:16.675  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 532745 checked out by user 2058 in 285ms
+2026-11-18 10:03:17.191  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 894968 checked out by user 612 in 163ms
+2026-11-18 10:03:17.690  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 113386 checked out by user 713 in 31ms
+2026-11-18 10:03:18.332  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 512908 checked out by user 797 in 226ms
+2026-11-18 10:03:18.929  WARN 1 --- [nio-8080-exec-5] c.shop.orders.InventoryClient          : Inventory call took 2490ms for sku 70328
+2026-11-18 10:03:19.489  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 119449 checked out by user 2555 in 75ms
+2026-11-18 10:03:19.864  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 335061 checked out by user 4345 in 43ms
+2026-11-18 10:03:20.259  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 742878 checked out by user 4689 in 225ms
+2026-11-18 10:03:20.695  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 505908 checked out by user 3704 in 122ms
+2026-11-18 10:03:21.395  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 712403 checked out by user 3231 in 90ms
+2026-11-18 10:03:21.618  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 898674 checked out by user 1587 in 264ms
+2026-11-18 10:03:21.910  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 420395 checked out by user 1833 in 118ms
+2026-11-18 10:03:22.139  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 633638 checked out by user 3170 in 254ms
+2026-11-18 10:03:22.420  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 480708 checked out by user 3842 in 83ms
+2026-11-18 10:03:22.960  WARN 1 --- [nio-8080-exec-6] c.shop.orders.InventoryClient          : Inventory call took 1541ms for sku 99394
+2026-11-18 10:03:23.387  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 304964 checked out by user 1286 in 280ms
+2026-11-18 10:03:23.826  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 224303 checked out by user 948 in 201ms
+2026-11-18 10:03:24.183  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 200532 checked out by user 3822 in 285ms
+2026-11-18 10:03:24.488  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 865625 checked out by user 3390 in 32ms
+2026-11-18 10:03:25.106  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 544607 checked out by user 4162 in 204ms
+2026-11-18 10:03:25.514  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 678630 checked out by user 4392 in 245ms
+2026-11-18 10:03:26.100  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 136630 checked out by user 4291 in 205ms
+2026-11-18 10:03:26.644  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 597321 checked out by user 1643 in 207ms
+2026-11-18 10:03:27.100  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 602109 checked out by user 4843 in 180ms
+2026-11-18 10:03:27.724  WARN 1 --- [nio-8080-exec-4] c.shop.orders.InventoryClient          : Inventory call took 2227ms for sku 35499
+2026-11-18 10:03:28.361 ERROR 1 --- [nio-8080-exec-7] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:03:28.701  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 620286 checked out by user 419 in 116ms
+2026-11-18 10:03:29.096  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 257685 checked out by user 4015 in 232ms
+2026-11-18 10:03:29.725  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 789808 checked out by user 3476 in 209ms
+2026-11-18 10:03:30.229  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 947747 checked out by user 2162 in 201ms
+2026-11-18 10:03:30.694  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 787679 checked out by user 3173 in 227ms
+2026-11-18 10:03:31.210  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 959061 checked out by user 4779 in 165ms
+2026-11-18 10:03:31.907  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 880750 checked out by user 642 in 208ms
+2026-11-18 10:03:32.288  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 388438 checked out by user 3632 in 159ms
+2026-11-18 10:03:32.930  WARN 1 --- [nio-8080-exec-6] c.shop.orders.InventoryClient          : Inventory call took 2126ms for sku 14728
+2026-11-18 10:03:33.497  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 365486 checked out by user 193 in 216ms
+2026-11-18 10:03:33.820  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 619207 checked out by user 1390 in 32ms
+2026-11-18 10:03:34.306  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 812220 checked out by user 4295 in 233ms
+2026-11-18 10:03:34.667  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 772853 checked out by user 2120 in 200ms
+2026-11-18 10:03:35.316  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 348537 checked out by user 3613 in 208ms
+2026-11-18 10:03:35.659  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 134118 checked out by user 3949 in 298ms
+2026-11-18 10:03:35.862  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 340723 checked out by user 4359 in 140ms
+2026-11-18 10:03:36.163  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 489937 checked out by user 3301 in 126ms
+2026-11-18 10:03:36.458  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 226736 checked out by user 2029 in 238ms
+2026-11-18 10:03:36.965  WARN 1 --- [nio-8080-exec-7] c.shop.orders.InventoryClient          : Inventory call took 1420ms for sku 78794
+2026-11-18 10:03:37.186  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 950838 checked out by user 240 in 273ms
+2026-11-18 10:03:37.499  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 319185 checked out by user 454 in 170ms
+2026-11-18 10:03:37.743  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 101371 checked out by user 3165 in 141ms
+2026-11-18 10:03:38.033  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 979158 checked out by user 241 in 190ms
+2026-11-18 10:03:38.285  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 941131 checked out by user 1157 in 238ms
+2026-11-18 10:03:38.669  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 341655 checked out by user 4367 in 261ms
+2026-11-18 10:03:39.192  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 552860 checked out by user 1688 in 133ms
+2026-11-18 10:03:39.848  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 513734 checked out by user 3828 in 173ms
+2026-11-18 10:03:40.379  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 379422 checked out by user 3229 in 251ms
+2026-11-18 10:03:40.960  WARN 1 --- [nio-8080-exec-1] c.shop.orders.InventoryClient          : Inventory call took 1307ms for sku 38627
+2026-11-18 10:03:41.595 ERROR 1 --- [nio-8080-exec-3] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:03:42.257  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 306114 checked out by user 4673 in 272ms
+2026-11-18 10:03:42.592  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 451980 checked out by user 4872 in 105ms
+2026-11-18 10:03:43.192  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 843138 checked out by user 4716 in 175ms
+2026-11-18 10:03:43.810  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 155964 checked out by user 728 in 40ms
+2026-11-18 10:03:44.101  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 557400 checked out by user 368 in 277ms
+2026-11-18 10:03:44.712  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 215526 checked out by user 4886 in 197ms
+2026-11-18 10:03:44.970  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 413555 checked out by user 4242 in 164ms
+2026-11-18 10:03:45.473  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 598887 checked out by user 4635 in 270ms
+2026-11-18 10:03:45.776  WARN 1 --- [nio-8080-exec-9] c.shop.orders.InventoryClient          : Inventory call took 1202ms for sku 40940
+2026-11-18 10:03:46.417  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 547863 checked out by user 715 in 164ms
+2026-11-18 10:03:46.745  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 437045 checked out by user 3664 in 220ms
+2026-11-18 10:03:47.083  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 653758 checked out by user 4834 in 137ms
+2026-11-18 10:03:47.720  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 124040 checked out by user 2818 in 123ms
+2026-11-18 10:03:48.129  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 294751 checked out by user 3829 in 44ms
+2026-11-18 10:03:48.700  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 653498 checked out by user 3854 in 201ms
+2026-11-18 10:03:49.121  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 163399 checked out by user 3940 in 73ms
+2026-11-18 10:03:49.646  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 813241 checked out by user 981 in 111ms
+2026-11-18 10:03:50.153  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 350772 checked out by user 3270 in 78ms
+2026-11-18 10:03:50.794  WARN 1 --- [nio-8080-exec-4] c.shop.orders.InventoryClient          : Inventory call took 1967ms for sku 24390
+2026-11-18 10:03:51.059  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 615882 checked out by user 3783 in 159ms
+2026-11-18 10:03:51.445  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 775920 checked out by user 4819 in 296ms
+2026-11-18 10:03:52.139  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 804823 checked out by user 840 in 136ms
+2026-11-18 10:03:52.804  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 622431 checked out by user 3369 in 286ms
+2026-11-18 10:03:53.232  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 450713 checked out by user 4138 in 35ms
+2026-11-18 10:03:53.682  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 169350 checked out by user 368 in 237ms
+2026-11-18 10:03:54.314  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 224891 checked out by user 246 in 248ms
+2026-11-18 10:03:54.650  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 620049 checked out by user 294 in 262ms
+2026-11-18 10:03:55.120  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 898335 checked out by user 4407 in 184ms
+2026-11-18 10:03:55.545  WARN 1 --- [nio-8080-exec-9] c.shop.orders.InventoryClient          : Inventory call took 2296ms for sku 45245
+2026-11-18 10:03:56.007 ERROR 1 --- [nio-8080-exec-4] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:03:56.619  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 339073 checked out by user 2084 in 294ms
+2026-11-18 10:03:57.249  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 584903 checked out by user 1746 in 251ms
+2026-11-18 10:03:57.925  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 791991 checked out by user 2333 in 33ms
+2026-11-18 10:03:58.569  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 375062 checked out by user 1060 in 275ms
+2026-11-18 10:03:58.863  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 160561 checked out by user 82 in 126ms
+2026-11-18 10:03:59.123  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 680996 checked out by user 4146 in 155ms
+2026-11-18 10:03:59.728  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 942623 checked out by user 2100 in 155ms
+2026-11-18 10:04:00.306  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 548814 checked out by user 4035 in 295ms
+2026-11-18 10:04:00.672  WARN 1 --- [nio-8080-exec-10] c.shop.orders.InventoryClient          : Inventory call took 1829ms for sku 44993
+2026-11-18 10:04:01.357  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 380128 checked out by user 342 in 191ms
+2026-11-18 10:04:01.937  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 326085 checked out by user 197 in 132ms
+2026-11-18 10:04:02.232  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 583569 checked out by user 3046 in 253ms
+2026-11-18 10:04:02.434  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 262020 checked out by user 3468 in 57ms
+2026-11-18 10:04:02.697  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 266674 checked out by user 1694 in 49ms
+2026-11-18 10:04:03.357  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 736539 checked out by user 4900 in 235ms
+2026-11-18 10:04:03.752  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 329580 checked out by user 175 in 114ms
+2026-11-18 10:04:04.418  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 475617 checked out by user 3274 in 210ms
+2026-11-18 10:04:04.753  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 356717 checked out by user 241 in 255ms
+2026-11-18 10:04:05.258  WARN 1 --- [nio-8080-exec-10] c.shop.orders.InventoryClient          : Inventory call took 1040ms for sku 56297
+2026-11-18 10:04:05.598  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 943380 checked out by user 1475 in 267ms
+2026-11-18 10:04:05.904  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 127007 checked out by user 963 in 104ms
+2026-11-18 10:04:06.547  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 474637 checked out by user 1762 in 77ms
+2026-11-18 10:04:07.032  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 104591 checked out by user 181 in 179ms
+2026-11-18 10:04:07.297  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 182193 checked out by user 4356 in 101ms
+2026-11-18 10:04:07.855  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 894887 checked out by user 3150 in 294ms
+2026-11-18 10:04:08.119  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 415575 checked out by user 4329 in 93ms
+2026-11-18 10:04:08.719  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 694139 checked out by user 1946 in 58ms
+2026-11-18 10:04:09.384  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 411764 checked out by user 4348 in 177ms
+2026-11-18 10:04:09.946  WARN 1 --- [nio-8080-exec-8] c.shop.orders.InventoryClient          : Inventory call took 1245ms for sku 77660
+2026-11-18 10:04:10.329 ERROR 1 --- [nio-8080-exec-8] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:04:10.916  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 729148 checked out by user 3663 in 134ms
+2026-11-18 10:04:11.416  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 884826 checked out by user 1232 in 168ms
+2026-11-18 10:04:12.041  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 769080 checked out by user 2683 in 151ms
+2026-11-18 10:04:12.510  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 492951 checked out by user 694 in 110ms
+2026-11-18 10:04:12.958  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 811449 checked out by user 1539 in 293ms
+2026-11-18 10:04:13.603  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 557798 checked out by user 2249 in 97ms
+2026-11-18 10:04:14.103  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 203249 checked out by user 4133 in 205ms
+2026-11-18 10:04:14.397  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 482866 checked out by user 3826 in 244ms
+2026-11-18 10:04:14.993  WARN 1 --- [nio-8080-exec-9] c.shop.orders.InventoryClient          : Inventory call took 2404ms for sku 78937
+2026-11-18 10:04:15.531  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 452891 checked out by user 2773 in 51ms
+2026-11-18 10:04:15.855  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 638236 checked out by user 1016 in 246ms
+2026-11-18 10:04:16.427  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 444294 checked out by user 2485 in 164ms
+2026-11-18 10:04:17.006  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 575511 checked out by user 3176 in 82ms
+2026-11-18 10:04:17.551  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 115616 checked out by user 2410 in 292ms
+2026-11-18 10:04:18.034  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 713630 checked out by user 944 in 196ms
+2026-11-18 10:04:18.611  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 635215 checked out by user 4687 in 99ms
+2026-11-18 10:04:19.146  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 402101 checked out by user 3336 in 178ms
+2026-11-18 10:04:19.367  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 448584 checked out by user 220 in 257ms
+2026-11-18 10:04:20.044  WARN 1 --- [nio-8080-exec-7] c.shop.orders.InventoryClient          : Inventory call took 2019ms for sku 57331
+2026-11-18 10:04:20.421  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 730544 checked out by user 1724 in 218ms
+2026-11-18 10:04:21.061  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 632994 checked out by user 4185 in 69ms
+2026-11-18 10:04:21.700  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 632455 checked out by user 1099 in 108ms
+2026-11-18 10:04:22.128  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 913657 checked out by user 2702 in 183ms
+2026-11-18 10:04:22.556  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 758071 checked out by user 4069 in 282ms
+2026-11-18 10:04:22.895  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 702327 checked out by user 1474 in 219ms
+2026-11-18 10:04:23.240  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 232320 checked out by user 1777 in 293ms
+2026-11-18 10:04:23.669  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 992889 checked out by user 2364 in 157ms
+2026-11-18 10:04:24.116  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 592764 checked out by user 316 in 38ms
+2026-11-18 10:04:24.568  WARN 1 --- [nio-8080-exec-1] c.shop.orders.InventoryClient          : Inventory call took 2255ms for sku 47358
+2026-11-18 10:04:25.215 ERROR 1 --- [nio-8080-exec-6] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:04:25.872  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 728983 checked out by user 2329 in 188ms
+2026-11-18 10:04:26.363  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 584279 checked out by user 2173 in 84ms
+2026-11-18 10:04:26.786  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 239011 checked out by user 1618 in 204ms
+2026-11-18 10:04:27.389  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 791002 checked out by user 4003 in 90ms
+2026-11-18 10:04:27.667  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 481696 checked out by user 4802 in 143ms
+2026-11-18 10:04:28.042  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 276953 checked out by user 3690 in 250ms
+2026-11-18 10:04:28.470  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 754379 checked out by user 171 in 222ms
+2026-11-18 10:04:28.824  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 920236 checked out by user 1269 in 108ms
+2026-11-18 10:04:29.275  WARN 1 --- [nio-8080-exec-3] c.shop.orders.InventoryClient          : Inventory call took 2191ms for sku 73265
+2026-11-18 10:04:29.678  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 306930 checked out by user 515 in 174ms
+2026-11-18 10:04:30.296  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 218673 checked out by user 1655 in 171ms
+2026-11-18 10:04:30.548  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 767910 checked out by user 405 in 58ms
+2026-11-18 10:04:30.921  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 482244 checked out by user 2756 in 153ms
+2026-11-18 10:04:31.525  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 470348 checked out by user 2914 in 202ms
+2026-11-18 10:04:32.179  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 556278 checked out by user 1535 in 92ms
+2026-11-18 10:04:32.596  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 795795 checked out by user 1759 in 134ms
+2026-11-18 10:04:32.986  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 833327 checked out by user 3397 in 242ms
+2026-11-18 10:04:33.446  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 687717 checked out by user 2918 in 33ms
+2026-11-18 10:04:33.800  WARN 1 --- [nio-8080-exec-10] c.shop.orders.InventoryClient          : Inventory call took 987ms for sku 13928
+2026-11-18 10:04:34.257  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 896007 checked out by user 417 in 180ms
+2026-11-18 10:04:34.559  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 596657 checked out by user 728 in 219ms
+2026-11-18 10:04:35.225  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 813548 checked out by user 3863 in 194ms
+2026-11-18 10:04:35.817  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 198031 checked out by user 4744 in 263ms
+2026-11-18 10:04:36.315  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 333903 checked out by user 3203 in 226ms
+2026-11-18 10:04:36.969  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 916249 checked out by user 1988 in 65ms
+2026-11-18 10:04:37.511  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 137797 checked out by user 4289 in 295ms
+2026-11-18 10:04:37.970  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 467274 checked out by user 201 in 75ms
+2026-11-18 10:04:38.187  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 489866 checked out by user 4521 in 130ms
+2026-11-18 10:04:38.692  WARN 1 --- [nio-8080-exec-2] c.shop.orders.InventoryClient          : Inventory call took 990ms for sku 24159
+2026-11-18 10:04:39.081 ERROR 1 --- [nio-8080-exec-4] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:04:39.369  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 269621 checked out by user 3326 in 175ms
+2026-11-18 10:04:39.593  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 740773 checked out by user 1556 in 151ms
+2026-11-18 10:04:40.155  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 698384 checked out by user 3551 in 154ms
+2026-11-18 10:04:40.610  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 144632 checked out by user 1516 in 31ms
+2026-11-18 10:04:41.150  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 669736 checked out by user 4592 in 259ms
+2026-11-18 10:04:41.615  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 786694 checked out by user 515 in 138ms
+2026-11-18 10:04:42.085  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 397089 checked out by user 3685 in 296ms
+2026-11-18 10:04:42.335  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 910470 checked out by user 3710 in 251ms
+2026-11-18 10:04:42.741  WARN 1 --- [nio-8080-exec-4] c.shop.orders.InventoryClient          : Inventory call took 2331ms for sku 45778
+2026-11-18 10:04:43.391  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 875053 checked out by user 65 in 149ms
+2026-11-18 10:04:43.744  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 833331 checked out by user 760 in 125ms
+2026-11-18 10:04:44.094  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 878942 checked out by user 3316 in 252ms
+2026-11-18 10:04:44.443  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 391602 checked out by user 1220 in 241ms
+2026-11-18 10:04:44.800  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 989431 checked out by user 246 in 161ms
+2026-11-18 10:04:45.237  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 303554 checked out by user 1364 in 283ms
+2026-11-18 10:04:45.743  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 526209 checked out by user 1963 in 256ms
+2026-11-18 10:04:46.247  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 643459 checked out by user 762 in 272ms
+2026-11-18 10:04:46.674  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 385869 checked out by user 4993 in 116ms
+2026-11-18 10:04:47.033  WARN 1 --- [nio-8080-exec-7] c.shop.orders.InventoryClient          : Inventory call took 1878ms for sku 68440
+2026-11-18 10:04:47.572  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 420817 checked out by user 2108 in 226ms
+2026-11-18 10:04:48.189  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 327778 checked out by user 4662 in 201ms
+2026-11-18 10:04:48.516  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 949738 checked out by user 2680 in 199ms
+2026-11-18 10:04:49.129  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 522969 checked out by user 2548 in 103ms
+2026-11-18 10:04:49.429  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 392708 checked out by user 84 in 108ms
+2026-11-18 10:04:49.949  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 930722 checked out by user 4779 in 35ms
+2026-11-18 10:04:50.582  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 692808 checked out by user 3073 in 167ms
+2026-11-18 10:04:51.174  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 507477 checked out by user 3199 in 244ms
+2026-11-18 10:04:51.715  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 166979 checked out by user 998 in 123ms
+2026-11-18 10:04:52.344  WARN 1 --- [nio-8080-exec-3] c.shop.orders.InventoryClient          : Inventory call took 1980ms for sku 29122
+2026-11-18 10:04:52.668 ERROR 1 --- [nio-8080-exec-3] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:04:53.004  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 687396 checked out by user 4020 in 100ms
+2026-11-18 10:04:53.299  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 337561 checked out by user 3832 in 136ms
+2026-11-18 10:04:53.616  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 841345 checked out by user 4572 in 168ms
+2026-11-18 10:04:53.843  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 808302 checked out by user 527 in 134ms
+2026-11-18 10:04:54.306  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 615836 checked out by user 2465 in 296ms
+2026-11-18 10:04:54.999  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 619855 checked out by user 4108 in 155ms
+2026-11-18 10:04:55.225  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 925463 checked out by user 2701 in 197ms
+2026-11-18 10:04:55.724  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 819832 checked out by user 2667 in 260ms
+2026-11-18 10:04:56.263  WARN 1 --- [nio-8080-exec-7] c.shop.orders.InventoryClient          : Inventory call took 2134ms for sku 97305
+2026-11-18 10:04:56.932  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 965782 checked out by user 3772 in 287ms
+2026-11-18 10:04:57.329  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 809887 checked out by user 18 in 57ms
+2026-11-18 10:04:57.982  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 453710 checked out by user 550 in 97ms
+2026-11-18 10:04:58.651  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 768154 checked out by user 3924 in 247ms
+2026-11-18 10:04:58.984  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 730880 checked out by user 2163 in 139ms
+2026-11-18 10:04:59.679  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 335081 checked out by user 1357 in 269ms
+2026-11-18 10:04:59.897  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 531055 checked out by user 880 in 160ms
+2026-11-18 10:05:00.589  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 472382 checked out by user 1581 in 158ms
+2026-11-18 10:05:01.198  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 286197 checked out by user 347 in 61ms
+2026-11-18 10:05:01.547  WARN 1 --- [nio-8080-exec-3] c.shop.orders.InventoryClient          : Inventory call took 979ms for sku 99784
+2026-11-18 10:05:02.008  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 564599 checked out by user 2049 in 263ms
+2026-11-18 10:05:02.574  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 486566 checked out by user 1125 in 55ms
+2026-11-18 10:05:02.901  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 186845 checked out by user 4706 in 77ms
+2026-11-18 10:05:03.393  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 464486 checked out by user 178 in 204ms
+2026-11-18 10:05:03.802  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 757823 checked out by user 830 in 150ms
+2026-11-18 10:05:04.116  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 993614 checked out by user 4484 in 193ms
+2026-11-18 10:05:04.341  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 191845 checked out by user 2156 in 126ms
+2026-11-18 10:05:05.008  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 973417 checked out by user 1523 in 286ms
+2026-11-18 10:05:05.652  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 543877 checked out by user 3365 in 134ms
+2026-11-18 10:05:05.947  WARN 1 --- [nio-8080-exec-8] c.shop.orders.InventoryClient          : Inventory call took 2175ms for sku 87469
+2026-11-18 10:05:06.501 ERROR 1 --- [nio-8080-exec-1] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:05:07.100  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 235116 checked out by user 1698 in 134ms
+2026-11-18 10:05:07.580  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 101639 checked out by user 3295 in 50ms
+2026-11-18 10:05:08.251  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 745506 checked out by user 635 in 281ms
+2026-11-18 10:05:08.473  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 481294 checked out by user 1238 in 94ms
+2026-11-18 10:05:08.981  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 654429 checked out by user 2190 in 208ms
+2026-11-18 10:05:09.416  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 708571 checked out by user 3330 in 215ms
+2026-11-18 10:05:09.932  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 121946 checked out by user 2735 in 97ms
+2026-11-18 10:05:10.374  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 837453 checked out by user 1477 in 209ms
+2026-11-18 10:05:10.889  WARN 1 --- [nio-8080-exec-10] c.shop.orders.InventoryClient          : Inventory call took 1679ms for sku 22541
+2026-11-18 10:05:11.579  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 940720 checked out by user 2376 in 140ms
+2026-11-18 10:05:11.941  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 961542 checked out by user 1588 in 52ms
+2026-11-18 10:05:12.300  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 757993 checked out by user 3965 in 275ms
+2026-11-18 10:05:12.874  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 229501 checked out by user 1810 in 50ms
+2026-11-18 10:05:13.293  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 111366 checked out by user 4878 in 108ms
+2026-11-18 10:05:13.952  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 214016 checked out by user 3289 in 263ms
+2026-11-18 10:05:14.299  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 942610 checked out by user 1648 in 265ms
+2026-11-18 10:05:14.555  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 568725 checked out by user 1960 in 109ms
+2026-11-18 10:05:14.777  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 357770 checked out by user 678 in 94ms
+2026-11-18 10:05:15.204  WARN 1 --- [nio-8080-exec-5] c.shop.orders.InventoryClient          : Inventory call took 1309ms for sku 21401
+2026-11-18 10:05:15.495  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 545629 checked out by user 3369 in 209ms
+2026-11-18 10:05:15.898  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 284060 checked out by user 1816 in 133ms
+2026-11-18 10:05:16.303  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 533923 checked out by user 2915 in 203ms
+2026-11-18 10:05:16.764  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 538849 checked out by user 1193 in 158ms
+2026-11-18 10:05:17.196  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 447872 checked out by user 2772 in 106ms
+2026-11-18 10:05:17.611  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 245590 checked out by user 444 in 153ms
+2026-11-18 10:05:18.018  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 883694 checked out by user 471 in 103ms
+2026-11-18 10:05:18.450  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 218210 checked out by user 64 in 33ms
+2026-11-18 10:05:19.105  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 884677 checked out by user 3577 in 279ms
+2026-11-18 10:05:19.326  WARN 1 --- [nio-8080-exec-7] c.shop.orders.InventoryClient          : Inventory call took 1985ms for sku 10359
+2026-11-18 10:05:19.689 ERROR 1 --- [nio-8080-exec-8] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:05:20.378  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 910131 checked out by user 582 in 121ms
+2026-11-18 10:05:20.620  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 195745 checked out by user 3139 in 262ms
+2026-11-18 10:05:21.265  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 312451 checked out by user 1477 in 153ms
+2026-11-18 10:05:21.651  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 702249 checked out by user 1882 in 148ms
+2026-11-18 10:05:21.859  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 385887 checked out by user 4340 in 174ms
+2026-11-18 10:05:22.434  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 834908 checked out by user 2619 in 71ms
+2026-11-18 10:05:23.079  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 446918 checked out by user 3876 in 58ms
+2026-11-18 10:05:23.737  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 709937 checked out by user 2432 in 126ms
+2026-11-18 10:05:24.011  WARN 1 --- [nio-8080-exec-2] c.shop.orders.InventoryClient          : Inventory call took 2246ms for sku 79207
+2026-11-18 10:05:24.327  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 255090 checked out by user 2224 in 120ms
+2026-11-18 10:05:24.729  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 532291 checked out by user 4329 in 201ms
+2026-11-18 10:05:25.250  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 875123 checked out by user 905 in 42ms
+2026-11-18 10:05:25.523  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 419382 checked out by user 564 in 63ms
+2026-11-18 10:05:25.888  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 670816 checked out by user 4133 in 46ms
+2026-11-18 10:05:26.486  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 203312 checked out by user 409 in 143ms
+2026-11-18 10:05:26.783  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 510360 checked out by user 2991 in 156ms
+2026-11-18 10:05:27.097  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 312947 checked out by user 1951 in 33ms
+2026-11-18 10:05:27.458  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 843092 checked out by user 3018 in 184ms
+2026-11-18 10:05:27.757  WARN 1 --- [nio-8080-exec-8] c.shop.orders.InventoryClient          : Inventory call took 2234ms for sku 16938
+2026-11-18 10:05:27.958  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 959446 checked out by user 4426 in 174ms
+2026-11-18 10:05:28.219  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 908524 checked out by user 2159 in 149ms
+2026-11-18 10:05:28.649  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 134608 checked out by user 1202 in 79ms
+2026-11-18 10:05:29.251  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 111244 checked out by user 2209 in 255ms
+2026-11-18 10:05:29.482  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 958694 checked out by user 1507 in 204ms
+2026-11-18 10:05:30.042  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 277856 checked out by user 4521 in 144ms
+2026-11-18 10:05:30.683  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 758071 checked out by user 4632 in 270ms
+2026-11-18 10:05:30.930  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 773126 checked out by user 4417 in 221ms
+2026-11-18 10:05:31.324  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 213708 checked out by user 3720 in 223ms
+2026-11-18 10:05:31.833  WARN 1 --- [nio-8080-exec-8] c.shop.orders.InventoryClient          : Inventory call took 1567ms for sku 14824
+2026-11-18 10:05:32.214 ERROR 1 --- [nio-8080-exec-10] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:05:32.462  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 875418 checked out by user 1940 in 152ms
+2026-11-18 10:05:32.677  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 159984 checked out by user 2844 in 215ms
+2026-11-18 10:05:33.333  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 188040 checked out by user 3101 in 126ms
+2026-11-18 10:05:33.659  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 611837 checked out by user 4824 in 138ms
+2026-11-18 10:05:34.314  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 401489 checked out by user 4093 in 44ms
+2026-11-18 10:05:34.779  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 848041 checked out by user 2112 in 183ms
+2026-11-18 10:05:35.001  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 467405 checked out by user 2425 in 211ms
+2026-11-18 10:05:35.624  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 875999 checked out by user 2737 in 133ms
+2026-11-18 10:05:36.300  WARN 1 --- [nio-8080-exec-6] c.shop.orders.InventoryClient          : Inventory call took 1756ms for sku 12812
+2026-11-18 10:05:36.839  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 993902 checked out by user 3131 in 218ms
+2026-11-18 10:05:37.042  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 373636 checked out by user 3211 in 122ms
+2026-11-18 10:05:37.687  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 591754 checked out by user 4408 in 194ms
+2026-11-18 10:05:38.104  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 784251 checked out by user 1494 in 260ms
+2026-11-18 10:05:38.360  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 793777 checked out by user 1312 in 240ms
+2026-11-18 10:05:38.573  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 970522 checked out by user 3138 in 63ms
+2026-11-18 10:05:38.835  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 557294 checked out by user 4199 in 40ms
+2026-11-18 10:05:39.413  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 127671 checked out by user 4968 in 142ms
+2026-11-18 10:05:39.836  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 716179 checked out by user 558 in 172ms
+2026-11-18 10:05:40.468  WARN 1 --- [nio-8080-exec-10] c.shop.orders.InventoryClient          : Inventory call took 807ms for sku 82842
+2026-11-18 10:05:40.702  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 151336 checked out by user 402 in 130ms
+2026-11-18 10:05:40.971  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 823826 checked out by user 3328 in 116ms
+2026-11-18 10:05:41.441  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 461471 checked out by user 4292 in 266ms
+2026-11-18 10:05:41.879  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 992482 checked out by user 4062 in 55ms
+2026-11-18 10:05:42.122  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 803620 checked out by user 4823 in 267ms
+2026-11-18 10:05:42.390  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 631125 checked out by user 1061 in 81ms
+2026-11-18 10:05:42.643  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 452165 checked out by user 3497 in 235ms
+2026-11-18 10:05:42.999  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 129539 checked out by user 4022 in 260ms
+2026-11-18 10:05:43.302  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 723510 checked out by user 2966 in 229ms
+2026-11-18 10:05:43.858  WARN 1 --- [nio-8080-exec-10] c.shop.orders.InventoryClient          : Inventory call took 2204ms for sku 24689
+2026-11-18 10:05:44.361 ERROR 1 --- [nio-8080-exec-3] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:05:44.637  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 471301 checked out by user 985 in 134ms
+2026-11-18 10:05:45.025  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 351824 checked out by user 4661 in 265ms
+2026-11-18 10:05:45.633  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 866096 checked out by user 4348 in 119ms
+2026-11-18 10:05:46.013  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 151073 checked out by user 4064 in 212ms
+2026-11-18 10:05:46.267  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 589659 checked out by user 2177 in 298ms
+2026-11-18 10:05:46.680  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 298324 checked out by user 2975 in 91ms
+2026-11-18 10:05:47.162  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 866323 checked out by user 926 in 280ms
+2026-11-18 10:05:47.734  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 374873 checked out by user 4175 in 260ms
+2026-11-18 10:05:48.417  WARN 1 --- [nio-8080-exec-5] c.shop.orders.InventoryClient          : Inventory call took 1822ms for sku 69130
+2026-11-18 10:05:48.927  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 491974 checked out by user 2729 in 187ms
+2026-11-18 10:05:49.237  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 346621 checked out by user 3055 in 227ms
+2026-11-18 10:05:49.746  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 718926 checked out by user 3848 in 93ms
+2026-11-18 10:05:50.036  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 251619 checked out by user 296 in 71ms
+2026-11-18 10:05:50.549  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 164573 checked out by user 3113 in 160ms
+2026-11-18 10:05:50.967  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 229067 checked out by user 1219 in 225ms
+2026-11-18 10:05:51.581  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 217373 checked out by user 4730 in 75ms
+2026-11-18 10:05:52.072  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 713698 checked out by user 4713 in 126ms
+2026-11-18 10:05:52.379  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 350583 checked out by user 308 in 138ms
+2026-11-18 10:05:52.900  WARN 1 --- [nio-8080-exec-2] c.shop.orders.InventoryClient          : Inventory call took 1302ms for sku 82759
+2026-11-18 10:05:53.344  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 327278 checked out by user 325 in 194ms
+2026-11-18 10:05:53.872  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 656132 checked out by user 1087 in 293ms
+2026-11-18 10:05:54.480  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 492074 checked out by user 1902 in 150ms
+2026-11-18 10:05:54.848  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 286579 checked out by user 3470 in 117ms
+2026-11-18 10:05:55.075  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 727282 checked out by user 2268 in 281ms
+2026-11-18 10:05:55.404  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 628671 checked out by user 1015 in 88ms
+2026-11-18 10:05:55.699  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 265301 checked out by user 3304 in 130ms
+2026-11-18 10:05:56.047  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 228157 checked out by user 3704 in 148ms
+2026-11-18 10:05:56.539  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 939535 checked out by user 1045 in 100ms
+2026-11-18 10:05:57.035  WARN 1 --- [nio-8080-exec-4] c.shop.orders.InventoryClient          : Inventory call took 969ms for sku 67736
+2026-11-18 10:05:57.565 ERROR 1 --- [nio-8080-exec-8] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:05:58.026  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 451951 checked out by user 67 in 155ms
+2026-11-18 10:05:58.516  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 818966 checked out by user 3600 in 221ms
+2026-11-18 10:05:59.144  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 431628 checked out by user 2668 in 276ms
+2026-11-18 10:05:59.698  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 859976 checked out by user 3953 in 70ms
+2026-11-18 10:06:00.132  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 313741 checked out by user 608 in 94ms
+2026-11-18 10:06:00.674  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 321965 checked out by user 2473 in 193ms
+2026-11-18 10:06:00.979  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 359664 checked out by user 4120 in 69ms
+2026-11-18 10:06:01.214  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 618996 checked out by user 2882 in 46ms
+2026-11-18 10:06:01.852  WARN 1 --- [nio-8080-exec-10] c.shop.orders.InventoryClient          : Inventory call took 1088ms for sku 70218
+2026-11-18 10:06:02.132  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 748964 checked out by user 2226 in 293ms
+2026-11-18 10:06:02.349  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 499019 checked out by user 4846 in 221ms
+2026-11-18 10:06:02.779  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 537995 checked out by user 1528 in 161ms
+2026-11-18 10:06:03.079  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 704627 checked out by user 823 in 238ms
+2026-11-18 10:06:03.553  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 966945 checked out by user 3774 in 32ms
+2026-11-18 10:06:04.165  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 663197 checked out by user 2584 in 196ms
+2026-11-18 10:06:04.373  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 700446 checked out by user 2231 in 146ms
+2026-11-18 10:06:04.969  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 774461 checked out by user 2234 in 166ms
+2026-11-18 10:06:05.579  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 163379 checked out by user 553 in 38ms
+2026-11-18 10:06:05.932  WARN 1 --- [nio-8080-exec-3] c.shop.orders.InventoryClient          : Inventory call took 1796ms for sku 87726
+2026-11-18 10:06:06.374  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 752459 checked out by user 1581 in 208ms
+2026-11-18 10:06:06.716  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 257552 checked out by user 940 in 30ms
+2026-11-18 10:06:06.970  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 938542 checked out by user 582 in 288ms
+2026-11-18 10:06:07.449  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 535849 checked out by user 931 in 139ms
+2026-11-18 10:06:08.140  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 899707 checked out by user 4803 in 155ms
+2026-11-18 10:06:08.529  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 436550 checked out by user 1722 in 300ms
+2026-11-18 10:06:08.886  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 764965 checked out by user 636 in 81ms
+2026-11-18 10:06:09.131  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 851451 checked out by user 4092 in 49ms
+2026-11-18 10:06:09.768  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 414119 checked out by user 3753 in 219ms
+2026-11-18 10:06:10.170  WARN 1 --- [nio-8080-exec-1] c.shop.orders.InventoryClient          : Inventory call took 2116ms for sku 22125
+2026-11-18 10:06:10.815 ERROR 1 --- [nio-8080-exec-7] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:06:11.161  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 503018 checked out by user 1535 in 184ms
+2026-11-18 10:06:11.787  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 439040 checked out by user 2326 in 243ms
+2026-11-18 10:06:12.070  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 286508 checked out by user 1012 in 148ms
+2026-11-18 10:06:12.444  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 931569 checked out by user 3190 in 116ms
+2026-11-18 10:06:12.717  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 697285 checked out by user 2331 in 32ms
+2026-11-18 10:06:13.167  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 887217 checked out by user 3644 in 156ms
+2026-11-18 10:06:13.708  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 340201 checked out by user 2263 in 227ms
+2026-11-18 10:06:14.104  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 940368 checked out by user 2790 in 162ms
+2026-11-18 10:06:14.545  WARN 1 --- [nio-8080-exec-1] c.shop.orders.InventoryClient          : Inventory call took 2276ms for sku 96768
+2026-11-18 10:06:14.770  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 153187 checked out by user 2047 in 299ms
+2026-11-18 10:06:15.406  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 153971 checked out by user 3617 in 213ms
+2026-11-18 10:06:15.661  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 299109 checked out by user 2764 in 98ms
+2026-11-18 10:06:15.899  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 763126 checked out by user 700 in 120ms
+2026-11-18 10:06:16.099  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 273495 checked out by user 2385 in 84ms
+2026-11-18 10:06:16.548  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 518759 checked out by user 552 in 226ms
+2026-11-18 10:06:17.011  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 736876 checked out by user 2765 in 253ms
+2026-11-18 10:06:17.340  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 654467 checked out by user 2751 in 168ms
+2026-11-18 10:06:17.602  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 328937 checked out by user 1615 in 252ms
+2026-11-18 10:06:18.002  WARN 1 --- [nio-8080-exec-6] c.shop.orders.InventoryClient          : Inventory call took 2296ms for sku 11616
+2026-11-18 10:06:18.273  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 457086 checked out by user 4893 in 64ms
+2026-11-18 10:06:18.641  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 830482 checked out by user 2618 in 89ms
+2026-11-18 10:06:19.065  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 203708 checked out by user 3058 in 272ms
+2026-11-18 10:06:19.545  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 693304 checked out by user 488 in 198ms
+2026-11-18 10:06:19.835  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 721437 checked out by user 1461 in 117ms
+2026-11-18 10:06:20.078  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 221784 checked out by user 841 in 174ms
+2026-11-18 10:06:20.359  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 711211 checked out by user 4978 in 168ms
+2026-11-18 10:06:20.816  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 404289 checked out by user 903 in 175ms
+2026-11-18 10:06:21.019  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 326910 checked out by user 4205 in 215ms
+2026-11-18 10:06:21.574  WARN 1 --- [nio-8080-exec-7] c.shop.orders.InventoryClient          : Inventory call took 1982ms for sku 86163
+2026-11-18 10:06:21.871 ERROR 1 --- [nio-8080-exec-10] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:06:22.132  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 996239 checked out by user 1380 in 241ms
+2026-11-18 10:06:22.496  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 105999 checked out by user 989 in 113ms
+2026-11-18 10:06:23.116  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 213322 checked out by user 3689 in 184ms
+2026-11-18 10:06:23.771  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 259537 checked out by user 424 in 289ms
+2026-11-18 10:06:24.302  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 835933 checked out by user 2517 in 253ms
+2026-11-18 10:06:24.818  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 638433 checked out by user 4265 in 230ms
+2026-11-18 10:06:25.224  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 754564 checked out by user 2436 in 67ms
+2026-11-18 10:06:25.777  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 254010 checked out by user 3796 in 125ms
+2026-11-18 10:06:26.458  WARN 1 --- [nio-8080-exec-10] c.shop.orders.InventoryClient          : Inventory call took 1055ms for sku 42413
+2026-11-18 10:06:26.996  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 579264 checked out by user 2679 in 82ms
+2026-11-18 10:06:27.663  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 427335 checked out by user 2238 in 93ms
+2026-11-18 10:06:28.328  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 300685 checked out by user 1225 in 88ms
+2026-11-18 10:06:28.814  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 199722 checked out by user 806 in 127ms
+2026-11-18 10:06:29.045  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 429929 checked out by user 1126 in 141ms
+2026-11-18 10:06:29.297  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 522200 checked out by user 4372 in 117ms
+2026-11-18 10:06:29.951  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 403898 checked out by user 1500 in 158ms
+2026-11-18 10:06:30.629  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 862593 checked out by user 1028 in 105ms
+2026-11-18 10:06:31.280  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 513701 checked out by user 1427 in 231ms
+2026-11-18 10:06:31.724  WARN 1 --- [nio-8080-exec-2] c.shop.orders.InventoryClient          : Inventory call took 2089ms for sku 41810
+2026-11-18 10:06:32.323  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 110514 checked out by user 1143 in 190ms
+2026-11-18 10:06:32.649  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 266645 checked out by user 1981 in 247ms
+2026-11-18 10:06:33.074  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 953061 checked out by user 3672 in 272ms
+2026-11-18 10:06:33.471  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 426040 checked out by user 1103 in 131ms
+2026-11-18 10:06:34.004  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 887789 checked out by user 4385 in 282ms
+2026-11-18 10:06:34.531  INFO 1 --- [nio-8080-exec-7] c.shop.orders.OrderController          : Order 842736 checked out by user 3237 in 270ms
+2026-11-18 10:06:34.885  INFO 1 --- [nio-8080-exec-1] c.shop.orders.OrderController          : Order 665267 checked out by user 4090 in 279ms
+2026-11-18 10:06:35.526  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 178683 checked out by user 326 in 259ms
+2026-11-18 10:06:36.058  INFO 1 --- [nio-8080-exec-6] c.shop.orders.OrderController          : Order 287147 checked out by user 2393 in 56ms
+2026-11-18 10:06:36.268  WARN 1 --- [nio-8080-exec-4] c.shop.orders.InventoryClient          : Inventory call took 1247ms for sku 14691
+2026-11-18 10:06:36.919 ERROR 1 --- [nio-8080-exec-6] o.a.c.c.C.[.[.[/].[dispatcherServlet] : Servlet.service() for servlet [dispatcherServlet] threw exception
+java.lang.NullPointerException: Cannot invoke "com.shop.Customer.getAddress()" because "customer" is null
+	at com.shop.orders.ShippingService.quote(ShippingService.java:57)
+	at com.shop.orders.OrderController.checkout(OrderController.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:195)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:391)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1736)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2026-11-18 10:06:37.556  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 119576 checked out by user 4902 in 282ms
+2026-11-18 10:06:38.250  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 397436 checked out by user 3785 in 100ms
+2026-11-18 10:06:38.626  INFO 1 --- [nio-8080-exec-5] c.shop.orders.OrderController          : Order 291728 checked out by user 3542 in 207ms
+2026-11-18 10:06:38.974  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 558089 checked out by user 4357 in 136ms
+2026-11-18 10:06:39.477  INFO 1 --- [nio-8080-exec-3] c.shop.orders.OrderController          : Order 608974 checked out by user 3559 in 149ms
+2026-11-18 10:06:39.974  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 434561 checked out by user 1518 in 142ms
+2026-11-18 10:06:40.458  INFO 1 --- [nio-8080-exec-2] c.shop.orders.OrderController          : Order 944038 checked out by user 4517 in 116ms
+2026-11-18 10:06:41.065  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 704565 checked out by user 1563 in 225ms
+2026-11-18 10:06:41.596  WARN 1 --- [nio-8080-exec-4] c.shop.orders.InventoryClient          : Inventory call took 2173ms for sku 92124
+2026-11-18 10:06:41.881  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 675962 checked out by user 3494 in 294ms
+2026-11-18 10:06:42.091  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 873423 checked out by user 326 in 170ms
+2026-11-18 10:06:42.383  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 469394 checked out by user 3741 in 148ms
+2026-11-18 10:06:42.623  INFO 1 --- [nio-8080-exec-9] c.shop.orders.OrderController          : Order 744031 checked out by user 4933 in 218ms
+2026-11-18 10:06:43.119  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 174214 checked out by user 661 in 248ms
+2026-11-18 10:06:43.668  INFO 1 --- [nio-8080-exec-10] c.shop.orders.OrderController          : Order 721984 checked out by user 1533 in 71ms
+2026-11-18 10:06:44.201  INFO 1 --- [nio-8080-exec-4] c.shop.orders.OrderController          : Order 434232 checked out by user 2044 in 189ms
+2026-11-18 10:06:44.763  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 854885 checked out by user 468 in 207ms
+2026-11-18 10:06:44.966  INFO 1 --- [nio-8080-exec-8] c.shop.orders.OrderController          : Order 996190 checked out by user 28 in 283ms

@@ -1,0 +1,16 @@
+[package]
+name = "komp"
+version = "0.1.0"
+edition = "2024"
+description = "Compress DevOps/Kubernetes logs into a short, meaningful summary so Claude spends fewer tokens reading them."
+
+[dependencies]
+# Clipboard access. Default features pull in image libraries; we only need text.
+arboard = { version = "3.7.0", default-features = false }
+# Pattern matching for timestamps, levels, IDs, numbers…
+regex = "1"
+# JSON: parsing JSON log lines and speaking the MCP protocol (JSON-RPC).
+serde_json = "1"
+
+[profile.release]
+strip = true
