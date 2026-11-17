@@ -26,12 +26,15 @@ fn go_logfmt_database_outage() {
         &[
             "dial tcp 10.0.3.17:5432: connect: connection refused",
             "FATAL msg=\"giving up: database unreachable after 5 attempts\"",
-            "status={200|503}",
             "attempt={1|2|3|4|5}/5",
             "service=orders", // hoisted into the header
+            // the 503s only happened during the outage, so they get their own line and time range
+            "10:04:06–10:06:49 INFO  msg=\"GET /api/orders/",
+            "status=503",
         ],
     );
     assert_eq!(out.matches("service=orders").count(), 1, "hoisted once:\n{out}");
+    assert!(!out.contains("{200|503}"), "503s split from the 200s:\n{out}");
 }
 
 #[test]
@@ -59,6 +62,7 @@ fn java_null_pointer_with_stack_trace() {
         ],
     );
     assert!(!out.contains("org.apache.catalina"), "framework frames folded:\n{out}");
+    assert!(!out.contains("nio-8080-exec"), "Spring Boot pid/thread dropped:\n{out}");
 }
 
 #[test]

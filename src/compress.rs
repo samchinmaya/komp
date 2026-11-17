@@ -102,7 +102,7 @@ pub fn compress(input: &str, opts: &Options) -> Summary {
     let mut index: HashMap<(Level, String), usize> = HashMap::new();
     let mut level_counts: HashMap<Level, usize> = HashMap::new();
 
-    for record in records {
+    for (position, record) in records.into_iter().enumerate() {
         *level_counts.entry(record.level).or_default() += 1;
         let (template, values) = templatize(&record.message);
         let slot_count = values.len();
@@ -111,8 +111,13 @@ pub fn compress(input: &str, opts: &Options) -> Summary {
             groups.len() - 1
         });
         let when = stamp(&record);
-        groups[gi].add(record, values, when);
+        groups[gi].add(record, values, when, position);
     }
+
+    // "status={200|503}" hides *when* the 503s happened. If a value is bunched up
+    // in one stretch of the log, give each value its own line and time range.
+    let mut groups: Vec<Group> = groups.into_iter().flat_map(Group::split_by_clustered_value).collect();
+    groups.sort_by_key(|g| g.first_position);
 
     // ---- budget: keep errors/warnings first, then the most frequent lines ----
     let mut keep = vec![true; groups.len()];
@@ -279,6 +284,8 @@ lazy_regex!(CONTINUATION, r"^(?:\s+\S|at |Caused by:|\.\.\. \d+ (?:more|common f
 lazy_regex!(EXCEPTION_HEAD, r"^(?:[\w$]+\.)*[\w$]*(?:Error|Exception|Throwable)\b");
 // Python prints this before every stack trace; it carries no information.
 lazy_regex!(TRACEBACK, r"^Traceback \(most recent call last\):");
+// Spring Boot: "1 --- [nio-8080-exec-3] c.shop.Orders : msg" (pid, thread, optional app name)
+lazy_regex!(SPRING_PREFIX, r"^\d+ --- (?:\[[^\]]*\]\s*)+");
 // Text that smells like trouble even without a level.
 lazy_regex!(LOOKS_BAD, r"(?i:\b(?:errors?|exception|fatal|panic|failed|failure|refused|timeout|timed out|deadline exceeded|denied|unauthorized|forbidden|oomkilled|out of memory|crashloopbackoff|back-off|unhealthy|evicted)\b)|\w(?:Error|Exception)\b");
 
@@ -337,6 +344,11 @@ fn parse(input: &str) -> Vec<Record> {
                 level = Level::from_word(&c[1]);
                 message = format!("{} {}", &message[..m.start()], &message[m.end()..]);
             }
+        }
+
+        // Spring Boot's process id and thread name rarely help debugging; drop them.
+        if let Some(m) = SPRING_PREFIX.find(&message) {
+            message = message[m.end()..].to_string();
         }
 
         // logfmt time="…" is always removed from the message (it would make every line unique).
@@ -568,6 +580,11 @@ const MAX_TRACKED: usize = 32;
 lazy_regex!(NUMBER_WITH_UNIT, r"^(\d+(?:\.\d+)?)([a-zA-Zµ]*)$");
 
 impl Slot {
+    /// Durations and sizes ("2ms", "4Mi"): a min–max range describes them better than splitting.
+    fn has_unit(&self) -> bool {
+        !self.non_numeric && matches!(&self.range, Some((_, _, unit)) if !unit.is_empty())
+    }
+
     fn add(&mut self, value: &str) {
         if !self.distinct.iter().any(|d| d == value) {
             if self.distinct.len() < MAX_TRACKED {
@@ -662,6 +679,13 @@ fn fold_trace(lines: &[String]) -> Vec<String> {
     out
 }
 
+/// One record's place in a group: its slot values, timestamp and line position.
+struct Member {
+    values: Vec<String>,
+    when: Option<String>,
+    position: usize,
+}
+
 /// Records that share a level and a template.
 struct Group {
     level: Level,
@@ -673,6 +697,9 @@ struct Group {
     last_seen: Option<String>,
     /// Stack trace from the first occurrence (repeats are identical or nearly so).
     extra: Vec<String>,
+    members: Vec<Member>,
+    /// Position (record number) of the first member, used to keep output in log order.
+    first_position: usize,
 }
 
 impl Group {
@@ -686,24 +713,83 @@ impl Group {
             first_seen: None,
             last_seen: None,
             extra: Vec::new(),
+            members: Vec::new(),
+            first_position: 0,
         }
     }
 
-    fn add(&mut self, record: Record, values: Vec<String>, when: Option<String>) {
-        self.count += 1;
+    fn add(&mut self, record: Record, values: Vec<String>, when: Option<String>, position: usize) {
         self.important |= record.important;
-        for (slot, value) in self.slots.iter_mut().zip(&values) {
-            slot.add(value);
-        }
         if self.extra.is_empty() && !record.extra.is_empty() {
             self.extra = record.extra;
         }
-        if when.is_some() {
-            if self.first_seen.is_none() {
-                self.first_seen = when.clone();
-            }
-            self.last_seen = when;
+        self.add_member(Member { values, when, position });
+    }
+
+    fn add_member(&mut self, member: Member) {
+        if self.count == 0 {
+            self.first_position = member.position;
         }
+        self.count += 1;
+        for (slot, value) in self.slots.iter_mut().zip(&member.values) {
+            slot.add(value);
+        }
+        if member.when.is_some() {
+            if self.first_seen.is_none() {
+                self.first_seen = member.when.clone();
+            }
+            self.last_seen = member.when.clone();
+        }
+        self.members.push(member);
+    }
+
+    /// An empty group with the same level, template, importance and stack trace.
+    fn empty_like(&self) -> Group {
+        let mut g = Group::new(self.level, self.template.clone(), self.slots.len());
+        g.important = self.important;
+        g.extra = self.extra.clone();
+        g
+    }
+
+    /// Split this group by the first slot that has 2–4 distinct values where one
+    /// value (seen at least 3 times) is bunched into at most half of the group's
+    /// stretch of the log. Example: `status=200` all along, `status=503` only
+    /// during an outage → two lines, each with its own time range.
+    fn split_by_clustered_value(self) -> Vec<Group> {
+        let (Some(first), Some(last)) = (self.members.first(), self.members.last()) else {
+            return vec![self];
+        };
+        let span = last.position - first.position;
+        if self.count < 6 || span == 0 {
+            return vec![self];
+        }
+
+        let chosen = (0..self.slots.len()).find(|&i| {
+            let slot = &self.slots[i];
+            let d = slot.distinct.len();
+            if slot.untracked || !(2..=4).contains(&d) || slot.has_unit() {
+                return false;
+            }
+            slot.distinct.iter().any(|value| {
+                let positions: Vec<usize> =
+                    self.members.iter().filter(|m| &m.values[i] == value).map(|m| m.position).collect();
+                match (positions.first(), positions.last()) {
+                    (Some(start), Some(end)) => positions.len() >= 3 && (end - start) * 2 <= span,
+                    _ => false,
+                }
+            })
+        });
+        let Some(i) = chosen else {
+            return vec![self];
+        };
+
+        let values = self.slots[i].distinct.clone();
+        let mut parts: Vec<Group> = values.iter().map(|_| self.empty_like()).collect();
+        for member in self.members {
+            let k = values.iter().position(|v| *v == member.values[i]).unwrap_or(0);
+            parts[k].add_member(member);
+        }
+        parts
     }
 
     fn render(&self, max_trace_lines: usize) -> String {
@@ -802,9 +888,42 @@ mod tests {
         let out = run(&input);
         assert_eq!(out.matches("Orders.java:42").count(), 1, "{out}");
         assert!(
-            out.contains("ERROR 1 --- [main] c.e.App : request failed → java.lang.IllegalStateException: no customer ×3"),
+            out.contains("ERROR c.e.App : request failed → java.lang.IllegalStateException: no customer ×3"),
             "exception merged into its ERROR line: {out}"
         );
+    }
+
+    #[test]
+    fn spring_boot_pid_and_thread_are_dropped() {
+        let input = "\
+2026-11-18 10:00:01.000  INFO 1 --- [nio-8080-exec-1] c.shop.Orders  : order 1 placed
+2026-11-18 10:00:02.000  INFO 1 --- [nio-8080-exec-7] c.shop.Orders  : order 2 placed";
+        let out = run(input);
+        assert!(out.contains("INFO  c.shop.Orders : order {1|2} placed ×2"), "{out}");
+        assert!(!out.contains("---"), "{out}");
+    }
+
+    #[test]
+    fn value_bunched_in_time_gets_its_own_line() {
+        let mut input = String::new();
+        for i in 0..60 {
+            let status = if (20..40).contains(&i) && i % 2 == 0 { 503 } else { 200 };
+            input.push_str(&format!("2026-11-18T10:{:02}:00Z INFO GET /orders status={status}\n", i));
+        }
+        let out = run(&input);
+        assert!(out.contains("10:00:00–10:59:00 INFO  GET /orders status=200 ×50"), "{out}");
+        assert!(out.contains("10:20:00–10:38:00 INFO  GET /orders status=503 ×10"), "{out}");
+    }
+
+    #[test]
+    fn values_spread_evenly_stay_merged() {
+        let mut input = String::new();
+        for i in 0..60 {
+            let region = ["eu1", "us2"][i % 2];
+            input.push_str(&format!("2026-11-18T10:{:02}:00Z INFO GET /orders region={region}\n", i));
+        }
+        let out = run(&input);
+        assert!(out.contains("INFO  GET /orders region={eu1|us2} ×60"), "{out}");
     }
 
     #[test]

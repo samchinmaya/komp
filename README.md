@@ -6,8 +6,8 @@ Compress DevOps and Kubernetes logs into a short, meaningful summary, so Claude
 spends a few hundred tokens reading them instead of tens of thousands.
 
 ```
-2,001 lines of Go service logs   ~76,000 tokens  →  10 lines   ~280 tokens
-1,350 lines of Spring Boot logs  ~41,000 tokens  →   8 lines   ~230 tokens
+2,001 lines of Go service logs   ~76,000 tokens  →  11 lines   ~310 tokens
+1,350 lines of Spring Boot logs  ~41,000 tokens  →   8 lines   ~200 tokens
 1,200 lines of Node JSON logs    ~60,000 tokens  →  10 lines   ~310 tokens
   700 lines of kubelet logs      ~39,000 tokens  →   7 lines   ~320 tokens
 ```
@@ -75,6 +75,8 @@ Rules that keep the meaning:
 
 - **Errors and warnings keep more detail**: up to 6 distinct values are listed, and their stack traces are kept.
 - **Order survives**: every entry has its first–last time, so you can still see that the errors started at 10:04.
+- **Bursts get their own line**: if a value only shows up during one stretch (`status=503` only during a database outage), it is split out with its own time range instead of hiding inside `status={200|503}`. Values spread evenly over the log stay merged.
+- **Known boilerplate is dropped**: Spring Boot's process id and thread name (`1 --- [nio-8080-exec-3]`).
 - **Exceptions join their error**: `ERROR request failed` followed by `java.lang.NullPointerException: …` (or a Python `ZeroDivisionError: …`) becomes one entry, `ERROR request failed → java.lang.NullPointerException: …`. Different exceptions stay separate entries.
 - **Stack traces print once** per group, with runs of framework frames (Spring, Tomcat, `node_modules`…) folded into `… 12 framework frames`.
 - **Nothing silently disappears**: if there are more than 80 patterns, the rarest low-severity ones are dropped and the output says how many lines were omitted.
