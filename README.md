@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="brand/logo-dark.svg">
-    <img src="brand/logo-light.svg" width="260" alt="комп">
+    <img src="brand/logo-light.svg" width="220" alt="комп">
   </picture>
 </p>
 
@@ -163,19 +163,20 @@ src/
 tests/
   fixtures/    realistic logs: Go/logfmt, Node/JSON, Java/Spring, kubelet/klog
   fixtures.rs  checks each is ≥95% smaller and still contains the key facts
-brand/         logo, wordmark, favicons, app icons
+brand/         logo, favicons, app icons
 ```
 
 ## Brand
 
-The mark is three grey lines (noise) merging into one green line (signal).
-Colours: ink `#0F1419`, noise `#6B7684`, signal `#3EE08F`.
+The logo is just the name, **комп**, drawn as plain rounded strokes (no font
+needed). The favicon and app icons use its first letter, **к**.
+Colours: ink `#0F1419`, paper `#E8ECF1`.
 
 | file | use |
 |---|---|
-| `logo-light.svg` / `logo-dark.svg` | mark + wordmark, for light / dark backgrounds |
-| `logo-vertical-light.svg` / `-dark.svg` | wordmark rotated, for narrow spaces |
-| `mark.svg`, `wordmark-*.svg` | the parts on their own |
+| `logo-light.svg` / `logo-dark.svg` | the name, for light / dark backgrounds |
+| `logo-vertical-light.svg` / `-dark.svg` | the name rotated, for narrow spaces |
+| `icon.svg` | the к icon, source for the PNGs |
 | `favicon.svg`, `favicon.ico`, `favicon-{16,32,48}.png` | browser tab icons |
 | `apple-touch-icon.png`, `icon-{192,512}.png`, `site.webmanifest` | phone home screen / PWA |
 
