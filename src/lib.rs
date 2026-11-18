@@ -6,6 +6,7 @@
 //! - [`mcp`]: the MCP server that exposes it all to Claude as tools
 
 pub mod compress;
+pub mod drain;
 pub mod guard;
 pub mod input;
 pub mod mcp;

@@ -7,14 +7,15 @@
 //!                 klog (Kubernetes components) and syslog lines.
 //! 2. `hoist`      anything every line shares (a `[pod/api-…]` tag, `env=prod`)
 //!                 moves into the header once instead of repeating per line.
-//! 3. `templatize` the variable parts of a message become slots:
-//!                 `GET /health 200 2ms` → `GET /health ␁ ␁`, values `["200","2ms"]`.
-//! 4. group        records with the same level + template merge into one group
-//!                 that remembers every slot value, the count and the time range.
-//! 5. render       one line per group: `10:00:01–10:00:07 INFO GET /health 200 1–3ms ×4`.
+//! 3. mine         Drain (`drain.rs`) finds which messages share a template.
+//! 4. group        each template's differing tokens become slots, and the group
+//!                 remembers every slot value, the count and the time range.
+//! 5. render       one line per group: `10:00:01–10:00:07 INFO GET /health 200 1–3ms ×4`,
+//!                 with a real sample under important lines whose values were summarised.
 //!
 //! This module knows nothing about MCP, the clipboard or files: text in, text out.
 
+use crate::drain::{DEFAULT_SIMILARITY, Drain, tokenize};
 use regex::Regex;
 use serde_json::{Map, Value};
 use std::collections::{HashMap, HashSet};
@@ -97,21 +98,62 @@ pub fn compress(input: &str, opts: &Options) -> Summary {
     let span_start = records.iter().find_map(full_stamp);
     let span_end = records.iter().rev().find_map(full_stamp);
 
-    // ---- 4. group ----
-    let mut groups: Vec<Group> = Vec::new();
-    let mut index: HashMap<(Level, String), usize> = HashMap::new();
+    // ---- 3. mine templates ----
+    let mut miners: HashMap<MinerKey, Drain> = HashMap::new();
+    let mut families: Vec<Family> = Vec::new();
+    let mut family_of: HashMap<(MinerKey, usize), usize> = HashMap::new();
     let mut level_counts: HashMap<Level, usize> = HashMap::new();
 
-    for (position, record) in records.into_iter().enumerate() {
+    for (position, record) in records.iter().enumerate() {
         *level_counts.entry(record.level).or_default() += 1;
-        let (template, values) = templatize(&record.message);
-        let slot_count = values.len();
-        let gi = *index.entry((record.level, template.clone())).or_insert_with(|| {
-            groups.push(Group::new(record.level, template, slot_count));
-            groups.len() - 1
+        let parsed = tokenize(&record.message);
+        let key = (record.level, record.important, parsed.compact);
+        let similarity = if record.important { IMPORTANT_SIMILARITY } else { DEFAULT_SIMILARITY };
+        // The stricter match for errors must not split them over IDs like `c1` and `c2`.
+        let masked: Vec<&str> = parsed
+            .tokens
+            .iter()
+            .map(|t| {
+                if record.important && t.masked.bytes().any(|b| b.is_ascii_digit()) {
+                    "<VAR>"
+                } else {
+                    t.masked.as_str()
+                }
+            })
+            .collect();
+        let template_id = miners.entry(key).or_insert_with(|| Drain::new(similarity)).add(&masked);
+        let family = *family_of.entry((key, template_id)).or_insert_with(|| {
+            families.push(Family { level: record.level, compact: parsed.compact, members: Vec::new() });
+            families.len() - 1
         });
-        let when = stamp(&record);
-        groups[gi].add(record, values, when, position);
+        let ranges = parsed.tokens.into_iter().map(|t| t.range).collect();
+        families[family].members.push((position, ranges));
+    }
+    let template_count = families.len();
+
+    // ---- 4. group ----
+    let mut records: Vec<Option<Record>> = records.into_iter().map(Some).collect();
+    let mut groups: Vec<Group> = Vec::with_capacity(families.len());
+    for family in families {
+        let (template, values) = {
+            let rows: Vec<Vec<&str>> = family
+                .members
+                .iter()
+                .map(|(position, ranges)| {
+                    let message = &records[*position].as_ref().expect("each record has one family").message;
+                    ranges.iter().map(|range| &message[range.clone()]).collect()
+                })
+                .collect();
+            slot_template(&rows, if family.compact { "" } else { " " })
+        };
+        let slot_count = values.first().map_or(0, Vec::len);
+        let mut group = Group::new(family.level, template, slot_count);
+        for ((position, _), member_values) in family.members.into_iter().zip(values) {
+            let record = records[position].take().expect("each record has one family");
+            let when = stamp(&record);
+            group.add(record, member_values, when, position);
+        }
+        groups.push(group);
     }
 
     // "status={200|503}" hides *when* the 503s happened. If a value is bunched up
@@ -139,8 +181,9 @@ pub fn compress(input: &str, opts: &Options) -> Summary {
 
     let plural = |n: usize, one: &str, many: &str| format!("{n} {}", if n == 1 { one } else { many });
     let mut header = format!(
-        "[komp] {} → {}",
+        "[komp] {} → {}, {}",
         plural(input_lines, "line", "lines"),
+        plural(template_count, "template", "templates"),
         plural(kept, "entry", "entries")
     );
     match (&span_start, &span_end) {
@@ -520,45 +563,88 @@ fn hoist(records: &mut [Record]) -> Vec<String> {
     shared
 }
 
-// ─────────────────────────── 3. templatize ───────────────────────────
+// ─────────────────────────── 3. templates ───────────────────────────
 
-/// Marks a slot inside a template. A control character that never appears in logs.
+/// Marks a slot inside a template. Removed from log text before it is used.
 const SLOT: char = '\u{1}';
 
-// The variable parts of a message. Order matters: the first alternative that matches wins.
-lazy_regex!(
-    VARIABLE,
-    r#"(?x)
-      (?:\b(?i:[a-z_]*id)=)(?P<idval>[^\s,;"}]+)
-    | (?P<ts>\d{4}-\d{2}-\d{2}[T\ ]\d{2}:\d{2}:\d{2}(?:[.,]\d+)?(?:Z|[+-]\d{2}:?\d{2})?)
-    | (?P<uuid>\b[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}\b)
-    | (?P<ip>\b\d{1,3}(?:\.\d{1,3}){3}(?::\d{1,5})?\b)
-    | (?P<pod>\b[a-z0-9]+(?:-[a-z0-9]+)*-[a-z0-9]{8,10}-[a-z0-9]{5}\b)
-    | (?P<clock>\b\d{2}:\d{2}:\d{2}(?:\.\d+)?\b)
-    | (?P<num>\b\d+(?:\.\d+)?(?:ns|us|µs|ms|s|m|h|KiB|MiB|GiB|Ki|Mi|Gi|KB|MB|GB|kB|B)?\b)
-    | (?P<id>\b\w*\d\w*\b)
-    "#
-);
+/// Errors must not blur together: two failures that merely start alike stay separate.
+const IMPORTANT_SIMILARITY: f64 = 0.7;
 
-/// `"GET /users/42 200 3ms"` → (`"GET /users/␁ ␁ ␁"`, `["42", "200", "3ms"]`)
-///
-/// The first alternative makes the value of any `…id=` key a slot (`reqId=caabfb`).
-/// The last one, `id`, catches any word containing a digit (`d33c81`, `x2k4`).
-/// Over-matching is harmless: a slot that only ever has one value is printed as that value.
-fn templatize(message: &str) -> (String, Vec<String>) {
-    let mut template = String::with_capacity(message.len());
-    let mut values = Vec::new();
-    let mut last = 0;
-    for caps in VARIABLE.captures_iter(message) {
-        // For `key=value` matches only the value is the slot; otherwise the whole match.
-        let m = caps.name("idval").unwrap_or_else(|| caps.get(0).unwrap());
-        template.push_str(&message[last..m.start()]);
+/// Severity, importance and tokenizer each get their own Drain tree.
+type MinerKey = (Level, bool, bool);
+
+/// The records Drain placed in one template, with each record's token positions.
+struct Family {
+    level: Level,
+    compact: bool,
+    members: Vec<(usize, Vec<std::ops::Range<usize>>)>,
+}
+
+/// Turn a family's tokens into komp's template and the slot values of each row.
+/// `status=200` and `status=503` become `status=␁` with values `200` and `503`.
+fn slot_template(rows: &[Vec<&str>], separator: &str) -> (String, Vec<Vec<String>>) {
+    let mut template = String::new();
+    let mut values = vec![Vec::new(); rows.len()];
+    let width = rows.first().map_or(0, Vec::len);
+
+    for column in 0..width {
+        if column > 0 {
+            template.push_str(separator);
+        }
+        let first = rows[0][column];
+        if rows.iter().all(|row| row[column] == first) {
+            template.extend(first.chars().filter(|c| *c != SLOT));
+            continue;
+        }
+        let (prefix, suffix) = shared_edges(rows, column);
+        template.extend(first[..prefix].chars().filter(|c| *c != SLOT));
         template.push(SLOT);
-        values.push(m.as_str().to_string());
-        last = m.end();
+        template.extend(first[first.len() - suffix..].chars().filter(|c| *c != SLOT));
+        for (row, row_values) in rows.iter().zip(&mut values) {
+            let token = row[column];
+            row_values.push(token[prefix..token.len() - suffix].to_string());
+        }
     }
-    template.push_str(&message[last..]);
     (template, values)
+}
+
+/// Bytes at each end of a column that every token shares and that can stay literal.
+/// Edges stop at punctuation, so `8ms` and `9ms` keep their unit in the value and a
+/// number is never cut at its decimal point.
+fn shared_edges(rows: &[Vec<&str>], column: usize) -> (usize, usize) {
+    let first = rows[0][column];
+    let mut prefix = first;
+    let mut suffix = first;
+    let mut shortest = first.len();
+    for row in rows {
+        let token = row[column];
+        shortest = shortest.min(token.len());
+        let same: usize =
+            prefix.chars().zip(token.chars()).take_while(|(a, b)| a == b).map(|(a, _)| a.len_utf8()).sum();
+        prefix = &prefix[..same];
+        let same: usize =
+            suffix.chars().rev().zip(token.chars().rev()).take_while(|(a, b)| a == b).map(|(a, _)| a.len_utf8()).sum();
+        suffix = &suffix[suffix.len() - same..];
+    }
+
+    let mut prefix_len = prefix.rfind(|c: char| !c.is_alphanumeric()).map_or(0, |i| {
+        i + prefix[i..].chars().next().map_or(0, char::len_utf8)
+    });
+    let kept = &prefix[..prefix_len];
+    let mut before_separator = kept.chars().rev().skip(1);
+    if kept.ends_with(['.', ':', ',']) && before_separator.next().is_some_and(|c| c.is_ascii_digit()) {
+        prefix_len = kept.trim_end_matches(|c: char| c.is_ascii_digit() || matches!(c, '.' | ':' | ',')).len();
+    }
+
+    let mut suffix_len = suffix.find(|c: char| !c.is_alphanumeric()).map_or(0, |i| suffix.len() - i);
+    let tail = &suffix[suffix.len() - suffix_len..];
+    let mut tail_chars = tail.chars();
+    if matches!(tail_chars.next(), Some('.' | ',')) && tail_chars.next().is_some_and(|c| c.is_ascii_digit()) {
+        suffix_len = 0;
+    }
+
+    if prefix_len + suffix_len >= shortest { (0, 0) } else { (prefix_len, suffix_len) }
 }
 
 // ───────────────────────────── 4. group ─────────────────────────────
@@ -576,6 +662,7 @@ struct Slot {
 }
 
 const MAX_TRACKED: usize = 32;
+const MAX_SAMPLE_CHARS: usize = 220;
 
 lazy_regex!(NUMBER_WITH_UNIT, r"^(\d+(?:\.\d+)?)([a-zA-Zµ]*)$");
 
@@ -792,6 +879,28 @@ impl Group {
         parts
     }
 
+    /// A real message for important lines where the summary cannot show which values
+    /// occurred together: several slots vary, or a slot's values were abbreviated.
+    fn sample(&self, limit: usize) -> Option<String> {
+        if !self.important || self.count < 2 {
+            return None;
+        }
+        let varying = self.slots.iter().filter(|s| s.distinct.len() > 1 || s.untracked).count();
+        let abbreviated = self.slots.iter().any(|s| s.distinct.len() > limit || s.untracked);
+        if varying < 2 && !abbreviated {
+            return None;
+        }
+        let member = self.members.first()?;
+        let mut sample = String::new();
+        for (i, part) in self.template.split(SLOT).enumerate() {
+            if i > 0 {
+                sample.push_str(member.values.get(i - 1)?);
+            }
+            sample.push_str(part);
+        }
+        Some(shorten(&sample, MAX_SAMPLE_CHARS))
+    }
+
     fn render(&self, max_trace_lines: usize) -> String {
         // Errors and warnings list more distinct values before abbreviating.
         let limit = if self.important { 6 } else { 3 };
@@ -821,6 +930,10 @@ impl Group {
             line.push_str(&format!(" ×{}", self.count));
         }
         line.push('\n');
+
+        if let Some(sample) = self.sample(limit) {
+            line.push_str(&format!("    e.g. {sample}\n"));
+        }
 
         let trace = fold_trace(&self.extra);
         for frame in trace.iter().take(max_trace_lines) {
@@ -962,6 +1075,42 @@ E1118 10:00:05.000000    2345 pod_workers.go:1298] \"Error syncing pod\" err=\"C
         let out = run(input);
         assert!(out.contains("INFO  kubelet.go:2123 \"SyncLoop ADD\""), "{out}");
         assert!(out.contains("ERROR pod_workers.go:1298 \"Error syncing pod\" err=\"CrashLoopBackOff\""), "{out}");
+    }
+
+    #[test]
+    fn drain_merges_words_that_vary_in_ordinary_lines() {
+        let input = "\
+INFO user alice logged in
+INFO user bob logged in
+INFO user carol logged in";
+        let out = run(input);
+        assert!(out.contains("1 template, 1 entry"), "{out}");
+        assert!(out.contains("INFO  user {alice|bob|carol} logged in ×3"), "{out}");
+    }
+
+    #[test]
+    fn compact_punctuation_heavy_lines_get_slots() {
+        let input = r#"["checkout",200,"ok"]
+["checkout",503,"ok"]
+["checkout",200,"ok"]"#;
+        let out = run(input);
+        assert!(out.contains(r#"["checkout",{200|503},"ok"] ×3"#), "{out}");
+    }
+
+    #[test]
+    fn important_lines_with_abbreviated_values_keep_a_real_sample() {
+        let mut input = String::new();
+        for i in 0..10 {
+            input.push_str(&format!("ERROR payment {i}a failed for customer c{i}\n"));
+        }
+        let out = run(&input);
+        assert!(out.contains("    e.g. payment 0a failed for customer c0"), "{out}");
+    }
+
+    #[test]
+    fn decimal_values_are_not_cut_at_the_point() {
+        let input = "INFO took 1.25ms\nINFO took 1.75ms";
+        assert!(run(input).contains("INFO  took 1.25–1.75ms ×2"), "{input}");
     }
 
     #[test]
