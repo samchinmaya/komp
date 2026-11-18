@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { CopyButton } from "@/components/CopyButton";
 import { DemoViewer } from "@/components/DemoViewer";
 import { EvidenceWindow } from "@/components/EvidenceWindow";
-import { HeroFunnel } from "@/components/HeroFunnel";
+import { HeroVoxels } from "@/components/HeroVoxels";
 import { AnimatedWordmark } from "@/components/manual/AnimatedWordmark";
 import { Wordmark } from "@/components/Wordmark";
 import { run } from "@/data/run";
@@ -87,7 +87,7 @@ export default function Home() {
 
       <main>
         <section className="relative flex flex-col pt-[34px] min-[901px]:block min-[901px]:pt-[70px]">
-          <HeroFunnel className="pointer-events-none relative order-2 block h-28 w-full min-[901px]:absolute min-[901px]:-top-[76px] min-[901px]:right-0 min-[901px]:h-[calc(100%+76px)] min-[901px]:w-[52%]" />
+          <HeroVoxels className="pointer-events-none relative order-2 block h-64 w-full min-[901px]:absolute min-[901px]:-top-[76px] min-[901px]:right-0 min-[901px]:h-[calc(100%+76px)] min-[901px]:w-[52%]" />
           <div className="relative max-w-[720px] pb-[18px] min-[901px]:pb-16">
             <h1 className="rise text-balance font-display text-[clamp(40px,4.7vw,62px)] font-normal leading-[1.1] tracking-[-0.045em]">
               logs in, signal out
@@ -98,7 +98,7 @@ export default function Home() {
             </p>
             <div className="rise mt-8 flex flex-wrap items-center gap-4 [animation-delay:160ms]">
               <a href="#install" className={`${BUTTON} w-full bg-snow px-[17px] font-medium text-[#081018] hover:bg-white sm:w-auto`}>
-                install комп
+                install
               </a>
               <a href={links.github} className={`${BUTTON} w-full px-1.5 text-soft hover:text-snow sm:w-auto`}>
                 view on GitHub →

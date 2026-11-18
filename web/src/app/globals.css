@@ -20,6 +20,8 @@
 html {
   color-scheme: dark;
   scroll-behavior: smooth;
+  /* the full-width glow behind the product window must not widen the page */
+  overflow-x: clip;
 }
 
 body {
@@ -46,6 +48,65 @@ body {
   background:
     radial-gradient(44% 26% at 60% 34%, rgb(120 158 186 / 0.34), transparent 72%),
     radial-gradient(34% 13% at 17% 72%, rgb(214 16 30 / 0.46), transparent 74%);
+}
+
+/* the recorded run: pinned while scrolling plays it, like scrubbing a video */
+@media (min-width: 1180px) {
+  .run-window {
+    height: 770px;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .run-track {
+    height: 320svh;
+  }
+  .run-pin {
+    position: sticky;
+    top: 12px;
+  }
+  .run-window {
+    transform: scale(var(--run-zoom, 1));
+    transform-origin: 50% 0;
+  }
+  .run-terminal {
+    overflow: hidden;
+    pointer-events: none;
+  }
+}
+@media (prefers-reduced-motion: no-preference) and (min-width: 1180px) {
+  .run-window {
+    height: min(770px, calc(100svh - 24px));
+  }
+  .run-camera {
+    transform: scale(var(--run-camera, 1));
+    transform-origin: 6% 96%;
+  }
+}
+@media (prefers-reduced-motion: no-preference) and (max-width: 1179px) {
+  .run-window {
+    height: calc(100svh - 24px);
+  }
+  .run-terminal {
+    flex: none;
+    height: calc((100svh - 70px) * 0.44);
+  }
+  .run-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .run-log {
+    flex: 1;
+    height: auto;
+    min-height: 0;
+  }
+  .run-result {
+    padding: 10px 16px;
+  }
+  .run-recorded {
+    display: none;
+  }
 }
 
 .install-panel {
