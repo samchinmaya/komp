@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Comfortaa, Geist, Geist_Mono } from "next/font/google";
-import { SiteBackground } from "@/components/manual/Grainient";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -36,8 +35,7 @@ export const viewport: Viewport = { themeColor: "#03060b" };
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${comfortaa.variable} h-full bg-[#03060b] antialiased`}>
-      <body className="min-h-full overflow-x-hidden">
-        <SiteBackground />
+      <body className="min-h-full overflow-x-clip bg-night text-snow">
         {children}
       </body>
     </html>

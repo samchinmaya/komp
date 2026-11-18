@@ -14,15 +14,15 @@ export type Palette = {
 };
 
 export const darkPalette: Palette = {
-  text: "text-paper",
-  header: "text-signal",
-  time: "text-faint",
-  error: "text-err font-semibold",
-  warn: "text-warn font-semibold",
-  info: "text-muted",
-  slot: "text-slot",
-  count: "text-signal font-semibold",
-  trace: "text-faint",
+  text: "text-snow",
+  header: "text-snow",
+  time: "text-dim",
+  error: "text-[#ff7b72] font-medium",
+  warn: "text-[#f5b83d] font-medium",
+  info: "text-dim",
+  slot: "text-ice",
+  count: "text-snow font-medium",
+  trace: "text-dim",
 };
 
 const TIME = /^(\d{2}(?:-\d{2})?[: ]\d{2}:\d{2}(?::\d{2})?(?:–[\d:\- ]+)?)/;

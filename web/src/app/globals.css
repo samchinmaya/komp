@@ -1,22 +1,16 @@
 @import "tailwindcss";
 
-/* комп brand tokens → Tailwind utilities (bg-ink, text-signal, border-line, …) */
+/* комп brand tokens → Tailwind utilities (bg-night, text-snow, border-rule, …) */
 @theme inline {
-  --color-ink: #0f1419;
-  --color-surface: #151b22;
-  --color-surface-2: #1b232c;
-  --color-line: #26303b;
-  --color-paper: #e8ecf1;
-  --color-muted: #8b96a5;
-  --color-faint: #5c6776;
-  --color-signal: #3ee08f;
-  --color-signal-deep: #12a35c;
-  --color-err: #ff6b6b;
-  --color-warn: #f5b83d;
-  --color-slot: #9fd8ff;
-  --color-light-bg: #f6f7f9;
-  --color-light-line: #e3e6ea;
-  --color-light-muted: #5b6573;
+  --color-night: #03060b;
+  --color-panel: #070c12;
+  --color-panel-2: #0b1016;
+  --color-raise: #121c26;
+  --color-snow: #edf2f6;
+  --color-soft: #b8c5d1;
+  --color-dim: #8497a9;
+  --color-ice: #9fd8ff;
+  --color-rule: rgb(237 242 246 / 0.1);
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -39,90 +33,40 @@ body {
   }
 }
 
-:root {
-  --noise: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-}
-
-/* ── Full-page background ───────────────────────────────────── */
-.site-bg {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  overflow: hidden;
-  background: linear-gradient(
-    176deg,
-    #02040a 0%,
-    #06101b 20%,
-    #10263a 36%,
-    #24405a 46%,
-    #0d1a27 57%,
-    #04080e 70%,
-    #020306 86%,
-    #06101c 100%
-  );
-}
-.site-bg-sweep,
-.site-bg-streak {
-  position: absolute;
-  border-radius: 50%;
-}
-.site-bg-sweep {
-  left: -30vw;
-  top: 33vh;
-  width: 160vw;
-  height: 25vh;
-  transform: rotate(4deg);
-  background: radial-gradient(
-    closest-side,
-    rgba(170, 197, 214, 0.86) 0%,
-    rgba(118, 150, 174, 0.5) 46%,
-    rgba(60, 90, 116, 0.16) 76%,
-    transparent 100%
-  );
-}
-.site-bg-streak {
-  left: -22vw;
-  top: 56vh;
-  width: 92vw;
-  height: 11vh;
-  transform: rotate(8deg);
-  filter: blur(5px);
-  background: radial-gradient(
-    closest-side,
-    #e3121f 0%,
-    rgba(190, 12, 26, 0.72) 42%,
-    rgba(110, 8, 18, 0.26) 74%,
-    transparent 100%
-  );
-}
-.site-bg-grain {
-  position: absolute;
-  inset: 0;
-  opacity: 0.32;
-  mix-blend-mode: overlay;
-  background-image: var(--noise);
-  background-size: 180px 180px;
-}
-
-/* dark sheet that keeps text readable over the bright parts of the background */
-.sheet {
-  background: rgb(5 9 14 / 0.62);
-}
-
-/* soft shade behind the cover text, which sits directly on the background */
-.hero-copy {
-  position: relative;
-  isolation: isolate;
-}
-.hero-copy::before {
+/* the blue band and red streak, kept to the light behind the product window */
+.stage::before {
   content: "";
   position: absolute;
-  inset: -40px -16px -40px -120px;
-  z-index: -1;
-  background: radial-gradient(closest-side, rgb(3 6 11 / 0.58) 58%, transparent 100%);
+  left: 50%;
+  top: 120px;
+  width: 100vw;
+  height: 560px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background:
+    radial-gradient(44% 26% at 60% 34%, rgb(120 158 186 / 0.34), transparent 72%),
+    radial-gradient(34% 13% at 17% 72%, rgb(214 16 30 / 0.46), transparent 74%);
 }
 
-/* ── Logo animation (manual design) ─────────────────────────── */
+.install-panel {
+  background:
+    radial-gradient(60% 90% at 88% 10%, rgb(89 128 158 / 0.24), transparent 70%),
+    var(--color-panel);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .rise {
+    animation: rise 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+/* ── Logo animation ─────────────────────────────────────────── */
 .komp-draw {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
@@ -156,23 +100,6 @@ body {
     animation: none;
     stroke-dashoffset: 0;
     opacity: 1;
-  }
-}
-
-/* active edges in the route diagram: a calm flowing dash */
-.rd-flow {
-  stroke-dasharray: 6 5;
-  animation: rd-flow 900ms linear infinite;
-}
-@keyframes rd-flow {
-  to {
-    stroke-dashoffset: -11;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .rd-flow {
-    animation: none;
-    stroke-dasharray: none;
   }
 }
 
