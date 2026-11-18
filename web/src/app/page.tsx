@@ -1,241 +1,272 @@
-import { BlackHole } from "@/components/BlackHole";
-import { TokenCard } from "@/components/TokenCard";
-import { DitherBand } from "@/components/Texture";
-import { GrainyGlow, GridLayer, Plus, Rail, Section } from "@/components/Blueprint";
 import { CopyButton } from "@/components/CopyButton";
 import { DemoViewer, type DemoTheme } from "@/components/DemoViewer";
-import { Wordmark } from "@/components/Wordmark";
-import { commands, faqs, features, formats, links, stats, statsNote, steps, tools, version } from "@/data/site";
+import type { Palette } from "@/components/LogOutput";
+import { AnimatedWordmark } from "@/components/manual/AnimatedWordmark";
+import { DitherPlate, GrainPlate } from "@/components/manual/Grainient";
+import { Machine } from "@/components/manual/Machine";
+import { RouteDiagram } from "@/components/manual/RouteDiagram";
+import { commands, faqs, features, formats, links, tools, version } from "@/data/site";
 
-const LINE = "border-white/[0.09]";
-const MARK = "text-white/30";
-const LABEL = "bg-ink text-faint";
+/*
+ * Design D — "The комп manual". A printed technical manual: warm paper, ink
+ * hairlines, square corners, one accent (deep signal green), serif display
+ * type over Geist. No glass, no glows; gradients only as printed plates.
+ */
 
-const demoTheme: DemoTheme = {
-  tab: "rounded-full border border-line px-3.5 py-1.5 text-sm text-muted hover:text-paper",
-  tabActive: "rounded-full border border-paper bg-paper px-3.5 py-1.5 text-sm text-ink",
-  about: "mb-4 text-[15px] text-muted",
-  rawPane: "min-w-0 overflow-hidden rounded-xl border border-line bg-surface/80 backdrop-blur",
-  rawHead: "flex items-baseline justify-between gap-3 border-b border-line px-4 py-3 text-[13px] font-semibold text-paper [&>span:last-child]:font-normal [&>span:last-child]:text-muted",
-  rawText: "m-0 whitespace-pre px-4 py-3.5 font-mono text-xs leading-relaxed text-faint",
-  outPane: "min-w-0 overflow-hidden rounded-xl border border-signal/40 bg-surface/80 shadow-[0_0_80px_-20px_rgba(62,224,143,0.35)] backdrop-blur",
-  outHead: "flex items-baseline justify-between gap-3 border-b border-line px-4 py-3 text-[13px] font-semibold text-paper [&>span:last-child]:font-normal [&>span:last-child]:text-signal",
-  outText: "m-0 px-4 py-3.5 font-mono text-xs leading-relaxed text-paper",
-  meter: "relative h-2 flex-1 overflow-hidden rounded-full bg-surface-2",
-  meterFill: "absolute inset-y-0 left-0 min-w-[3px] rounded-full bg-signal",
-  meterText: "font-mono text-sm text-muted [&_b]:font-semibold [&_b]:text-signal",
+const INK = "text-[#1a1c1f]";
+const MUTED = "text-[#5d594f]";
+const RULE = "border-[#1a1c1f]/20";
+
+const paperPalette: Palette = {
+  text: "text-[#1a1c1f]",
+  header: "text-[#0f7a47]",
+  time: "text-[#8a8578]",
+  error: "text-[#b3261e] font-semibold",
+  warn: "text-[#9a6200] font-semibold",
+  info: "text-[#6b6759]",
+  slot: "text-[#2f5fa8]",
+  count: "text-[#0f7a47] font-semibold",
+  trace: "text-[#8a8578]",
 };
 
-function Kicker({ children }: { children: string }) {
-  return <p className="mb-3 font-mono text-[13px] text-signal">{children}</p>;
+const demoTheme: DemoTheme = {
+  tab: "border-b border-transparent py-1 font-mono text-[12px] text-[#8a8578] hover:text-[#1a1c1f] mr-4",
+  tabActive: "border-b border-[#1a1c1f] py-1 font-mono text-[12px] text-[#1a1c1f] mr-4",
+  about: "mb-4 text-[15px] text-[#5d594f]",
+  rawPane: "min-w-0 border border-[#1a1c1f]/80 bg-[#fbfaf6]",
+  rawHead: "flex items-baseline justify-between gap-3 border-b border-[#1a1c1f]/20 px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.1em] text-[#1a1c1f] [&>span:last-child]:normal-case [&>span:last-child]:tracking-normal [&>span:last-child]:text-[#8a8578]",
+  rawText: "m-0 whitespace-pre px-4 py-3.5 font-mono text-xs leading-relaxed text-[#8a8578]",
+  outPane: "min-w-0 border border-[#1a1c1f] bg-[#fbfaf6] shadow-[6px_6px_0_#1a1c1f]",
+  outHead: "flex items-baseline justify-between gap-3 border-b border-[#1a1c1f]/20 px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.1em] text-[#1a1c1f] [&>span:last-child]:normal-case [&>span:last-child]:tracking-normal [&>span:last-child]:text-[#0f7a47]",
+  outText: "m-0 px-4 py-3.5 font-mono text-xs leading-relaxed text-[#1a1c1f]",
+  meter: "relative h-1.5 flex-1 overflow-hidden bg-[#1a1c1f]/10",
+  meterFill: "absolute inset-y-0 left-0 min-w-[3px] bg-[#0f7a47]",
+  meterText: "font-mono text-sm tabular-nums text-[#5d594f] [&_b]:font-semibold [&_b]:text-[#0f7a47]",
+  palette: paperPalette,
+};
+
+function SectionHead({ n, title, kicker }: { n: string; title: string; kicker: string }) {
+  return (
+    <div className={`mb-8 grid gap-2 border-t ${RULE} pt-4 md:grid-cols-12`}>
+      <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-[#8a8578] md:col-span-2">§ {n}</span>
+      <div className="md:col-span-10">
+        <h2 className="font-serif text-[clamp(34px,4.6vw,56px)] leading-[1.02] tracking-[-0.01em]">{title}</h2>
+        <p className={`mt-2 max-w-[58ch] text-[16px] leading-relaxed ${MUTED}`}>{kicker}</p>
+      </div>
+    </div>
+  );
 }
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen bg-ink text-paper selection:bg-signal/30">
-      <GridLayer className="h-[1100px]" />
-      <GrainyGlow
-        className="inset-x-0 top-0 h-[900px]"
-        blobs={[
-          "radial-gradient(40% 35% at 50% 38%, rgba(62,224,143,0.22), transparent 70%)",
-          "radial-gradient(30% 30% at 22% 20%, rgba(80,140,255,0.14), transparent 70%)",
-          "radial-gradient(28% 28% at 80% 26%, rgba(62,224,143,0.10), transparent 70%)",
-        ]}
-        grainOpacity={0.4}
-      />
-
-      <Rail line={LINE}>
-        {/* nav */}
-        <header className={`sticky top-0 z-40 flex h-16 items-center justify-between border-b border-dashed ${LINE} bg-ink/70 px-4 backdrop-blur-md sm:px-6`}>
-          <a href="#top" className="text-paper" aria-label="комп home">
-            <Wordmark className="h-[22px] w-auto" disk="#3ee08f" />
-          </a>
-          <nav className="flex items-center gap-6 text-sm text-muted">
-            <a href="#how" className="hidden hover:text-paper sm:inline">How it works</a>
-            <a href="#demo" className="hidden hover:text-paper sm:inline">Demo</a>
-            <a href="#install" className="hidden hover:text-paper sm:inline">Install</a>
-            <a href={links.github} className="rounded-lg border border-line px-3 py-1.5 text-paper hover:border-muted">GitHub</a>
+    <div className={`min-h-screen bg-[#f3f0e8] ${INK} selection:bg-[#6cf2ae]`}>
+      <div className="mx-auto max-w-[1240px] px-4 sm:px-8">
+        {/* masthead */}
+        <header className={`flex items-center justify-between gap-4 border-b ${RULE} py-3 font-mono text-[11px] uppercase tracking-[0.14em]`}>
+          <span>The комп manual · No. 01</span>
+          <nav className="flex gap-5">
+            <a href="#mechanism" className="hidden hover:underline sm:inline">Mechanism</a>
+            <a href="#install" className="hidden hover:underline sm:inline">Install</a>
+            <a href={links.github} className="hover:underline">GitHub ↗</a>
           </nav>
         </header>
 
-        {/* hero */}
-        <div id="top" className="relative grid items-center gap-14 px-4 pb-14 pt-16 sm:px-6 sm:pt-24 lg:grid-cols-[1.05fr_1fr]">
-          <span className="absolute left-3 top-3 font-mono text-[10px] text-faint">[0,0]</span>
-          <span className="absolute right-3 top-3 hidden font-mono text-[10px] text-faint sm:block">signal / noise</span>
-
-          <div className="relative min-w-0 text-center lg:text-left">
-            <span className="mb-7 inline-flex items-center gap-2 rounded-full border border-line bg-surface/70 px-3.5 py-1 font-mono text-xs text-muted backdrop-blur">
-              <span className="size-2 rounded-full bg-signal shadow-[0_0_10px_2px_rgba(62,224,143,0.6)]" />
-              <span><b className="font-medium text-signal">{version}</b> · open source<span className="hidden sm:inline"> · MCP server for Claude Code</span></span>
-            </span>
-            <h1 className="mx-auto mb-6 text-[clamp(44px,7vw,88px)] lg:mx-0 font-bold leading-[0.95] tracking-[-0.045em]">
+        {/* cover */}
+        <section className="grid gap-10 py-12 md:py-16 lg:grid-cols-12 lg:gap-12">
+          <div className="min-w-0 lg:col-span-7">
+            <AnimatedWordmark className="mb-10 h-14 text-[#1a1c1f] sm:h-16" />
+            <h1 className="font-serif text-[clamp(56px,9vw,128px)] leading-[0.9] tracking-[-0.02em]">
               Logs in.
               <br />
-              <span className="text-faint">Signal out.</span>
+              <em className="text-[#0f7a47]">Signal out.</em>
             </h1>
-            <p className="mx-auto mb-9 max-w-[560px] lg:mx-0 text-[clamp(17px,2.2vw,20px)] leading-relaxed text-muted">
-              комп turns thousands of Kubernetes and app log lines into a handful of meaningful ones. Claude reads{" "}
-              <strong className="font-semibold text-paper">~300 tokens instead of ~76,000</strong>, and your logs{" "}
-              <strong className="font-semibold text-paper">never leave your machine</strong>.
+            <p className={`mt-8 max-w-[52ch] text-[18px] leading-relaxed ${MUTED}`}>
+              комп compresses Kubernetes and app logs into a handful of meaningful lines, so Claude reads{" "}
+              <span className="text-[#1a1c1f]">~312 tokens instead of ~75,958</span>. It runs on your machine. Your logs never leave it.
             </p>
-            <div className="mx-auto mb-5 flex max-w-[600px] lg:mx-0 items-center gap-3 rounded-xl border border-line bg-surface/80 py-2.5 pl-5 pr-2.5 text-left backdrop-blur">
-              <code className="no-scrollbar min-w-0 flex-1 overflow-x-auto whitespace-nowrap font-mono text-sm">
-                <span className="select-none text-faint">$ </span>
+            <div className="mt-8 flex max-w-[620px] items-center gap-3 border border-[#1a1c1f] bg-[#fbfaf6] py-2 pl-4 pr-2">
+              <code className="no-scrollbar min-w-0 flex-1 overflow-x-auto whitespace-nowrap font-mono text-[13px]">
+                <span className="select-none text-[#8a8578]">$ </span>
                 {commands.install}
               </code>
-              <CopyButton text={commands.install} className="shrink-0 rounded-lg border border-line bg-surface-2 px-3 py-1.5 font-mono text-xs hover:border-muted" />
+              <CopyButton text={commands.install} className="shrink-0 bg-[#1a1c1f] px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.1em] text-[#f6f3ec] hover:bg-[#0f7a47]" />
             </div>
-            <div className="flex flex-wrap justify-center gap-3 lg:justify-start">
-              <a href={links.github} className="rounded-xl bg-paper px-5 py-3 text-[15px] font-semibold text-ink hover:bg-white">View on GitHub</a>
-              <a href={links.releases} className="rounded-xl border border-line bg-ink/40 px-5 py-3 text-[15px] font-semibold hover:border-muted">Download {version}</a>
-            </div>
+            <p className="mt-4 font-mono text-[12px] text-[#5d594f]">
+              {version} · macOS, Linux, Windows · MIT ·{" "}
+              <a href={links.releases} className="underline decoration-[#1a1c1f]/30 underline-offset-4 hover:decoration-[#1a1c1f]">
+                downloads
+              </a>
+            </p>
           </div>
-          <div className="relative min-w-0 pt-6 lg:pt-0">
-            <TokenCard theme="dark" />
-          </div>
-        </div>
 
-        {/* stats */}
-        <Section line={LINE} mark={MARK}>
-          <dl className="grid grid-cols-2 lg:grid-cols-4">
-            {stats.map((s, i) => (
-              <div key={s.label} className={`border-dashed ${LINE} px-5 py-6 sm:px-6 ${i % 2 === 0 ? "border-r" : ""} ${i < 2 ? "border-b lg:border-b-0" : ""} ${i === 1 ? "lg:border-r" : ""}`}>
-                <dt className="sr-only">{s.label}</dt>
-                <dd className={`font-mono text-[clamp(22px,3vw,30px)] font-semibold tracking-tight ${i === 1 ? "text-signal" : ""}`}>{s.value}</dd>
-                <dd className="mt-1 text-[13px] text-muted">{s.label}</dd>
+          {/* Plate I — a grainy gradient */}
+          <figure className="min-w-0 lg:col-span-5">
+            <GrainPlate
+              className="aspect-[4/5] w-full sm:aspect-[16/10] lg:aspect-[4/5]"
+              base="#0e1a14"
+              fields={[
+                "radial-gradient(55% 45% at 28% 78%, #3ee08f 0%, transparent 70%)",
+                "radial-gradient(45% 40% at 78% 26%, #f5b83d 0%, transparent 72%)",
+                "radial-gradient(50% 50% at 70% 70%, #0f7a47 0%, transparent 70%)",
+                "radial-gradient(40% 35% at 18% 18%, #2f5fa8 0%, transparent 70%)",
+              ]}
+            >
+              <div className="flex h-full flex-col justify-between p-6 text-[#f6f3ec] sm:p-8">
+                <span className="font-mono text-[11px] uppercase tracking-[0.14em] opacity-80">Plate I · Signal from noise</span>
+                <div>
+                  <div className="font-serif text-[clamp(84px,12vw,168px)] leading-[0.85] tabular-nums">312</div>
+                  <p className="mt-3 max-w-[30ch] font-mono text-[12px] leading-relaxed opacity-85">
+                    tokens Claude reads for a 2,001-line outage log. Pasted raw, it would have been 75,958.
+                  </p>
+                </div>
               </div>
-            ))}
-          </dl>
-          <p className={`border-t border-dashed ${LINE} px-5 py-3 font-mono text-[11px] text-faint sm:px-6`}>{statsNote}</p>
-        </Section>
+            </GrainPlate>
+            <figcaption className={`mt-2 font-mono text-[11px] ${MUTED}`}>Plate I. Grainy gradient, blurred colour fields with film grain.</figcaption>
+          </figure>
+        </section>
 
-        {/* demo */}
-        <Section id="demo" label="§ 01 — demo" line={LINE} mark={MARK} labelClass={LABEL} className="px-4 py-16 sm:px-6">
-          <Kicker>{"// real output"}</Kicker>
-          <h2 className="mb-3 text-[clamp(28px,4vw,40px)] font-semibold leading-tight tracking-[-0.025em]">Same logs. A fraction of the tokens.</h2>
-          <p className="mb-8 max-w-[620px] text-[17px] text-muted">Real комп output on the test logs in the repo. Left: what you&apos;d paste into the chat. Right: what Claude reads instead.</p>
-          <DemoViewer theme={demoTheme} />
-        </Section>
+        {/* spec strip */}
+        <dl className="grid grid-cols-2 border-y border-[#1a1c1f] md:grid-cols-4">
+          {[
+            ["Lines in → out", "2,001 → 11"],
+            ["Tokens saved", "99.6%"],
+            ["Platforms", "5"],
+            ["Network calls", "0"],
+          ].map(([k, v], idx) => (
+            <div key={k} className={`px-4 py-5 ${idx % 2 === 0 ? `border-r ${RULE}` : ""} ${idx === 1 ? `md:border-r ${RULE}` : ""} ${idx < 2 ? `border-b ${RULE} md:border-b-0` : ""}`}>
+              <dt className="font-mono text-[11px] uppercase tracking-[0.12em] text-[#8a8578]">{k}</dt>
+              <dd className="mt-1 font-serif text-[40px] leading-none tabular-nums">{v}</dd>
+            </div>
+          ))}
+        </dl>
+        <p className="mt-2 font-mono text-[11px] text-[#8a8578]">Measured on the four test logs in the repository; tokens estimated at ~4 characters each.</p>
 
-        {/* how */}
-        <Section id="how" label="§ 02 — how it works" line={LINE} mark={MARK} labelClass={LABEL} className="px-4 py-16 sm:px-6">
-          <Kicker>{"// how it works"}</Kicker>
-          <h2 className="mb-3 text-[clamp(28px,4vw,40px)] font-semibold leading-tight tracking-[-0.025em]">Pasting logs costs you before any tool can help.</h2>
-          <p className="mb-10 max-w-[640px] text-[17px] text-muted">Claude reads everything you send it. So комп never takes logs through the chat: it reads them itself, on your laptop, and hands Claude only the summary.</p>
-          <ol className={`grid border border-dashed ${LINE} md:grid-cols-3`}>
-            {steps.map((s, i) => (
-              <li key={s.title} className={`relative border-dashed ${LINE} p-6 ${i < 2 ? "border-b md:border-b-0 md:border-r" : ""}`}>
-                <span className="mb-4 block font-mono text-sm text-signal">{String(i + 1).padStart(2, "0")}</span>
-                <h3 className="mb-2 text-lg font-semibold">{s.title}</h3>
-                <p className="text-[15px] leading-relaxed text-muted">{s.body}</p>
+        {/* mechanism */}
+        <section id="mechanism" className="pt-20">
+          <SectionHead
+            n="1"
+            title="The mechanism"
+            kicker="A machine that does what комп does. Log sheets drop into the hopper, the press stamps out the repetition into the noise bin, and one card, the summary, slides out. Pick a log; the readout uses its real numbers."
+          />
+          <Machine />
+        </section>
+
+        {/* route */}
+        <section className="pt-20">
+          <SectionHead
+            n="2"
+            title="The round trip"
+            kicker="Why it saves tokens: the raw logs never enter the conversation. Step through what happens between your clipboard and Claude."
+          />
+          <RouteDiagram />
+        </section>
+
+        {/* specimen */}
+        <section className="pt-20">
+          <SectionHead n="3" title="Specimens" kicker="Real output on the repository's test logs. Left, what you would paste. Right, what Claude reads." />
+          <DemoViewer theme={demoTheme} rawHeight="h-[420px]" />
+        </section>
+
+        {/* rules */}
+        <section className="pt-20">
+          <SectionHead n="4" title="What it keeps" kicker="комп is lossy on purpose. It drops repetition, not meaning. Six rules decide what stays." />
+          <ol className="grid border-t border-[#1a1c1f] md:grid-cols-2">
+            {features.map((f, k) => (
+              <li key={f.title} className={`grid grid-cols-[44px_1fr] gap-3 border-b ${RULE} py-6 md:px-4 ${k % 2 === 0 ? `md:border-r` : ""}`}>
+                <span className="font-mono text-[12px] tabular-nums text-[#8a8578]">{String(k + 1).padStart(2, "0")}</span>
+                <div className="min-w-0">
+                  <h3 className="font-serif text-[26px] leading-tight">{f.title}</h3>
+                  <p className={`mt-1 text-[15px] leading-relaxed ${MUTED}`}>{f.body}</p>
+                  <pre className="mt-3 whitespace-pre-wrap break-words border-l-2 border-[#0f7a47] bg-[#fbfaf6] px-3 py-2 font-mono text-[12px]">{f.example}</pre>
+                </div>
               </li>
             ))}
           </ol>
-          <div className="mt-4 grid gap-4 md:grid-cols-2">
-            <div className="flex items-center gap-5 rounded-xl border border-line bg-surface p-6">
-              <span className="font-mono text-[clamp(26px,3.5vw,36px)] font-bold tracking-tight text-err">~76,000</span>
-              <p className="text-[15px] text-muted">tokens to paste the 2,001-line Go outage log. Your context fills up fast.</p>
-            </div>
-            <div className="flex items-center gap-5 rounded-xl border border-signal/30 bg-surface p-6">
-              <span className="font-mono text-[clamp(26px,3.5vw,36px)] font-bold tracking-tight text-signal">~312</span>
-              <p className="text-[15px] text-muted">tokens for the комп summary. Claude still finds the outage, the retries and the 503s.</p>
-            </div>
-          </div>
-        </Section>
-
-        {/* features */}
-        <Section label="§ 03 — what it keeps" line={LINE} mark={MARK} labelClass={LABEL} className="px-4 py-16 sm:px-6">
-          <h2 className="mb-3 text-[clamp(28px,4vw,40px)] font-semibold leading-tight tracking-[-0.025em]">Shorter, without losing the plot.</h2>
-          <p className="mb-10 max-w-[620px] text-[17px] text-muted">комп is lossy on purpose: it drops repetition, not meaning.</p>
-          <div className={`grid border-l border-t border-dashed ${LINE} sm:grid-cols-2 lg:grid-cols-3`}>
-            {features.map((f) => (
-              <div key={f.title} className={`relative border-b border-r border-dashed ${LINE} p-6`}>
-                <h3 className="mb-2 text-lg font-semibold">{f.title}</h3>
-                <p className="mb-4 text-[15px] text-muted">{f.body}</p>
-                <pre className="whitespace-pre-wrap break-words rounded-lg border border-line bg-ink p-3 font-mono text-xs text-muted">{f.example}</pre>
-              </div>
-            ))}
-          </div>
-          <div className="mt-8 flex flex-wrap gap-2">
-            {formats.map((f) => (
-              <span key={f} className="rounded-full border border-line bg-surface px-3 py-1 font-mono text-xs">{f}</span>
-            ))}
-          </div>
-        </Section>
+          <p className="mt-6 font-mono text-[12px] text-[#5d594f]">Reads: {formats.join(" · ")}</p>
+        </section>
 
         {/* tools */}
-        <Section label="§ 04 — mcp tools" line={LINE} mark={MARK} labelClass={LABEL} className="px-4 py-16 sm:px-6">
-          <h2 className="mb-8 text-[clamp(28px,4vw,40px)] font-semibold leading-tight tracking-[-0.025em]">Three tools Claude can call.</h2>
-          <div className={`divide-y divide-dashed divide-white/[0.09] border border-dashed ${LINE}`}>
-            {tools.map((t) => (
-              <div key={t.name} className="grid gap-1 p-5 md:grid-cols-[240px_1fr_1.2fr] md:gap-4">
-                <code className="font-mono text-sm text-signal">{t.name}</code>
-                <span className="font-mono text-[13px] text-muted">{t.args}</span>
-                <span className="text-[15px] text-muted">{t.source}</span>
-              </div>
-            ))}
-          </div>
-        </Section>
+        <section className="pt-20">
+          <SectionHead n="5" title="Three tools" kicker="комп speaks the Model Context Protocol over stdio. Claude Code starts it in the background." />
+          <table className="w-full border-collapse text-left">
+            <thead>
+              <tr className="border-y border-[#1a1c1f] font-mono text-[11px] uppercase tracking-[0.12em] text-[#8a8578]">
+                <th className="py-2 pr-4 font-normal">Tool</th>
+                <th className="hidden py-2 pr-4 font-normal md:table-cell">Arguments</th>
+                <th className="py-2 font-normal">Reads from</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tools.map((t) => (
+                <tr key={t.name} className={`border-b ${RULE} align-top`}>
+                  <td className="py-3 pr-4 font-mono text-[13px] text-[#0f7a47]">{t.name}</td>
+                  <td className="hidden py-3 pr-4 font-mono text-[12px] text-[#5d594f] md:table-cell">{t.args}</td>
+                  <td className="py-3 text-[15px]">{t.source}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+      </div>
 
-        {/* install */}
-        <Section id="install" label="§ 05 — install" line={LINE} mark={MARK} labelClass={LABEL} className="px-4 py-16 sm:px-6">
-          <h2 className="mb-8 text-[clamp(28px,4vw,40px)] font-semibold leading-tight tracking-[-0.025em]">Two commands.</h2>
-          <div className="grid gap-4 md:grid-cols-2">
+      {/* install over Plate II — a dithered gradient */}
+      <section id="install" className="relative mt-24 overflow-hidden border-y border-[#1a1c1f]">
+        <DitherPlate className="absolute inset-0" />
+        <div className="relative mx-auto max-w-[1240px] px-4 py-16 sm:px-8 sm:py-24">
+          <div className="max-w-[720px] border border-[#1a1c1f] bg-[#f3f0e8] p-6 shadow-[8px_8px_0_#1a1c1f] sm:p-10">
+            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-[#8a8578]">§ 6 · Installation</p>
+            <h2 className="mt-2 font-serif text-[clamp(36px,5vw,60px)] leading-none">Two commands.</h2>
             {[
-              { n: "1", title: "Install комп", cmd: commands.install, note: "Checks the SHA-256 and installs to ~/.local/bin. Windows: download the .zip from Releases." },
-              { n: "2", title: "Connect to Claude Code", cmd: commands.connect, note: "Teams can commit a .mcp.json instead." },
-            ].map((c) => (
-              <div key={c.n} className="rounded-xl border border-line bg-surface p-6">
-                <h3 className="mb-4 flex items-center gap-3 text-lg font-semibold">
-                  <span className="rounded-md bg-signal/10 px-2 py-0.5 font-mono text-xs text-signal">{c.n}</span>
-                  {c.title}
-                </h3>
+              ["Install the binary", commands.install],
+              ["Connect it to Claude Code", commands.connect],
+            ].map(([label, cmd], k) => (
+              <div key={label} className="mt-6">
+                <p className="mb-2 text-[15px]">
+                  <span className="mr-2 font-mono text-[12px] text-[#8a8578]">{k + 1}.</span>
+                  {label}
+                </p>
                 <div className="relative">
-                  <pre className="whitespace-pre-wrap break-all rounded-lg border border-line bg-ink py-3 pl-3.5 pr-20 font-mono text-[13px]">{c.cmd}</pre>
-                  <CopyButton text={c.cmd} className="absolute right-2 top-2 rounded-md border border-line bg-surface-2 px-2.5 py-1 font-mono text-xs hover:border-muted" />
+                  <pre className="whitespace-pre-wrap break-all border border-[#1a1c1f] bg-[#fbfaf6] py-3 pl-3.5 pr-20 font-mono text-[13px]">{cmd}</pre>
+                  <CopyButton text={cmd} className="absolute right-2 top-2 bg-[#1a1c1f] px-2.5 py-1 font-mono text-[11px] uppercase text-[#f6f3ec] hover:bg-[#0f7a47]" />
                 </div>
-                <p className="mt-3 text-sm text-muted">{c.note}</p>
               </div>
             ))}
+            <p className={`mt-6 text-[14px] ${MUTED}`}>Then copy some logs and ask Claude what&apos;s wrong in the logs you copied.</p>
           </div>
-        </Section>
+        </div>
+      </section>
 
+      <div className="mx-auto max-w-[1240px] px-4 sm:px-8">
         {/* faq */}
-        <Section label="§ 06 — faq" line={LINE} mark={MARK} labelClass={LABEL} className="px-4 py-16 sm:px-6">
-          <div className="max-w-[780px]">
+        <section className="pt-20">
+          <SectionHead n="7" title="Questions" kicker="Short answers." />
+          <dl className="grid gap-x-12 md:grid-cols-2">
             {faqs.map((f) => (
-              <details key={f.q} className={`group border-b border-dashed ${LINE} py-5`}>
-                <summary className="flex cursor-pointer list-none justify-between gap-4 text-[17px] font-semibold [&::-webkit-details-marker]:hidden">
-                  {f.q}
-                  <span className="font-mono text-faint group-open:rotate-45 transition-transform">+</span>
-                </summary>
-                <p className="mt-2 text-muted">{f.a}</p>
-              </details>
+              <div key={f.q} className={`border-t ${RULE} py-5`}>
+                <dt className="font-serif text-[24px] leading-tight">{f.q}</dt>
+                <dd className={`mt-2 text-[15px] leading-relaxed ${MUTED}`}>{f.a}</dd>
+              </div>
             ))}
-          </div>
-        </Section>
+          </dl>
+        </section>
 
-        {/* closing */}
-        <Section line={LINE} mark={MARK} className="relative overflow-hidden px-4 py-24 text-center sm:px-6">
-          <BlackHole color="signal" className="mx-auto mb-10 w-full max-w-[560px] opacity-80" />
-          <h2 className="mb-4 text-[clamp(28px,4vw,44px)] font-semibold tracking-[-0.03em]">Stop paying to read the same line 400 times.</h2>
-          <p className="mb-8 text-muted">Install комп, copy your logs, and ask Claude what&apos;s wrong.</p>
-          <a href={links.github} className="inline-block rounded-xl bg-paper px-5 py-3 font-semibold text-ink hover:bg-white">Get комп</a>
-        </Section>
-
-        <DitherBand flip />
-        <footer className={`relative flex flex-wrap justify-between gap-4 border-t border-dashed ${LINE} px-4 py-8 pb-24 text-sm text-faint sm:px-6`}>
-          <Plus className={MARK} style={{ left: 0, top: 0 }} />
-          <Plus className={MARK} style={{ left: "100%", top: 0 }} />
-          <span>комп · MIT · by <a href={links.author} className="text-muted hover:text-paper">samchinmaya</a></span>
-          <nav className="flex gap-5">
-            <a href={links.github} className="hover:text-paper">GitHub</a>
-            <a href={links.releases} className="hover:text-paper">Releases</a>
-            <a href={links.readme} className="hover:text-paper">Docs</a>
-          </nav>
+        {/* colophon */}
+        <footer className="mt-20 grid gap-6 border-t border-[#1a1c1f] py-8 font-mono text-[11px] leading-relaxed text-[#5d594f] md:grid-cols-3">
+          <p>
+            <span className="uppercase tracking-[0.14em] text-[#1a1c1f]">Colophon</span>
+            <br />
+            Set in Instrument Serif, Geist and Geist Mono. Figures are hand-coded SVG. Plate I is a grainy gradient; Plate II is a Bayer-dithered gradient.
+          </p>
+          <p>
+            Fig. 1 follows the Anatomy rules: one isometric camera, four tones, one lit part. Fig. 2 is an Archify-style lane diagram.
+          </p>
+          <p className="md:text-right">
+            комп {version} · MIT · <a href={links.author} className="underline underline-offset-4">samchinmaya</a>
+            <br />
+            <a href={links.github} className="underline underline-offset-4">github.com/samchinmaya/komp</a>
+          </p>
         </footer>
-      </Rail>
-
+      </div>
     </div>
   );
 }

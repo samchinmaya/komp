@@ -1,7 +1,6 @@
 """Ordered (Bayer) dither textures for the комп website. Plain Python, no dependencies.
 
-  web/public/dither-band-signal.png  top→bottom ramp in signal green, solid → nothing.
-                                     A texture strip above dark sections.
+  web/public/dither-plate.png        diagonal ramp in deep green: a dithered gradient plate.
 
     python3 scripts/gen_dither.py
 """
@@ -52,8 +51,8 @@ def smooth(t: float) -> float:
 if __name__ == "__main__":
     OUT.mkdir(parents=True, exist_ok=True)
     files = {
-        # solid at the top, gone by the bottom.
-        "dither-band-signal.png": render(1600, 160, 4, lambda u, v: 1 - smooth(v), (62, 224, 143)),
+        # "dither art gradient" plate: dense in the lower left, dissolving to the upper right.
+        "dither-plate.png": render(1200, 480, 4, lambda u, v: smooth(1.15 - ((1 - v) * 0.75 + u * 0.95)), (15, 122, 71)),
     }
     for name, data in files.items():
         (OUT / name).write_bytes(data)

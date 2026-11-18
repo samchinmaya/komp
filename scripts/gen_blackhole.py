@@ -1,4 +1,6 @@
-"""Render a dithered black hole for the комп website (plain Python, no dependencies).
+"""Render a dithered black hole (plain Python, no dependencies).
+
+Used by the earlier dark website design; the current homepage does not use these images.
 
 The scene: a black shadow, a thin photon ring, the lensed far side of the
 accretion disk arching over the top, a tilted disk in front (brighter on the
