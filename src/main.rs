@@ -1,6 +1,6 @@
 //! The `komp` command.
 
-use komp::{compress, input, mcp};
+use komp::{compress, guard, input, mcp};
 
 const HELP: &str = "\
 komp — compress DevOps/Kubernetes logs into a short summary for Claude
@@ -10,7 +10,11 @@ USAGE:
     komp <file>       compress a log file
     komp -            compress standard input   (kubectl logs api | komp -)
     komp serve        run as an MCP server on stdio (Claude Code starts this)
+    komp hook         stop chat messages with pasted logs (Claude Code hook)
     komp --help       show this help
+
+Secrets and personal data are removed first, on this machine. Clipboard text
+that does not look like logs is refused.
 
 The summary goes to stdout; the before/after size goes to stderr.";
 
@@ -29,16 +33,26 @@ fn main() {
             }
             return;
         }
+        Some("hook") => {
+            // A hook problem must never get in the way of an ordinary message.
+            if let Some(block) = input::stdin().ok().and_then(|event| guard::prompt_hook(&event)) {
+                println!("{block}");
+            }
+            return;
+        }
         Some("-") => input::stdin(),
         Some(path) => input::file(path),
         None => input::clipboard(),
     };
 
-    match raw {
-        Ok(text) => {
-            let summary = compress::compress(&text, &compress::Options::default());
-            println!("{}", summary.text);
+    // Only the clipboard can hold something the user did not mean to share.
+    let require_logs = arg.is_none();
+    match raw.and_then(|text| guard::check(&text, require_logs)) {
+        Ok(checked) => {
+            let summary = compress::compress(&checked.text, &compress::Options::default());
+            println!("{}", guard::redact(&summary.text).text);
             eprintln!("{}", summary.stats_line());
+            eprintln!("{}", checked.report.line());
         }
         Err(message) => {
             eprintln!("komp: {message}");
