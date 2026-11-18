@@ -3,6 +3,7 @@
 //! 2. the facts an engineer needs to debug are still in it.
 
 use komp::compress::{Options, compress};
+use komp::guard;
 
 fn check(input: &str, must_contain: &[&str]) -> String {
     let summary = compress(input, &Options::default());
@@ -71,4 +72,17 @@ fn kubelet_crash_loop() {
         include_str!("fixtures/kubelet-crashloop.log"),
         &["CrashLoopBackOff", "back-off 10–160s", "\"Probe failed\"", "connection refused\" ×100"],
     );
+}
+
+#[test]
+fn privacy_check_accepts_every_fixture_and_keeps_its_facts() {
+    for (log, fact) in [
+        (include_str!("fixtures/go-logfmt-db-outage.log"), "dial tcp 10.0.3.17:5432"),
+        (include_str!("fixtures/java-spring-npe.log"), "NullPointerException"),
+        (include_str!("fixtures/kubelet-crashloop.log"), "CrashLoopBackOff"),
+        (include_str!("fixtures/node-json-payments.log"), "card"),
+    ] {
+        let checked = guard::check(log, true).expect("a real log must pass");
+        assert!(checked.text.contains(fact));
+    }
 }
