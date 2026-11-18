@@ -76,9 +76,41 @@ the summary.
 │  (MCP client)    │ ◀──────────────────── │   src/mcp.rs   protocol   │
 └──────────────────┘     stdout            │   src/input.rs where logs │
                                            │                come from  │
+                                           │   src/guard.rs privacy   │
+                                           │                check      │
                                            │   src/compress.rs  the    │
                                            │                compressor │
                                            └───────────────────────────┘
+```
+
+### Privacy check
+
+Before anything is returned to Claude, комп checks the text on your machine:
+
+1. **Is it logs?** Clipboard text or a file that does not look like logs is refused,
+   and none of it is shared. A copied password, a `.env` file or an SSH key stops here.
+2. **Remove sensitive values.** API keys, tokens, passwords, cookies, private keys,
+   credentials in URLs, emails, card numbers, phone numbers and public IP addresses
+   become markers such as `[redacted:secret]`. Private IPs stay, because they are often
+   the clue in an outage.
+3. **Compress, then check the summary again.** The result ends with a line saying what
+   was removed.
+
+This is pattern matching, so it greatly reduces the risk but cannot recognise every
+secret.
+
+Text pasted straight into the chat does not go through комп. To stop pasted logs when you
+press Enter, add `komp hook` as a Claude Code `UserPromptSubmit` hook in
+`~/.claude/settings.json`:
+
+```json
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      { "hooks": [{ "type": "command", "command": "komp hook", "timeout": 5 }] }
+    ]
+  }
+}
 ```
 
 ## What the output looks like
