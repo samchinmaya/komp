@@ -23,7 +23,7 @@ export const links = {
   author: "https://github.com/samchinmaya",
 };
 
-export const version = "v0.1.0";
+export const version = "v0.2.0";
 
 export const commands = {
   install: "curl -fsSL https://raw.githubusercontent.com/samchinmaya/komp/master/install.sh | sh",

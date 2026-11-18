@@ -1,6 +1,6 @@
 [package]
 name = "komp"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2024"
 description = "Compress DevOps/Kubernetes logs into a short, meaningful summary so Claude spends fewer tokens reading them."
 license = "MIT"
