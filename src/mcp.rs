@@ -13,7 +13,7 @@
 //! all logging goes to stderr (`eprintln!`).
 
 use crate::compress::{Options, compress};
-use crate::input;
+use crate::{guard, input};
 use serde_json::{Value, json};
 use std::io::{self, BufRead, Write};
 
@@ -56,7 +56,9 @@ pub fn handle(message: &Value) -> Option<Value> {
             "instructions": "komp is a local log summariser the user installed for themselves; it \
                 runs on this machine and sends nothing anywhere. When the user says they copied logs, \
                 call compress_clipboard instead of running pbpaste or asking them to paste: raw logs \
-                cost the full token price, the summary costs a few hundred tokens.",
+                cost the full token price, the summary costs a few hundred tokens. Before anything is \
+                returned, komp refuses text that is not logs and removes secrets and personal data. \
+                Call its tools only for logs the user asked you to look at.",
         }),
         "ping" => json!({}),
         "tools/list" => json!({ "tools": tool_definitions() }),
@@ -83,9 +85,11 @@ fn tool_definitions() -> Value {
                 (Kubernetes, Docker, app logs; plain text, JSON, logfmt, klog). Runs entirely on this \
                 machine: a local program the user installed, nothing is sent anywhere. Returns one line \
                 per distinct message with ×counts, time ranges and value ranges; errors and warnings \
-                keep their values and stack traces. Use this whenever the user says they copied logs, \
-                and prefer it over reading the clipboard with shell commands (pbpaste, xclip) or asking \
-                the user to paste: those put thousands of raw log lines into the conversation.",
+                keep their values and stack traces. A local privacy check runs first: text that is not \
+                logs is refused, and secrets and personal data are removed. Use this whenever the user \
+                says they copied logs, and only then. Prefer it over reading the clipboard with shell \
+                commands (pbpaste, xclip) or asking the user to paste: those skip the privacy check and \
+                put thousands of raw log lines into the conversation.",
             "inputSchema": {
                 "type": "object",
                 "properties": { "max_entries": max_entries },
@@ -94,7 +98,8 @@ fn tool_definitions() -> Value {
         },
         {
             "name": "compress_file",
-            "description": "Compress a log file on the user's machine (same output as compress_clipboard).",
+            "description": "Compress a log file on the user's machine (same output and privacy check as \
+                compress_clipboard). Files that are not logs are refused.",
             "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -108,7 +113,7 @@ fn tool_definitions() -> Value {
         {
             "name": "compress_kubectl_logs",
             "description": "Run `kubectl logs --timestamps` for a pod with the user's current kube \
-                context and return the compressed result.",
+                context and return the compressed result, after the same privacy check.",
             "inputSchema": {
                 "type": "object",
                 "properties": {
@@ -157,13 +162,29 @@ fn call_tool(params: &Value) -> Value {
     match raw {
         Ok(logs) if logs.trim().is_empty() => tool_result("No log text found: the input was empty.", true),
         Ok(logs) => {
-            let max_entries = args["max_entries"].as_u64().map_or(80, |n| n.clamp(5, 500) as usize);
-            let summary = compress(&logs, &Options { max_entries, ..Options::default() });
-            eprintln!("{}", summary.stats_line());
-            tool_result(&format!("{}\n{}", summary.text, summary.stats_line()), false)
+            // kubectl output is logs by definition; a clipboard or a path might be anything.
+            let require_logs = name != "compress_kubectl_logs";
+            match guard::check(&logs, require_logs) {
+                Ok(checked) => summarise(&checked, args),
+                Err(message) => tool_result(&message, true),
+            }
         }
         Err(message) => tool_result(&message, true),
     }
+}
+
+/// Only checked text gets here, and the finished summary is checked once more.
+fn summarise(checked: &guard::Checked, args: &Value) -> Value {
+    let max_entries = args["max_entries"].as_u64().map_or(80, |n| n.clamp(5, 500) as usize);
+    let summary = compress(&checked.text, &Options { max_entries, ..Options::default() });
+    let output = guard::redact(&summary.text);
+    let privacy = guard::Report {
+        secrets: checked.report.secrets + output.report.secrets,
+        personal: checked.report.personal + output.report.personal,
+    };
+    eprintln!("{}", summary.stats_line());
+    eprintln!("{}", privacy.line());
+    tool_result(&format!("{}\n{}\n{}", output.text, summary.stats_line(), privacy.line()), false)
 }
 
 fn tool_result(text: &str, is_error: bool) -> Value {
@@ -207,6 +228,38 @@ mod tests {
     fn unknown_method_is_an_error() {
         let reply = handle(&json!({ "jsonrpc": "2.0", "id": 7, "method": "nope" })).unwrap();
         assert_eq!(reply["error"]["code"], -32601);
+    }
+
+    fn call_on_file(name: &str, contents: &str) -> Value {
+        let path = std::env::temp_dir().join(format!("komp-{}-{name}", std::process::id()));
+        std::fs::write(&path, contents).unwrap();
+        let reply = handle(&json!({
+            "jsonrpc": "2.0", "id": 3, "method": "tools/call",
+            "params": { "name": "compress_file", "arguments": { "path": path } }
+        }))
+        .unwrap();
+        std::fs::remove_file(&path).unwrap();
+        reply["result"].clone()
+    }
+
+    #[test]
+    fn secrets_never_reach_the_tool_result() {
+        let result = call_on_file(
+            "secrets.log",
+            "2026-11-18T10:00:00Z ERROR login failed password=hunter2 user=a@example.com\n",
+        );
+        let text = result["content"][0]["text"].as_str().unwrap();
+        assert_eq!(result["isError"], false);
+        assert!(!text.contains("hunter2") && !text.contains("a@example.com"), "{text}");
+        assert!(text.contains("removed 1 secret(s) and 1 personal detail(s)"), "{text}");
+    }
+
+    #[test]
+    fn files_that_are_not_logs_are_refused_without_being_quoted() {
+        let result = call_on_file("dotenv", "DATABASE_PASSWORD=hunter2\nAPI_KEY=abc123\n");
+        let text = result["content"][0]["text"].as_str().unwrap();
+        assert_eq!(result["isError"], true);
+        assert!(text.contains("does not look like logs") && !text.contains("hunter2"), "{text}");
     }
 
     #[test]
