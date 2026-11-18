@@ -1,0 +1,16 @@
+{
+  "name": "komp-monorepo",
+  "private": true,
+  "packageManager": "npm@10.9.9",
+  "workspaces": [
+    "web"
+  ],
+  "scripts": {
+    "dev": "turbo run dev --filter=web",
+    "build": "turbo run build --filter=web",
+    "lint": "turbo run lint --filter=web"
+  },
+  "devDependencies": {
+    "turbo": "^2.11.13"
+  }
+}
