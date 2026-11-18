@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Comfortaa, Geist, Geist_Mono } from "next/font/google";
+import { SiteBackground } from "@/components/manual/Grainient";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,11 +13,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin", "cyrillic"],
 });
 
-const instrumentSerif = Instrument_Serif({
-  variable: "--font-instrument-serif",
-  weight: "400",
-  style: ["normal", "italic"],
-  subsets: ["latin"],
+// Headlines: rounded, even strokes, closest to the hand-drawn комп logo.
+const comfortaa = Comfortaa({
+  variable: "--font-comfortaa",
+  subsets: ["latin", "cyrillic"],
 });
 
 const title = "комп · log compression for Claude";
@@ -31,12 +31,15 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title, description },
 };
 
-export const viewport: Viewport = { themeColor: "#f3f0e8" };
+export const viewport: Viewport = { themeColor: "#03060b" };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} h-full bg-[#f3f0e8] antialiased`}>
-      <body className="min-h-full overflow-x-hidden">{children}</body>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${comfortaa.variable} h-full bg-[#03060b] antialiased`}>
+      <body className="min-h-full overflow-x-hidden">
+        <SiteBackground />
+        {children}
+      </body>
     </html>
   );
 }
