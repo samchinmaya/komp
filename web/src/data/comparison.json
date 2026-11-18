@@ -1,0 +1,192 @@
+{
+ "recorded": "2026-11-18",
+ "factCount": 14,
+ "methods": [
+  {
+   "key": "raw",
+   "label": "the whole log",
+   "tokens": 215906,
+   "kept": 14
+  },
+  {
+   "key": "uniq",
+   "label": "sort | uniq -c",
+   "tokens": 212899,
+   "kept": 14
+  },
+  {
+   "key": "grep",
+   "label": "grep errors and warnings",
+   "tokens": 35083,
+   "kept": 9
+  },
+  {
+   "key": "tail",
+   "label": "tail -n 100",
+   "tokens": 17259,
+   "kept": 10
+  },
+  {
+   "key": "komp",
+   "label": "комп",
+   "tokens": 1137,
+   "kept": 14
+  }
+ ],
+ "facts": [
+  {
+   "log": "Go",
+   "fact": "database connection refused",
+   "kept": {
+    "raw": true,
+    "uniq": true,
+    "grep": true,
+    "tail": false,
+    "komp": true
+   }
+  },
+  {
+   "log": "Go",
+   "fact": "final fatal error",
+   "kept": {
+    "raw": true,
+    "uniq": true,
+    "grep": true,
+    "tail": true,
+    "komp": true
+   }
+  },
+  {
+   "log": "Go",
+   "fact": "503 responses during the outage",
+   "kept": {
+    "raw": true,
+    "uniq": true,
+    "grep": false,
+    "tail": false,
+    "komp": true
+   }
+  },
+  {
+   "log": "Go",
+   "fact": "retry attempts",
+   "kept": {
+    "raw": true,
+    "uniq": true,
+    "grep": true,
+    "tail": false,
+    "komp": true
+   }
+  },
+  {
+   "log": "Go",
+   "fact": "time the outage began",
+   "kept": {
+    "raw": true,
+    "uniq": true,
+    "grep": true,
+    "tail": false,
+    "komp": true
+   }
+  },
+  {
+   "log": "Spring Boot",
+   "fact": "NullPointerException",
+   "kept": {
+    "raw": true,
+    "uniq": true,
+    "grep": true,
+    "tail": true,
+    "komp": true
+   }
+  },
+  {
+   "log": "Spring Boot",
+   "fact": "line of code that failed",
+   "kept": {
+    "raw": true,
+    "uniq": true,
+    "grep": false,
+    "tail": true,
+    "komp": true
+   }
+  },
+  {
+   "log": "kubelet",
+   "fact": "CrashLoopBackOff",
+   "kept": {
+    "raw": true,
+    "uniq": true,
+    "grep": true,
+    "tail": true,
+    "komp": true
+   }
+  },
+  {
+   "log": "kubelet",
+   "fact": "failed health probe",
+   "kept": {
+    "raw": true,
+    "uniq": true,
+    "grep": false,
+    "tail": true,
+    "komp": true
+   }
+  },
+  {
+   "log": "kubelet",
+   "fact": "probe connection refused",
+   "kept": {
+    "raw": true,
+    "uniq": true,
+    "grep": false,
+    "tail": true,
+    "komp": true
+   }
+  },
+  {
+   "log": "Node.js",
+   "fact": "failed charge",
+   "kept": {
+    "raw": true,
+    "uniq": true,
+    "grep": true,
+    "tail": true,
+    "komp": true
+   }
+  },
+  {
+   "log": "Node.js",
+   "fact": "card declined message",
+   "kept": {
+    "raw": true,
+    "uniq": true,
+    "grep": true,
+    "tail": true,
+    "komp": true
+   }
+  },
+  {
+   "log": "Node.js",
+   "fact": "line of code that failed",
+   "kept": {
+    "raw": true,
+    "uniq": true,
+    "grep": true,
+    "tail": true,
+    "komp": true
+   }
+  },
+  {
+   "log": "Node.js",
+   "fact": "fraud-check upstream",
+   "kept": {
+    "raw": true,
+    "uniq": true,
+    "grep": false,
+    "tail": true,
+    "komp": true
+   }
+  }
+ ]
+}

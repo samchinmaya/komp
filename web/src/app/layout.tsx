@@ -30,12 +30,12 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title, description },
 };
 
-export const viewport: Viewport = { themeColor: "#03060b" };
+export const viewport: Viewport = { themeColor: "#000000" };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${comfortaa.variable} h-full bg-[#03060b] antialiased`}>
-      <body className="min-h-full overflow-x-clip bg-night text-snow">
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${comfortaa.variable} h-full bg-black antialiased`}>
+      <body className="min-h-full overflow-x-clip text-snow">
         {children}
       </body>
     </html>
