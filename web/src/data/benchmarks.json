@@ -2,7 +2,7 @@
  "recorded": "2026-11-18",
  "runs": 41,
  "scaleRuns": 15,
- "binaryMB": 1.98,
+ "binaryMB": 2.03,
  "system": {
   "chip": "Apple M5",
   "cores": 10,
@@ -16,94 +16,94 @@
    "label": "Go",
    "lines": 2001,
    "sizeMB": 0.29,
-   "ms": 33.18,
-   "cpuMs": 30.35,
-   "memoryMB": 15.69,
-   "memoryShare": 0.096,
-   "mbPerSecond": 8.7
+   "ms": 26.69,
+   "cpuMs": 24.7,
+   "memoryMB": 15.84,
+   "memoryShare": 0.097,
+   "mbPerSecond": 10.9
   },
   {
    "key": "java",
    "label": "Spring Boot",
    "lines": 1350,
    "sizeMB": 0.157,
-   "ms": 24.44,
-   "cpuMs": 22.16,
-   "memoryMB": 15.58,
-   "memoryShare": 0.095,
-   "mbPerSecond": 6.4
+   "ms": 20.2,
+   "cpuMs": 18.26,
+   "memoryMB": 15.67,
+   "memoryShare": 0.096,
+   "mbPerSecond": 7.8
   },
   {
    "key": "node",
    "label": "Node.js",
    "lines": 1200,
    "sizeMB": 0.227,
-   "ms": 24.33,
-   "cpuMs": 21.93,
-   "memoryMB": 13.88,
+   "ms": 20.52,
+   "cpuMs": 18.61,
+   "memoryMB": 13.97,
    "memoryShare": 0.085,
-   "mbPerSecond": 9.3
+   "mbPerSecond": 11.1
   },
   {
    "key": "k8s",
    "label": "kubelet",
    "lines": 700,
    "sizeMB": 0.149,
-   "ms": 25.08,
-   "cpuMs": 22.78,
-   "memoryMB": 15.09,
-   "memoryShare": 0.092,
-   "mbPerSecond": 6.0
+   "ms": 19.6,
+   "cpuMs": 17.7,
+   "memoryMB": 14.88,
+   "memoryShare": 0.091,
+   "mbPerSecond": 7.6
   }
  ],
  "scale": [
   {
    "lines": 2001,
    "sizeMB": 0.29,
-   "ms": 30.88,
-   "cpuMs": 28.65,
-   "memoryMB": 15.67,
-   "memoryShare": 0.096
+   "ms": 26.41,
+   "cpuMs": 24.39,
+   "memoryMB": 15.81,
+   "memoryShare": 0.097
   },
   {
    "lines": 4002,
    "sizeMB": 0.58,
-   "ms": 43.73,
-   "cpuMs": 41.21,
-   "memoryMB": 16.88,
-   "memoryShare": 0.103
+   "ms": 38.48,
+   "cpuMs": 36.26,
+   "memoryMB": 17.56,
+   "memoryShare": 0.107
   },
   {
    "lines": 10005,
    "sizeMB": 1.45,
-   "ms": 82.11,
-   "cpuMs": 79.19,
-   "memoryMB": 22.05,
-   "memoryShare": 0.135
+   "ms": 75.19,
+   "cpuMs": 72.43,
+   "memoryMB": 25.12,
+   "memoryShare": 0.153
   },
   {
    "lines": 20010,
    "sizeMB": 2.9,
-   "ms": 142.26,
-   "cpuMs": 139.47,
-   "memoryMB": 33.62,
-   "memoryShare": 0.205
+   "ms": 136.12,
+   "cpuMs": 132.55,
+   "memoryMB": 39.7,
+   "memoryShare": 0.242
   },
   {
    "lines": 50025,
    "sizeMB": 7.24,
-   "ms": 331.07,
-   "cpuMs": 326.44,
-   "memoryMB": 60.62,
-   "memoryShare": 0.37
+   "ms": 318.5,
+   "cpuMs": 314.92,
+   "memoryMB": 74.97,
+   "memoryShare": 0.458
   },
   {
    "lines": 100050,
    "sizeMB": 14.49,
-   "ms": 638.88,
-   "cpuMs": 635.13,
-   "memoryMB": 107.02,
-   "memoryShare": 0.653
+   "ms": 631.64,
+   "cpuMs": 627.56,
+   "memoryMB": 131.52,
+   "memoryShare": 0.803
   }
  ]
 }

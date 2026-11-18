@@ -19,9 +19,9 @@ Compress DevOps and Kubernetes logs into a short, meaningful summary, so Claude
 spends a few hundred tokens reading them instead of tens of thousands.
 
 ```
-2,001 lines of Go service logs   ~76,000 tokens  →  11 lines   ~310 tokens
-1,350 lines of Spring Boot logs  ~41,000 tokens  →   8 lines   ~200 tokens
-1,200 lines of Node JSON logs    ~60,000 tokens  →  10 lines   ~310 tokens
+2,001 lines of Go service logs   ~76,000 tokens  →  12 lines   ~340 tokens
+1,350 lines of Spring Boot logs  ~41,000 tokens  →   9 lines   ~220 tokens
+1,200 lines of Node JSON logs    ~60,000 tokens  →  10 lines   ~300 tokens
   700 lines of kubelet logs      ~39,000 tokens  →   7 lines   ~320 tokens
 ```
 
@@ -130,7 +130,7 @@ Input (7 lines):
 Output:
 
 ```
-[komp] 7 lines → 3 entries · 2026-11-18 10:00:01–10:00:07 · [pod/api-7d9f-x2k4]
+[komp] 7 lines → 3 templates, 3 entries · 2026-11-18 10:00:01–10:00:07 · [pod/api-7d9f-x2k4]
 levels: ERROR 2 · WARN 1 · INFO 4
 10:00:01–10:00:07 INFO  GET /health 200 1–3ms ×4
 10:00:04–10:00:05 ERROR db connection refused: 10.0.3.17:5432 ×2
@@ -146,9 +146,12 @@ the clipboard: text in, text out.
 |---|---|---|
 | **1. parse** | split into records: timestamp, level, message, stack-trace lines. Understands plain text, JSON (incl. pino), logfmt, klog, syslog | `2026-…Z ERROR db refused` → time `10:00:04`, level `ERROR`, message `db refused` |
 | **2. hoist** | what *every* line shares moves into the header once | `[pod/api-7d9f-x2k4]`, `service=orders` |
-| **3. templatize** | variable parts become slots | `GET /health 200 2ms` → `GET /health ␁ ␁` + values `200`, `2ms` |
-| **4. group** | same level + same template → one group with count, time range, all slot values | 4 health checks → 1 group |
-| **5. render** | one line per group; slot values summarised | `200` (one value), `1–3ms` (range), `{200\|503}` (few values), `{32+ distinct, e.g. 7432…}` (many IDs) |
+| **3. mine** | [Drain](https://github.com/logpai/Drain3)-style template mining in `src/drain.rs`: whitespace tokens, masks for IDs, IPs, hex and numbers, a fixed-depth tree and a similarity check. Compact punctuation-heavy lines are split by character class | `user alice logged in`, `user bob logged in` → one template |
+| **4. group** | tokens that differ inside a template become slots, with count, time range and all slot values | `status=200`, `status=503` → `status=␁` |
+| **5. render** | template and entry counts, one line per group, slot summaries, and a real sample when an important line's values were abbreviated | `200` (one value), `1–3ms` (range), `{200\|503}` (few values), `{32+ distinct, e.g. 7432…}` (many IDs) |
+
+Ordinary lines use Drain3's default similarity threshold of 0.4. Warnings and errors use
+0.7, so different failures that merely start the same way stay separate.
 
 Rules that keep the meaning:
 
@@ -159,6 +162,35 @@ Rules that keep the meaning:
 - **Exceptions join their error**: `ERROR request failed` followed by `java.lang.NullPointerException: …` (or a Python `ZeroDivisionError: …`) becomes one entry, `ERROR request failed → java.lang.NullPointerException: …`. Different exceptions stay separate entries.
 - **Stack traces print once** per group, with runs of framework frames (Spring, Tomcat, `node_modules`…) folded into `… 12 framework frames`.
 - **Nothing silently disappears**: if there are more than 80 patterns, the rarest low-severity ones are dropped and the output says how many lines were omitted.
+
+## Benchmarks
+
+Measured with `scripts/benchmark.py` and `scripts/compare.py` on an Apple M5 Mac with 16 GB of
+memory while other apps were running. Each time and memory figure is a median. Results will
+differ on other machines.
+
+| test log | lines | time | peak memory | tokens before → after |
+|---|---:|---:|---:|---:|
+| Go | 2,001 | 27 ms | 15.8 MB | ~75,958 → ~344 |
+| Spring Boot | 1,350 | 20 ms | 15.7 MB | ~41,216 → ~220 |
+| Node.js | 1,200 | 21 ms | 14.0 MB | ~59,552 → ~295 |
+| kubelet | 700 | 20 ms | 14.9 MB | ~39,180 → ~318 |
+
+Repeating the Go log to 100,050 lines (14.5 MB) took 632 ms and 131.5 MB of peak memory, 0.80%
+of system memory.
+
+Across all four logs, against common shell shortcuts:
+
+| method | tokens | facts kept |
+|---|---:|---:|
+| the whole log | ~215,906 | 14 of 14 |
+| `sort \| uniq -c` | ~212,899 | 14 of 14 |
+| `grep` for errors and warnings | ~35,083 | 9 of 14 |
+| `tail -n 100` | ~17,259 | 10 of 14 |
+| комп | ~1,177 | 14 of 14 |
+
+Tokens are estimated at about 4 characters each. The facts come from komp's own tests, and komp
+was built against these logs, so expect smaller gaps on other logs.
 
 ## Use it
 
@@ -190,16 +222,18 @@ opens it in Claude Code (with komp installed) gets the tools automatically:
 ```
 src/
   main.rs      the `komp` command: picks an input, prints the summary
-  lib.rs       declares the three modules below
+  lib.rs       declares the modules below
   compress.rs  the compressor (+ unit tests at the bottom)
+  drain.rs     Drain template mining, tokenizing and masks
   input.rs     clipboard, file, stdin, kubectl
   mcp.rs       the MCP server: JSON-RPC over stdio (+ protocol tests)
 tests/
   fixtures/    realistic logs: Go/logfmt, Node/JSON, Java/Spring, kubelet/klog
   fixtures.rs  checks each is ≥95% smaller and still contains the key facts
 brand/         logo, favicons, app icons
-web/           the website (Next.js + Tailwind), deployed to GitHub Pages
-scripts/       demo data, dithered black hole and texture generators for the site
+web/           the website (Next.js + Tailwind), a Turborepo workspace deployed to GitHub Pages
+scripts/       benchmarks, comparison and demo data, plus image generators for the site
+.claude/       the maintenance skill for working on this repository
 ```
 
 ## Brand
@@ -229,6 +263,11 @@ Colours: ink `#0F1419`, paper `#E8ECF1`.
 cargo test                 # unit tests + fixture tests
 cargo build --release      # build target/release/komp
 cargo install --path .     # install your local build as `komp`
+
+npm ci                     # install the website workspace
+npm run dev                # run the website through Turborepo
+npm run lint               # lint the website
+npm run build              # build the website
 ```
 
 Releases: push a tag like `v0.2.0`. The Release workflow builds macOS
