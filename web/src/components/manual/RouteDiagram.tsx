@@ -4,16 +4,17 @@ import { useEffect, useState } from "react";
 
 /*
  * Fig. 2 — the round trip, as an Archify-style lane diagram: three lanes,
- * orthogonal arrows, a legend, and a reader-controlled step-through.
+ * orthogonal arrows and a reader-controlled step-through.
  * Motion only highlights; it never moves the layout.
  */
 
 type Kind = "data" | "local" | "client" | "model";
-const KIND: Record<Kind, { label: string; fill: string; stroke: string; text: string }> = {
-  data: { label: "Data on your machine", fill: "#ffffff", stroke: "#1a1c1f", text: "#1a1c1f" },
-  local: { label: "Local process", fill: "#1a1c1f", stroke: "#1a1c1f", text: "#f6f3ec" },
-  client: { label: "MCP client", fill: "#dfe6f3", stroke: "#3b5590", text: "#1f3263" },
-  model: { label: "Model", fill: "#d7f5e5", stroke: "#0f7a47", text: "#0b5a35" },
+const DARK = { fill: "#121c26", stroke: "#6b7d8e", text: "#edf2f6" };
+const KIND: Record<Kind, { fill: string; stroke: string; text: string }> = {
+  data: DARK,
+  local: { fill: "#edf2f6", stroke: "#edf2f6", text: "#081018" },
+  client: DARK,
+  model: DARK,
 };
 
 const W = 150;
@@ -64,18 +65,15 @@ export function RouteDiagram() {
   const on = (n: NodeId) => s.nodes.includes(n);
 
   return (
-    <figure className="relative border border-[#1a1c1f]/80 bg-[#f6f3ec]">
-      <span className="absolute left-3 top-2.5 font-mono text-[11px] uppercase tracking-[0.12em]">Fig. 2</span>
-      <span className="absolute right-3 top-2.5 font-serif text-[15px] italic">The round trip</span>
-
-      <div className="overflow-x-auto px-4 pb-4 pt-10">
+    <figure className="relative">
+      <div className="overflow-x-auto pb-4">
         <svg viewBox="0 0 980 380" className="block w-full min-w-[720px]" role="img" aria-label="Diagram of the MCP round trip between your machine, Claude Code and Claude">
           <defs>
             <marker id="rd-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto">
-              <path d="M0 0L8 4L0 8Z" fill="#1a1c1f" />
+              <path d="M0 0L8 4L0 8Z" fill="#edf2f6" />
             </marker>
             <marker id="rd-arrow-on" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" orient="auto">
-              <path d="M0 0L8 4L0 8Z" fill="#0f7a47" />
+              <path d="M0 0L8 4L0 8Z" fill="#edf2f6" />
             </marker>
           </defs>
 
@@ -86,8 +84,8 @@ export function RouteDiagram() {
             ["Claude · model", 260],
           ].map(([label, y]) => (
             <g key={label as string}>
-              <rect x="10" y={y as number} width="960" height="110" fill="none" stroke="#1a1c1f" strokeOpacity="0.2" strokeDasharray="3 4" />
-              <text x="24" y={(y as number) + 64} className="font-mono" fontSize="11" fill="#8a8578" letterSpacing="0.06em">
+              <rect x="10" y={y as number} width="960" height="110" fill="none" stroke="#edf2f6" strokeOpacity="0.2" strokeDasharray="3 4" />
+              <text x="24" y={(y as number) + 64} className="font-mono" fontSize="11" fill="#a9b9c8" letterSpacing="0.06em">
                 {(label as string).toUpperCase()}
               </text>
             </g>
@@ -101,14 +99,14 @@ export function RouteDiagram() {
                 <path
                   d={e.d}
                   fill="none"
-                  stroke={active ? "#0f7a47" : "#1a1c1f"}
+                  stroke={active ? "#edf2f6" : "#edf2f6"}
                   strokeOpacity={active ? 1 : 0.35}
                   strokeWidth={active ? 2 : 1.2}
                   markerEnd={`url(#${active ? "rd-arrow-on" : "rd-arrow"})`}
                   className={active ? "rd-flow" : undefined}
                 />
                 {e.label && (
-                  <text x={e.lx} y={e.ly} fontSize="11" className="font-mono" fill={active ? "#0f7a47" : "#8a8578"} textAnchor={e.lx! > 650 ? "start" : "middle"}>
+                  <text x={e.lx} y={e.ly} fontSize="11" className="font-mono" fill={active ? "#edf2f6" : "#a9b9c8"} textAnchor={e.lx! > 650 ? "start" : "middle"}>
                     {e.label}
                   </text>
                 )}
@@ -123,7 +121,7 @@ export function RouteDiagram() {
             const active = on(id);
             return (
               <g key={id} opacity={active ? 1 : 0.42} style={{ transition: "opacity 240ms cubic-bezier(0.22,1,0.36,1)" }}>
-                <rect x={n.x} y={n.y} width={W} height={H} fill={k.fill} stroke={active ? "#0f7a47" : k.stroke} strokeWidth={active ? 2 : 1} />
+                <rect x={n.x} y={n.y} width={W} height={H} fill={k.fill} stroke={active ? "#edf2f6" : k.stroke} strokeWidth={active ? 2 : 1} />
                 <text x={n.x + 12} y={n.y + 20} fontSize="13" fontWeight="600" fill={k.text}>
                   {n.title}
                 </text>
@@ -136,34 +134,26 @@ export function RouteDiagram() {
         </svg>
       </div>
 
-      {/* step-through + legend, outside the drawing */}
-      <div className="grid gap-4 border-t border-[#1a1c1f]/20 px-4 py-4 md:grid-cols-[1fr_auto] md:items-end">
+      {/* step-through, outside the drawing */}
+      <div className="grid gap-4 border-t border-white/10 py-4 md:grid-cols-[1fr_auto] md:items-end">
         <div aria-live="polite">
-          <p className="mb-1 font-mono text-[11px] uppercase tracking-[0.12em] text-[#8a8578]">
+          <p className="mb-1 text-[13px] text-[#a9b9c8]">
             Step {step + 1} / {STEPS.length} — {s.title}
           </p>
           <p className="max-w-[62ch] text-[15px] leading-relaxed">{s.body}</p>
         </div>
-        <div className="flex items-center gap-2 font-mono text-[12px]">
-          <button type="button" onClick={() => { setPlaying(false); setStep(Math.max(0, step - 1)); }} disabled={step === 0} className="border border-[#1a1c1f] px-3 py-1.5 disabled:opacity-30">
+        <div className="flex items-center gap-2 text-[13px]">
+          <button type="button" onClick={() => { setPlaying(false); setStep(Math.max(0, step - 1)); }} disabled={step === 0} className="border border-white/30 px-3 py-1.5 disabled:opacity-30">
             ← Prev
           </button>
-          <button type="button" onClick={() => { if (step === STEPS.length - 1) setStep(0); setPlaying(!playing); }} className="border border-[#1a1c1f] bg-[#1a1c1f] px-3 py-1.5 text-[#f6f3ec]">
+          <button type="button" onClick={() => { if (step === STEPS.length - 1) setStep(0); setPlaying(!playing); }} className="border border-white/30 bg-[#edf2f6] px-3 py-1.5 text-[#081018]">
             {playing ? "Pause" : "Play"}
           </button>
-          <button type="button" onClick={() => { setPlaying(false); setStep(Math.min(STEPS.length - 1, step + 1)); }} disabled={step === STEPS.length - 1} className="border border-[#1a1c1f] px-3 py-1.5 disabled:opacity-30">
+          <button type="button" onClick={() => { setPlaying(false); setStep(Math.min(STEPS.length - 1, step + 1)); }} disabled={step === STEPS.length - 1} className="border border-white/30 px-3 py-1.5 disabled:opacity-30">
             Next →
           </button>
         </div>
       </div>
-      <ul className="flex flex-wrap gap-x-5 gap-y-1 border-t border-[#1a1c1f]/20 px-4 py-3 font-mono text-[11px] text-[#5d594f]">
-        {(Object.keys(KIND) as Kind[]).map((k) => (
-          <li key={k} className="flex items-center gap-2">
-            <span className="inline-block size-3 border" style={{ background: KIND[k].fill, borderColor: KIND[k].stroke }} />
-            {KIND[k].label}
-          </li>
-        ))}
-      </ul>
     </figure>
   );
 }
