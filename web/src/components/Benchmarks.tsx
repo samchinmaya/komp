@@ -83,13 +83,13 @@ function LineChart({ title, unit, yTicks, value, label }: { title: string; unit:
           {yTicks.map((tick) => (
             <g key={tick}>
               <line x1={MARGIN.left} x2={width - MARGIN.right} y1={y(tick)} y2={y(tick)} stroke="rgb(237 242 246 / 0.08)" />
-              <text x={MARGIN.left - 8} y={y(tick) + 4} textAnchor="end" className="fill-dim font-mono text-[11px]">
+              <text x={MARGIN.left - 8} y={y(tick) + 4} textAnchor="end" className="fill-dim font-mono text-[12px]">
                 {tick}
               </text>
             </g>
           ))}
           {LINE_TICKS.map((tick) => (
-            <text key={tick} x={x(tick)} y={HEIGHT - 8} textAnchor={tick === maxX ? "end" : tick ? "middle" : "start"} className="fill-dim font-mono text-[11px]">
+            <text key={tick} x={x(tick)} y={HEIGHT - 8} textAnchor={tick === maxX ? "end" : tick ? "middle" : "start"} className="fill-dim font-mono text-[12px]">
               {tick ? `${tick / 1000}k` : "0"}
             </text>
           ))}
@@ -104,7 +104,7 @@ function LineChart({ title, unit, yTicks, value, label }: { title: string; unit:
         </svg>
         {shown && (
           <div
-            className="pointer-events-none absolute top-2 z-10 rounded-lg border border-rule bg-raise px-2.5 py-1.5 font-mono text-[11.5px] leading-[1.5] shadow-lg"
+            className="pointer-events-none absolute top-2 z-10 rounded-lg border border-rule bg-raise px-2.5 py-1.5 font-mono text-[12px] leading-[1.5] shadow-lg"
             style={{ left: Math.min(Math.max(0, x(shown.lines) - 62), width - 124), width: 124 }}
           >
             <div className="text-dim">{fmt(shown.lines)} lines</div>
@@ -147,7 +147,7 @@ export function Benchmarks() {
 
       <div className="mt-8 grid grid-cols-[minmax(0,1fr)] gap-4 min-[901px]:grid-cols-2">
         <LineChart title="Time as logs grow" unit="milliseconds" yTicks={[0, 200, 400, 600, 800]} value={(point) => point.ms} label={ms} />
-        <LineChart title="Peak memory as logs grow" unit="MB" yTicks={[0, 40, 80, 120]} value={(point) => point.memoryMB} label={megabytes} />
+        <LineChart title="Peak memory as logs grow" unit="MB" yTicks={[0, 50, 100, 150]} value={(point) => point.memoryMB} label={megabytes} />
       </div>
 
       <div className="mt-4 overflow-x-auto rounded-2xl border border-rule bg-panel">

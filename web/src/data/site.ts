@@ -34,7 +34,7 @@ export const commands = {
 };
 
 export const stats = [
-  { value: "2,001 → 11", label: "lines, Go outage log" },
+  { value: "2,001 → 12", label: "lines, Go outage log" },
   { value: "99%+", label: "fewer tokens on every test log" },
   { value: "5", label: "platforms: macOS, Linux, Windows" },
   { value: "0 bytes", label: "sent over the network" },
@@ -76,7 +76,7 @@ export const features = [
   {
     title: "Shared fields, said once",
     body: "A pod name or service=orders on every line moves into the header.",
-    example: "[komp] 2001 lines → 9 entries · service=orders",
+    example: "[komp] 2001 lines → 7 templates, 8 entries · service=orders",
   },
   {
     title: "Nothing silently dropped",

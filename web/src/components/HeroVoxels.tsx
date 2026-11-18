@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { fmt } from "@/data/site";
 import { run, runSummary } from "@/data/run";
 
@@ -18,6 +18,8 @@ const COLLAPSE = 3000;
 const REST = 2800;
 const REBUILD = 1700;
 const LOOP = HOLD + COLLAPSE + REST + REBUILD;
+const FRAME_MS = 33;
+const SLOW_PAINT_MS = 16;
 
 const NIGHT = [3, 6, 11];
 const STEEL = [88, 110, 130];
@@ -60,8 +62,27 @@ function makeCube(top: Rgb, edge: number) {
 
 export function HeroVoxels({ className = "" }: { className?: string }) {
   const ref = useRef<HTMLCanvasElement>(null);
+  const [ready, setReady] = useState(false);
+
+  // The blocks are decoration, so the page finishes loading before they start.
+  useEffect(() => {
+    let idle = 0;
+    let timer = 0;
+    const schedule = () => {
+      if (typeof window.requestIdleCallback === "function") idle = window.requestIdleCallback(() => setReady(true), { timeout: 2500 });
+      else timer = window.setTimeout(() => setReady(true), 800);
+    };
+    if (document.readyState === "complete") schedule();
+    else window.addEventListener("load", schedule, { once: true });
+    return () => {
+      window.removeEventListener("load", schedule);
+      if (idle) window.cancelIdleCallback(idle);
+      window.clearTimeout(timer);
+    };
+  }, []);
 
   useEffect(() => {
+    if (!ready) return;
     const canvas = ref.current;
     const context = canvas?.getContext("2d");
     if (!canvas || !context) return;
@@ -229,14 +250,27 @@ export function HeroVoxels({ className = "" }: { className?: string }) {
       dim = PALETTE.map((color) => makeCube(mix(STEEL, color, 0.16), smallEdge));
       bright = PALETTE.map((color) => makeCube(color, smallEdge));
       large = PALETTE.map((color) => makeCube(color, largeEdge));
-      paint(reduced ? HOLD + COLLAPSE : 0);
+      paint(reduced || stopped ? HOLD + COLLAPSE : 0);
     }
 
     let started = 0;
+    let lastFrame = 0;
+    let slowFrames = 0;
+    let stopped = false;
     const loop = (now: number) => {
-      started ||= now;
-      paint((now - started) % LOOP);
       frame = requestAnimationFrame(loop);
+      if (now - lastFrame < FRAME_MS) return;
+      lastFrame = now;
+      started ||= now;
+      const before = performance.now();
+      paint((now - started) % LOOP);
+      slowFrames = performance.now() - before > SLOW_PAINT_MS ? slowFrames + 1 : 0;
+      // On a device that cannot keep up, settle on the finished picture.
+      if (slowFrames >= 3) {
+        stopped = true;
+        cancelAnimationFrame(frame);
+        paint(HOLD + COLLAPSE);
+      }
     };
 
     resize();
@@ -244,7 +278,7 @@ export function HeroVoxels({ className = "" }: { className?: string }) {
     sized.observe(canvas);
     const visible = new IntersectionObserver(([entry]) => {
       cancelAnimationFrame(frame);
-      if (entry.isIntersecting && !reduced) frame = requestAnimationFrame(loop);
+      if (entry.isIntersecting && !reduced && !stopped) frame = requestAnimationFrame(loop);
     });
     visible.observe(canvas);
     return () => {
@@ -252,14 +286,14 @@ export function HeroVoxels({ className = "" }: { className?: string }) {
       visible.disconnect();
       cancelAnimationFrame(frame);
     };
-  }, []);
+  }, [ready]);
 
   return (
     <canvas
       ref={ref}
       role="img"
       aria-label={`${fmt(run.linesIn)} log lines shown as blocks, collapsing into ${run.linesOut} summary lines`}
-      className={`font-mono ${className}`}
+      className={`font-mono transition-opacity duration-500 ${ready ? "opacity-100" : "opacity-0"} ${className}`}
     />
   );
 }

@@ -10,17 +10,18 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin", "cyrillic"],
+  preload: false,
 });
 
 // Headlines: rounded, even strokes, closest to the hand-drawn комп logo.
 const comfortaa = Comfortaa({
   variable: "--font-comfortaa",
-  subsets: ["latin", "cyrillic"],
+  subsets: ["latin"],
 });
 
 const title = "комп · log compression for Claude";
 const description =
-  "комп compresses Kubernetes and app logs into a few meaningful lines, so Claude reads ~300 tokens instead of ~76,000. Runs on your machine; your logs never leave it.";
+  "комп compresses Kubernetes and app logs into a few meaningful lines, so Claude reads a few hundred tokens instead of ~76,000. Runs on your machine; your logs never leave it.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://samchinmaya.github.io"),

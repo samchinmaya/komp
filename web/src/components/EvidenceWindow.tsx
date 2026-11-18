@@ -157,7 +157,7 @@ export function EvidenceWindow() {
             <p className="text-[12.5px] text-dim">log</p>
             <p className="mt-2 rounded-lg bg-snow/10 px-2.5 py-1.5 font-mono text-[12px]">{evidence.input.path}</p>
             <p className="mt-[26px] text-[12.5px] text-dim">комп tools</p>
-            <ul className="mt-2 grid gap-[3px] font-mono text-[11.5px] text-dim">
+            <ul className="mt-2 grid gap-[3px] font-mono text-[12px] text-dim">
               {tools.map((tool) => (
                 <li
                   key={tool.name}
@@ -177,7 +177,7 @@ export function EvidenceWindow() {
               </span>
             </div>
             <pre
-              className="m-0 whitespace-pre-wrap px-4 py-[13px] font-mono text-[11.5px] leading-[1.55] text-dim [overflow-wrap:anywhere]"
+              className="m-0 whitespace-pre-wrap px-4 py-[13px] font-mono text-[12px] leading-[1.55] text-dim [overflow-wrap:anywhere]"
               style={{ opacity: hasResult ? resultFade : rawFade }}
             >
               {hasResult ? <LogOutput text={summary} /> : evidence.rawPreview.join("\n")}
@@ -244,7 +244,7 @@ export function EvidenceWindow() {
       </div>
       </div>
       <figcaption className="mt-4 max-w-[680px] text-[13.5px] leading-relaxed text-dim">
-        Recorded on {recorded} with a test log from the repository. комп ran with networking blocked by the macOS sandbox. The prompt, tool call,
+        Recorded on {recorded} with комп v0.1.0 and a test log from the repository. комп ran with networking blocked by the macOS sandbox. The prompt, tool call,
         result and answer are unedited; scrolling only sets the pace.
       </figcaption>
     </figure>

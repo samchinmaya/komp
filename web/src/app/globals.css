@@ -27,6 +27,12 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+button,
+summary,
+[role="tab"] {
+  cursor: pointer;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -169,9 +175,9 @@ body::before {
     animation: rise 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 }
+/* Movement only: fading the headline in would delay the page's first large paint. */
 @keyframes rise {
   from {
-    opacity: 0;
     transform: translateY(12px);
   }
 }

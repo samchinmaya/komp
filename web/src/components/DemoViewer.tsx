@@ -4,7 +4,7 @@ import { useState } from "react";
 import { demos, fmt, saving } from "@/data/site";
 import { LogOutput } from "./LogOutput";
 
-const LOG = "m-0 h-[300px] overflow-auto whitespace-pre-wrap px-4 py-[13px] font-mono text-[11.5px] leading-[1.55] [overflow-wrap:anywhere] md:h-[390px]";
+const LOG = "m-0 h-[300px] overflow-auto whitespace-pre-wrap px-4 py-[13px] font-mono text-[12px] leading-[1.55] [overflow-wrap:anywhere] md:h-[390px]";
 
 function Pane({ title, note, children }: { title: string; note: string; children: React.ReactNode }) {
   return (

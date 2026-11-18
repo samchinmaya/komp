@@ -26,6 +26,8 @@ const FACTS = [
   ["MIT", "free and open source"],
 ];
 
+const GO_LOG = demos[0];
+
 const TOTAL_RAW = demos.reduce((sum, demo) => sum + demo.rawTokens, 0);
 const TOTAL_OUT = demos.reduce((sum, demo) => sum + demo.outTokens, 0);
 
@@ -66,6 +68,14 @@ function Step({ name, detail, lit = false }: { name: string; detail: string; lit
   );
 }
 
+function GitHubMark() {
+  return (
+    <svg viewBox="0 0 16 16" aria-hidden="true" className="size-[22px] fill-current">
+      <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z" />
+    </svg>
+  );
+}
+
 function TextLink({ href, children }: { href: string; children: ReactNode }) {
   return (
     <a href={href} className="transition-colors hover:text-snow">
@@ -86,8 +96,8 @@ export default function Home() {
             </TextLink>
           ))}
         </nav>
-        <a href={links.github} className="text-[15px]">
-          GitHub
+        <a href={links.github} aria-label="комп on GitHub" className="-mr-2.5 inline-flex size-11 items-center justify-center text-soft transition-colors hover:text-snow">
+          <GitHubMark />
         </a>
       </header>
 
@@ -97,10 +107,10 @@ export default function Home() {
           <div className="relative max-w-[720px] pb-[18px] min-[901px]:max-w-[60%] min-[901px]:pb-16">
             <h1 className="rise text-balance font-display text-[clamp(40px,4.7vw,62px)] font-normal leading-[1.1] tracking-[-0.045em]">
               logs in, signal out
-              <span className="block text-dim">cut Claude&rsquo;s log tokens by {run.saved}</span>
+              <span className="block text-dim">cut Claude&rsquo;s log tokens by {saving(GO_LOG)}%</span>
             </h1>
             <p className="rise mt-[26px] max-w-[560px] text-[18px] leading-normal text-soft [animation-delay:80ms] min-[901px]:text-[19px]">
-              A {fmt(run.linesIn)}-line log costs Claude about {fmt(run.tokensIn)} tokens. комп shrinks it on your machine to {run.linesOut} lines, about {run.tokensOut} tokens, and keeps the errors that matter.
+              комп turns {fmt(GO_LOG.rawLines)} log lines into about {GO_LOG.outTokens} tokens, on your machine.
             </p>
             <div className="rise mt-8 flex flex-wrap items-center gap-4 [animation-delay:160ms]">
               <a href="#install" className={`${BUTTON} w-full bg-snow px-[17px] font-medium text-[#081018] hover:bg-white sm:w-auto`}>
@@ -201,7 +211,7 @@ export default function Home() {
               <article key={feature.title}>
                 <h3 className="font-display text-[19px] font-normal leading-[1.3] tracking-[-0.025em]">{feature.title}</h3>
                 <p className="mt-2 text-[15px] leading-relaxed text-soft">{feature.body}</p>
-                <pre className="mt-3.5 whitespace-pre-wrap border-t border-rule pt-3 font-mono text-[11.5px] leading-[1.55] text-dim [overflow-wrap:anywhere]">{feature.example}</pre>
+                <pre className="mt-3.5 whitespace-pre-wrap border-t border-rule pt-3 font-mono text-[12px] leading-[1.55] text-dim [overflow-wrap:anywhere]">{feature.example}</pre>
               </article>
             ))}
           </div>
@@ -217,7 +227,7 @@ export default function Home() {
               <p className="font-mono text-[12px] text-dim">your machine</p>
               <Step name="Your logs" detail="clipboard, file or kubectl" />
               <Step name="Privacy check" detail="secrets and personal data removed" />
-              <Step name="комп" detail={`${fmt(run.linesIn)} lines → ${run.linesOut}`} lit />
+              <Step name="комп" detail={`${fmt(GO_LOG.rawLines)} lines → ${GO_LOG.outLines}`} lit />
             </div>
             <div className="mt-2.5 flex flex-col gap-0.5 rounded-2xl border border-rule px-[18px] py-3.5 text-[15px] sm:flex-row sm:justify-between sm:gap-4">
               Claude
