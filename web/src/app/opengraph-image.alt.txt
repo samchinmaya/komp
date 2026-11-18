@@ -1,0 +1,1 @@
+комп: Logs in. Signal out. Claude reads ~312 tokens instead of ~76,000.

@@ -166,6 +166,8 @@ tests/
   fixtures/    realistic logs: Go/logfmt, Node/JSON, Java/Spring, kubelet/klog
   fixtures.rs  checks each is ≥95% smaller and still contains the key facts
 brand/         logo, favicons, app icons
+web/           the website (Next.js + Tailwind), deployed to GitHub Pages
+scripts/       demo data, dithered black hole and texture generators for the site
 ```
 
 ## Brand
