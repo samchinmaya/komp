@@ -78,8 +78,9 @@ pub fn kubectl_logs(args: &KubectlLogs) -> Result<String, String> {
     if !output.status.success() {
         // kubectl's own errors are repetitive klog lines too, so compress them.
         let stderr = String::from_utf8_lossy(&output.stderr);
-        let summary = crate::compress::compress(&stderr, &Default::default());
-        return Err(format!("kubectl logs failed:\n{}", summary.text));
+        let checked = crate::guard::redact(&stderr);
+        let summary = crate::compress::compress(&checked.text, &Default::default());
+        return Err(format!("kubectl logs failed:\n{}", crate::guard::redact(&summary.text).text));
     }
     Ok(String::from_utf8_lossy(&output.stdout).into_owned())
 }
