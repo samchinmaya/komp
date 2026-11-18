@@ -110,18 +110,18 @@ export const tools = [
 export const faqs = [
   {
     q: "Does комп send my logs anywhere?",
-    a: "No. It's a local program. It reads your clipboard, a file or kubectl on your machine and returns text to Claude Code over stdin/stdout. It makes no network requests.",
+    a: "No. It runs locally and makes no network requests.",
   },
   {
     q: "Why not just paste the logs into Claude?",
-    a: "Everything you paste is read, and billed, in full before any tool runs. A 2,000-line log is tens of thousands of tokens. With комп the raw logs never enter the conversation; only the summary does.",
+    a: "Pasted logs are read and billed in full. With комп, only the summary enters the conversation.",
   },
   {
     q: "Doesn't compression lose information?",
-    a: "It removes repetition, not meaning. Identical lines merge with a count, varying values become ranges or short lists, and errors keep their values and stack traces. When something is dropped for space, the output says how much.",
+    a: "It removes repetition, not meaning. If anything is dropped for space, the output says so.",
   },
-  { q: "Does it work without Claude?", a: "Yes. komp is a normal command-line tool: run it on a file, on stdin or on your clipboard." },
-  { q: "Is it free?", a: "Yes. MIT licensed and open source on GitHub." },
+  { q: "Does it work without Claude?", a: "Yes. It is also a normal command-line tool." },
+  { q: "Is it free?", a: "Yes. It is MIT licensed and open source." },
 ];
 
 export const fmt = (n: number) => n.toLocaleString("en-US");
