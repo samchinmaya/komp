@@ -48,7 +48,7 @@ export function DemoViewer({ theme, rawHeight = "h-[440px]" }: { theme: DemoThem
       <div className="grid gap-4 lg:grid-cols-2">
         <div className={theme.rawPane}>
           <div className={theme.rawHead}>
-            <span>Raw logs</span>
+            <span>Before</span>
             <span className="font-mono">
               {fmt(d.rawLines)} lines · ~{fmt(d.rawTokens)} tokens
             </span>
@@ -61,7 +61,7 @@ export function DemoViewer({ theme, rawHeight = "h-[440px]" }: { theme: DemoThem
         </div>
         <div className={theme.outPane}>
           <div className={theme.outHead}>
-            <span>After комп</span>
+            <span>After</span>
             <span className="font-mono">
               {d.outLines} lines · ~{fmt(d.outTokens)} tokens
             </span>
