@@ -215,12 +215,8 @@ mod tests {
     #[test]
     fn lists_three_tools() {
         let reply = handle(&json!({ "jsonrpc": "2.0", "id": "a", "method": "tools/list" })).unwrap();
-        let names: Vec<&str> = reply["result"]["tools"]
-            .as_array()
-            .unwrap()
-            .iter()
-            .map(|t| t["name"].as_str().unwrap())
-            .collect();
+        let names: Vec<&str> =
+            reply["result"]["tools"].as_array().unwrap().iter().map(|t| t["name"].as_str().unwrap()).collect();
         assert_eq!(names, ["compress_clipboard", "compress_file", "compress_kubectl_logs"]);
     }
 

@@ -10,10 +10,7 @@ fn check(input: &str, must_contain: &[&str]) -> String {
     let out = &summary.text;
     let in_chars = input.chars().count();
     let out_chars = out.chars().count();
-    assert!(
-        out_chars * 20 < in_chars,
-        "expected at least 95% smaller, got {in_chars} → {out_chars} chars:\n{out}"
-    );
+    assert!(out_chars * 20 < in_chars, "expected at least 95% smaller, got {in_chars} → {out_chars} chars:\n{out}");
     for needle in must_contain {
         assert!(out.contains(needle), "lost {needle:?} in:\n{out}");
     }

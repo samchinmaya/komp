@@ -7,27 +7,65 @@ use std::sync::LazyLock;
 
 /// The text the engineer copied (Cmd+C).
 pub fn clipboard() -> Result<String, String> {
-    let mut clipboard =
-        arboard::Clipboard::new().map_err(|e| format!("could not open the clipboard: {e}"))?;
-    clipboard
-        .get_text()
-        .map_err(|_| "the clipboard has no text in it (was a screenshot or file copied instead of log text?)".to_string())
+    let mut clipboard = arboard::Clipboard::new().map_err(|e| format!("could not open the clipboard: {e}"))?;
+    clipboard.get_text().map_err(|_| {
+        "the clipboard has no text in it (was a screenshot or file copied instead of log text?)".to_string()
+    })
 }
 
-/// A log file on disk. Invalid UTF-8 bytes are replaced instead of failing.
+/// A log file on disk.
 pub fn file(path: &str) -> Result<String, String> {
     let bytes = std::fs::read(path).map_err(|e| format!("could not read {path}: {e}"))?;
-    Ok(String::from_utf8_lossy(&bytes).into_owned())
+    decode(&bytes, path)
 }
 
 /// Everything from standard input (`cat app.log | komp -`).
 pub fn stdin() -> Result<String, String> {
     use std::io::Read;
-    let mut text = String::new();
-    std::io::stdin()
-        .read_to_string(&mut text)
-        .map_err(|e| format!("could not read stdin: {e}"))?;
-    Ok(text)
+    let mut bytes = Vec::new();
+    std::io::stdin().read_to_end(&mut bytes).map_err(|e| format!("could not read stdin: {e}"))?;
+    decode(&bytes, "standard input")
+}
+
+/// Turn bytes into log text. A few invalid bytes are replaced, but compressed or
+/// binary data is refused without quoting any of it.
+pub fn decode(bytes: &[u8], name: &str) -> Result<String, String> {
+    if let Some(rest) = bytes.strip_prefix(&[0xFF, 0xFE]) {
+        return Ok(utf16(rest, u16::from_le_bytes));
+    }
+    if let Some(rest) = bytes.strip_prefix(&[0xFE, 0xFF]) {
+        return Ok(utf16(rest, u16::from_be_bytes));
+    }
+    if bytes.starts_with(&[0x1F, 0x8B]) {
+        return Err(format!(
+            "{name} is gzip-compressed, so komp did not read it. Decompress it first: gzip -dc app.log.gz | komp -"
+        ));
+    }
+    if looks_binary(bytes) {
+        return Err(format!("{name} looks like a binary file, so komp did not read it."));
+    }
+    let bytes = bytes.strip_prefix(&[0xEF, 0xBB, 0xBF]).unwrap_or(bytes);
+    Ok(String::from_utf8_lossy(bytes).into_owned())
+}
+
+fn utf16(bytes: &[u8], unit: fn([u8; 2]) -> u16) -> String {
+    let units: Vec<u16> = bytes.chunks_exact(2).map(|pair| unit([pair[0], pair[1]])).collect();
+    String::from_utf16_lossy(&units)
+}
+
+/// Judge from the start of the data: a NUL byte, or more than 5% unreadable characters.
+fn looks_binary(bytes: &[u8]) -> bool {
+    let sample = &bytes[..bytes.len().min(64 * 1024)];
+    if sample.contains(&0) {
+        return true;
+    }
+    let text = String::from_utf8_lossy(sample);
+    let total = text.chars().count();
+    let unreadable = text
+        .chars()
+        .filter(|&c| c == '\u{FFFD}' || (c.is_control() && !matches!(c, '\t' | '\n' | '\r' | '\x0C' | '\x1B')))
+        .count();
+    unreadable * 20 > total
 }
 
 /// Arguments for `kubectl logs`.
@@ -46,8 +84,7 @@ pub struct KubectlLogs {
 
 // Names must look like Kubernetes names. This also stops values such as
 // "--kubeconfig=/etc/…" from being smuggled in as extra kubectl flags.
-static K8S_NAME: LazyLock<Regex> =
-    LazyLock::new(|| Regex::new(r"^[a-zA-Z0-9][a-zA-Z0-9._/-]{0,252}$").unwrap());
+static K8S_NAME: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^[a-zA-Z0-9][a-zA-Z0-9._/-]{0,252}$").unwrap());
 static DURATION: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"^\d+[smh]$").unwrap());
 
 /// Run `kubectl logs …` and return its output. No shell is involved:
@@ -95,6 +132,27 @@ fn check(pattern: &Regex, what: &str, value: Option<&str>) -> Result<(), String>
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn refuses_compressed_and_binary_data() {
+        let gzip = decode(&[0x1F, 0x8B, 8, 0, 1, 2, 3], "app.log.gz").unwrap_err();
+        assert!(gzip.contains("gzip-compressed"));
+        let binary = decode(&[1, 2, 0, 4, 5], "core").unwrap_err();
+        assert!(binary.contains("binary file"));
+    }
+
+    #[test]
+    fn keeps_text_with_a_few_bad_bytes_and_reads_utf16() {
+        let mut log = b"2026-11-18 INFO caf".to_vec();
+        log.push(0xE9);
+        log.extend_from_slice(" opened with enough ordinary text around it\n".as_bytes());
+        assert!(decode(&log, "app.log").unwrap().contains("INFO caf"));
+
+        let utf16: Vec<u8> =
+            [0xFF, 0xFE].into_iter().chain("INFO ok".encode_utf16().flat_map(u16::to_le_bytes)).collect();
+        assert_eq!(decode(&utf16, "win.log").unwrap(), "INFO ok");
+        assert_eq!(decode(b"\xEF\xBB\xBFINFO ok", "bom.log").unwrap(), "INFO ok");
+    }
 
     #[test]
     fn rejects_flag_injection() {

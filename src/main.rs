@@ -12,6 +12,7 @@ USAGE:
     komp serve        run as an MCP server on stdio (Claude Code starts this)
     komp hook         stop chat messages with pasted logs (Claude Code hook)
     komp --help       show this help
+    komp --version    show the version
 
 Secrets and personal data are removed first, on this machine. Clipboard text
 that does not look like logs is refused.
@@ -24,6 +25,10 @@ fn main() {
     let raw = match arg.as_deref() {
         Some("-h" | "--help") => {
             println!("{HELP}");
+            return;
+        }
+        Some("-V" | "--version") => {
+            println!("komp {}", env!("CARGO_PKG_VERSION"));
             return;
         }
         Some("serve") => {
@@ -41,6 +46,10 @@ fn main() {
             return;
         }
         Some("-") => input::stdin(),
+        Some(option) if option.starts_with('-') => {
+            eprintln!("komp: unknown option {option}. Run komp --help to see the options.");
+            std::process::exit(2);
+        }
         Some(path) => input::file(path),
         None => input::clipboard(),
     };
