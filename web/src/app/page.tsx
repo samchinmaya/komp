@@ -4,9 +4,12 @@ import { Benchmarks } from "@/components/Benchmarks";
 import { Comparison } from "@/components/Comparison";
 import { DemoViewer } from "@/components/DemoViewer";
 import { EvidenceWindow } from "@/components/EvidenceWindow";
+import { FocusText } from "@/components/FocusText";
 import { HeroVoxels } from "@/components/HeroVoxels";
+import { HoverIndex } from "@/components/HoverIndex";
+import { OrbProcess } from "@/components/OrbProcess";
 import { run } from "@/data/run";
-import { commands, demos, features, fmt, links, saving, tools, version } from "@/data/site";
+import { commands, demos, fmt, links, saving, tools, version } from "@/data/site";
 
 /*
  * One statement above one large product window: the recorded Claude Code run.
@@ -27,6 +30,9 @@ const FACTS = [
 ];
 
 const GO_LOG = demos[0];
+
+const TOKENS_STORY =
+  "Every log line you paste uses Claude’s tokens and context, and most lines repeat. комп merges them first, so Claude gets the patterns, counts, time ranges and error values without reading the same line hundreds of times.";
 
 const TOTAL_RAW = demos.reduce((sum, demo) => sum + demo.rawTokens, 0);
 const TOTAL_OUT = demos.reduce((sum, demo) => sum + demo.outTokens, 0);
@@ -136,14 +142,12 @@ export default function Home() {
           ))}
         </dl>
 
+        <FocusText text={TOKENS_STORY} />
+
         <section id="tokens" className={SPLIT}>
           <div>
             <Heading first="spend tokens on the fix" second="not on repeated logs" />
-            <p className={COPY}>
-              Every log line you paste uses Claude&apos;s tokens and context, and most lines repeat. комп merges them first, so Claude gets the patterns, counts, time ranges and error values
-              without reading the same line hundreds of times.
-            </p>
-            <p className="mt-4 max-w-[520px] text-[13.5px] leading-relaxed text-dim">Measured on the four test logs in the repository. Tokens are estimated at about 4 characters each.</p>
+            <p className="mt-[18px] max-w-[520px] text-[13.5px] leading-relaxed text-dim">Measured on the four test logs in the repository. Tokens are estimated at about 4 characters each.</p>
           </div>
           <div>
             <ul className="border-b border-rule">
@@ -194,6 +198,10 @@ export default function Home() {
           </div>
         </section>
 
+        <section id="how" className={SECTION}>
+          <OrbProcess heading={<Heading first="five steps" second="all on your machine" />} />
+        </section>
+
         <section id="compare" className={SECTION}>
           <Heading first="thousands of lines in" second="a few lines out" />
           <DemoViewer />
@@ -206,15 +214,7 @@ export default function Home() {
 
         <section id="keeps" className={`${SECTION} px-3 min-[561px]:px-8 min-[901px]:px-14`}>
           <Heading first="less to read" second="the facts stay" />
-          <div className="mt-[52px] grid grid-cols-[minmax(0,1fr)] gap-8 min-[561px]:grid-cols-2 min-[561px]:gap-x-10 min-[561px]:gap-y-11 min-[901px]:grid-cols-3">
-            {features.map((feature) => (
-              <article key={feature.title}>
-                <h3 className="font-display text-[19px] font-normal leading-[1.3] tracking-[-0.025em]">{feature.title}</h3>
-                <p className="mt-2 text-[15px] leading-relaxed text-soft">{feature.body}</p>
-                <pre className="mt-3.5 whitespace-pre-wrap border-t border-rule pt-3 font-mono text-[12px] leading-[1.55] text-dim [overflow-wrap:anywhere]">{feature.example}</pre>
-              </article>
-            ))}
-          </div>
+          <HoverIndex />
         </section>
 
         <section id="local" className={SPLIT}>

@@ -52,6 +52,44 @@ export const steps = [
   },
 ];
 
+export const pipeline = [
+  {
+    name: "parse",
+    title: "Read every line",
+    body: "Each log line is split into its time, level, message and stack trace.",
+    input: "2026-11-18T10:00:01Z ERROR db timeout",
+    output: "time 10:00:01 · level ERROR · db timeout",
+  },
+  {
+    name: "hoist",
+    title: "Say shared fields once",
+    body: "Anything every line repeats moves into the header.",
+    input: "[pod/api-7d9f-x2k4] GET /health\n[pod/api-7d9f-x2k4] GET /ready",
+    output: "header [pod/api-7d9f-x2k4]\nGET /health\nGET /ready",
+  },
+  {
+    name: "mine",
+    title: "Find the templates",
+    body: "Drain-style mining spots lines that have the same shape.",
+    input: "user alice logged in\nuser bob logged in",
+    output: "1 template: user … logged in",
+  },
+  {
+    name: "group",
+    title: "Keep what changed",
+    body: "The values that differ inside a template become slots.",
+    input: "status=200\nstatus=503",
+    output: "status={200|503}",
+  },
+  {
+    name: "render",
+    title: "Write the summary",
+    body: "Each group becomes one line with its count and time range.",
+    input: "GET /health 200 2ms\nGET /health 200 1ms\nGET /health 200 3ms\nGET /health 200 2ms",
+    output: "10:00:01–10:00:07 INFO GET /health 200 1–3ms ×4",
+  },
+];
+
 export const features = [
   {
     title: "Errors keep their details",
