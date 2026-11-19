@@ -2,24 +2,32 @@
 //!
 //! The pipeline, one function per step:
 //!
-//! 1. `parse`      split the text into records (timestamp, level, message,
-//!                 stack-trace lines). Understands plain text, JSON, logfmt,
-//!                 klog (Kubernetes components) and syslog lines.
-//! 2. `hoist`      anything every line shares (a `[pod/api-…]` tag, `env=prod`)
-//!                 moves into the header once instead of repeating per line.
-//! 3. mine         Drain (`drain.rs`) finds which messages share a template.
-//! 4. group        each template's differing tokens become slots, and the group
-//!                 remembers every slot value, the count and the time range.
-//! 5. render       one line per group: `10:00:01–10:00:07 INFO GET /health 200 1–3ms ×4`,
-//!                 with a real sample under important lines whose values were summarised.
+//! 1. `parse`: split the text into records (timestamp, level, message, stack-trace
+//!    lines). Understands plain text, JSON, logfmt, klog, syslog, nginx/Apache access
+//!    logs, and Docker, containerd, `kubectl --prefix` and Compose wrappers.
+//! 2. `hoist`: anything every line shares (a `[pod/api-…]` tag, `env=prod`) moves into
+//!    the header once instead of repeating per line.
+//! 3. mine: Drain (`drain.rs`) finds which messages share a template.
+//! 4. group: each template's differing tokens become slots, and the group remembers
+//!    every slot value, the count and the time range.
+//! 5. render: one line per group, such as `10:00:01–10:00:07 INFO GET /health 200 1–3ms ×4`,
+//!    with a real sample under important lines whose values were summarised.
 //!
 //! This module knows nothing about MCP, the clipboard or files: text in, text out.
 
 use crate::drain::{DEFAULT_SIMILARITY, Drain, tokenize};
 use regex::Regex;
 use serde_json::{Map, Value};
+use std::borrow::Cow;
 use std::collections::{HashMap, HashSet};
 use std::sync::LazyLock;
+
+/// Longest message kept from one log line.
+const MAX_LINE_CHARS: usize = 2_000;
+/// Longest stack-trace line kept.
+const MAX_TRACE_CHARS: usize = 500;
+/// All rendered entries together stay under this size, about 7,500 tokens.
+const MAX_ENTRY_CHARS: usize = 30_000;
 
 /// Knobs for the output size.
 pub struct Options {
@@ -162,21 +170,27 @@ pub fn compress(input: &str, opts: &Options) -> Summary {
     groups.sort_by_key(|g| g.first_position);
 
     // ---- budget: keep errors/warnings first, then the most frequent lines ----
-    let mut keep = vec![true; groups.len()];
-    if groups.len() > opts.max_entries {
-        let mut ranked: Vec<usize> = (0..groups.len()).collect();
-        ranked.sort_by_key(|&i| {
-            let g = &groups[i];
-            (std::cmp::Reverse(g.important), std::cmp::Reverse(g.level), std::cmp::Reverse(g.count), i)
-        });
-        keep = vec![false; groups.len()];
-        for &i in ranked.iter().take(opts.max_entries) {
-            keep[i] = true;
+    let mut ranked: Vec<usize> = (0..groups.len()).collect();
+    ranked.sort_by_key(|&i| {
+        let g = &groups[i];
+        (std::cmp::Reverse(g.important), std::cmp::Reverse(g.level), std::cmp::Reverse(g.count), i)
+    });
+    let mut rendered: Vec<Option<String>> = vec![None; groups.len()];
+    let (mut kept, mut used) = (0, 0);
+    for i in ranked {
+        if kept == opts.max_entries || used >= MAX_ENTRY_CHARS {
+            break;
+        }
+        let entry = groups[i].render(opts.max_trace_lines);
+        let size = entry.chars().count();
+        if used + size <= MAX_ENTRY_CHARS {
+            rendered[i] = Some(entry);
+            kept += 1;
+            used += size;
         }
     }
 
     // ---- 5. render ----
-    let kept = keep.iter().filter(|k| **k).count();
     let mut out = String::new();
 
     let plural = |n: usize, one: &str, many: &str| format!("{n} {}", if n == 1 { one } else { many });
@@ -210,18 +224,16 @@ pub fn compress(input: &str, opts: &Options) -> Summary {
         out.push_str(&format!("levels: {}\n", levels.join(" · ")));
     }
 
-    for (g, _) in groups.iter().zip(&keep).filter(|(_, k)| **k) {
-        out.push_str(&g.render(opts.max_trace_lines));
+    for entry in rendered.iter().flatten() {
+        out.push_str(entry);
     }
 
     // Say what was dropped, so Claude knows the summary is partial.
-    let dropped: Vec<&Group> = groups.iter().zip(&keep).filter(|(_, k)| !**k).map(|(g, _)| g).collect();
+    let dropped: Vec<&Group> = groups.iter().zip(&rendered).filter(|(_, r)| r.is_none()).map(|(g, _)| g).collect();
     if !dropped.is_empty() {
         let lines: usize = dropped.iter().map(|g| g.count).sum();
-        out.push_str(&format!(
-            "… {} rarer low-severity patterns omitted ({lines} lines)\n",
-            dropped.len()
-        ));
+        let kind = if dropped.iter().any(|g| g.important) { "lower-priority" } else { "rarer low-severity" };
+        out.push_str(&format!("… {} {kind} patterns omitted ({lines} lines)\n", dropped.len()));
     }
 
     // Tiny or already-unique input: the header would make it bigger, so return it unchanged.
@@ -315,9 +327,15 @@ lazy_regex!(KLOG, r"^([IWEF])(\d{2})(\d{2}) (\d{2}:\d{2}:\d{2})\.\d+\s+\d+ (\S+:
 // syslog: Nov 18 10:00:01 host app[123]: msg
 lazy_regex!(SYSLOG, r"^([A-Z][a-z]{2} [ \d]\d) (\d{2}:\d{2}:\d{2}) ?");
 // INFO msg / [error] msg / WARN: msg  at the start of the message
-lazy_regex!(LEVEL_PREFIX, r"(?i)^[\[(]?(trace|debug|dbg|info|inf|notice|warning|warn|wrn|error|err|eror|fatal|critical|crit|panic|severe)[\])]?:?(?:\s+|$)");
+lazy_regex!(
+    LEVEL_PREFIX,
+    r"(?i)^[\[(]?(trace|debug|dbg|info|inf|notice|warning|warn|wrn|error|err|eror|fatal|critical|crit|panic|severe)[\])]?:?(?:\s+|$)"
+);
 // [api] ERROR msg  (a tag, then an upper-case level)
-lazy_regex!(TAG_THEN_LEVEL, r"^(\[[^\]]*\]\s+)[\[(]?(TRACE|DEBUG|INFO|NOTICE|WARNING|WARN|ERROR|FATAL|CRITICAL|PANIC)[\])]?:?(?:\s+|$)");
+lazy_regex!(
+    TAG_THEN_LEVEL,
+    r"^(\[[^\]]*\]\s+)[\[(]?(TRACE|DEBUG|INFO|NOTICE|WARNING|WARN|ERROR|FATAL|CRITICAL|PANIC)[\])]?:?(?:\s+|$)"
+);
 // logfmt: level=error  /  time="2026-11-18T10:00:01Z"
 lazy_regex!(LOGFMT_LEVEL, r#"(?i)(?:^|\s)(?:level|lvl|severity)="?([a-z]+)"?"#);
 lazy_regex!(LOGFMT_TIME, r#"(?:^|\s)(?:time|ts|timestamp)="?(\d{4}-\d{2}-\d{2})[T ](\d{2}:\d{2}:\d{2})[^\s"]*"?"#);
@@ -329,21 +347,137 @@ lazy_regex!(EXCEPTION_HEAD, r"^(?:[\w$]+\.)*[\w$]*(?:Error|Exception|Throwable)\
 lazy_regex!(TRACEBACK, r"^Traceback \(most recent call last\):");
 // Spring Boot: "1 --- [nio-8080-exec-3] c.shop.Orders : msg" (pid, thread, optional app name)
 lazy_regex!(SPRING_PREFIX, r"^\d+ --- (?:\[[^\]]*\]\s*)+");
+// Container wrappers: `kubectl logs --prefix` and Docker Compose name the source first.
+lazy_regex!(SOURCE_PREFIX, r"^(?:\[(pod/[^\]\s]+)\]|([A-Za-z0-9][\w.-]*)\s+\|)\s(.*)$");
+// containerd/CRI-O node logs: 2026-11-18T10:00:01.1Z stdout F message
+lazy_regex!(
+    CRI_LINE,
+    r"^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})) (?:stdout|stderr) [FP] (.*)$"
+);
+// nginx/Apache common and combined access logs.
+lazy_regex!(
+    ACCESS_LOG,
+    r#"^(\S+) \S+ \S+ \[(\d{2})/([A-Z][a-z]{2})/(\d{4}):(\d{2}:\d{2}:\d{2}) [+-]\d{4}\] "([^"]*)" (\d{3}) (\d+|-)"#
+);
 // Text that smells like trouble even without a level.
-lazy_regex!(LOOKS_BAD, r"(?i:\b(?:errors?|exception|fatal|panic|failed|failure|refused|timeout|timed out|deadline exceeded|denied|unauthorized|forbidden|oomkilled|out of memory|crashloopbackoff|back-off|unhealthy|evicted)\b)|\w(?:Error|Exception)\b");
+lazy_regex!(
+    LOOKS_BAD,
+    r"(?i:\b(?:errors?|exception|fatal|panic|failed|failure|refused|timeout|timed out|deadline exceeded|denied|unauthorized|forbidden|oomkilled|out of memory|crashloopbackoff|back-off|unhealthy|evicted)\b)|\w(?:Error|Exception)\b"
+);
+
+/// Keep the start of very long text and say how much was cut.
+fn clip(text: String, max: usize) -> String {
+    match text.char_indices().nth(max) {
+        Some((cut, _)) => {
+            let hidden = text[cut..].chars().count();
+            format!("{}… [{hidden} more characters]", &text[..cut])
+        }
+        None => text,
+    }
+}
+
+/// A log line with its container wrapper removed.
+struct Unwrapped<'a> {
+    source: Option<String>,
+    outer_time: Option<(String, String)>,
+    line: Cow<'a, str>,
+}
+
+impl Unwrapped<'_> {
+    /// Put back what the wrapper knew: the source tag and, if needed, its timestamp.
+    fn finish(&self, mut record: Record) -> Record {
+        if record.time.is_none() {
+            if let Some((date, time)) = &self.outer_time {
+                record.date = Some(date.clone());
+                record.time = Some(time.clone());
+            }
+        }
+        if let Some(source) = &self.source {
+            record.message = format!("{source} {}", record.message);
+        }
+        record
+    }
+}
+
+fn timestamp_parts(text: &str) -> Option<(String, String)> {
+    let c = ISO_TS.captures(text)?;
+    Some((c[1].replace('/', "-"), c[2].to_string()))
+}
+
+fn unwrap_line(line: &str) -> Unwrapped<'_> {
+    let (source, body) = match SOURCE_PREFIX.captures(line) {
+        Some(c) => {
+            let body = c.get(3).map_or("", |m| m.as_str());
+            match (c.get(1), c.get(2)) {
+                (Some(pod), _) => (Some(format!("[{}]", pod.as_str())), body),
+                (_, Some(name)) if Level::from_word(name.as_str()) == Level::Unknown => {
+                    (Some(format!("[{}]", name.as_str())), body)
+                }
+                _ => (None, line),
+            }
+        }
+        None => (None, line),
+    };
+
+    if let Some(c) = CRI_LINE.captures(body) {
+        let text = c.get(2).map_or("", |m| m.as_str());
+        return Unwrapped { source, outer_time: timestamp_parts(&c[1]), line: Cow::Borrowed(text) };
+    }
+    if body.trim_start().starts_with('{') && body.contains("\"log\"") {
+        if let Ok(Value::Object(map)) = serde_json::from_str::<Value>(body.trim_start()) {
+            if let (Some(Value::String(text)), true) = (map.get("log"), map.contains_key("stream")) {
+                let outer_time = map.get("time").and_then(Value::as_str).and_then(timestamp_parts);
+                return Unwrapped { source, outer_time, line: Cow::Owned(text.trim_end().to_string()) };
+            }
+        }
+    }
+    Unwrapped { source, outer_time: None, line: Cow::Borrowed(body) }
+}
+
+/// An nginx or Apache access line. The HTTP status gives it a severity.
+fn parse_access(line: &str) -> Option<Record> {
+    let c = ACCESS_LOG.captures(line)?;
+    let month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        .iter()
+        .position(|m| *m == &c[3])?
+        + 1;
+    let status: u16 = c[7].parse().ok()?;
+    let level = match status {
+        500.. => Level::Error,
+        400.. => Level::Warn,
+        _ => Level::Info,
+    };
+    let mut request = c[6].split_whitespace();
+    let target = match (request.next(), request.next()) {
+        (Some(method), Some(path)) => format!("{method} {path}"),
+        _ => format!("request={:?}", &c[6]),
+    };
+    let message = clip(format!("{target} status={status} bytes={} client={}", &c[8], &c[1]), MAX_LINE_CHARS);
+    Some(Record {
+        date: Some(format!("{}-{month:02}-{}", &c[4], &c[2])),
+        time: Some(c[5].to_string()),
+        level,
+        message,
+        extra: Vec::new(),
+        important: level >= Level::Warn,
+        has_cause: false,
+    })
+}
 
 fn parse(input: &str) -> Vec<Record> {
     let mut records: Vec<Record> = Vec::new();
 
     for raw in input.lines() {
         let clean = ANSI_COLOR.replace_all(raw, "");
-        let line = clean.trim_end();
+        let wrapped = unwrap_line(clean.trim_end());
+        let inner = ANSI_COLOR.replace_all(&wrapped.line, "");
+        let line = inner.trim_end();
         if line.trim().is_empty() {
             continue;
         }
 
-        if let Some(record) = parse_json(line.trim_start()) {
-            records.push(record);
+        if let Some(record) = parse_json(line.trim_start()).or_else(|| parse_access(line)) {
+            records.push(wrapped.finish(record));
             continue;
         }
 
@@ -353,7 +487,7 @@ fn parse(input: &str) -> Vec<Record> {
         if let Some(prev) = records.last_mut() {
             let looks_new = LEVEL_PREFIX.is_match(rest.trim_start());
             if CONTINUATION.is_match(&rest) && !looks_new {
-                prev.extra.push(rest.trim().to_string());
+                prev.extra.push(clip(rest.trim().to_string(), MAX_TRACE_CHARS));
                 continue;
             }
             if time.is_none() && TRACEBACK.is_match(&rest) {
@@ -364,7 +498,7 @@ fn parse(input: &str) -> Vec<Record> {
             // It becomes part of the message, so different exceptions stay in different groups.
             let cause = rest.trim();
             if time.is_none() && !prev.has_cause && prev.level >= Level::Warn && EXCEPTION_HEAD.is_match(cause) {
-                let cause = cause.split_whitespace().collect::<Vec<_>>().join(" ");
+                let cause = clip(cause.split_whitespace().collect::<Vec<_>>().join(" "), MAX_LINE_CHARS);
                 prev.message = format!("{} → {cause}", prev.message);
                 prev.has_cause = true;
                 continue;
@@ -406,7 +540,9 @@ fn parse(input: &str) -> Vec<Record> {
 
         let message = message.split_whitespace().collect::<Vec<_>>().join(" ");
         let important = level >= Level::Warn || LOOKS_BAD.is_match(&message);
-        records.push(Record { date, time, level, message, extra: Vec::new(), important, has_cause: false });
+        let message = clip(message, MAX_LINE_CHARS);
+        let record = Record { date, time, level, message, extra: Vec::new(), important, has_cause: false };
+        records.push(wrapped.finish(record));
     }
 
     records
@@ -473,7 +609,7 @@ fn parse_json(line: &str) -> Option<Record> {
     for key in ["err", "error"] {
         if let Some(Value::Object(err)) = map.get_mut(key) {
             if let Some(Value::String(stack)) = err.remove("stack") {
-                extra.extend(stack.lines().skip(1).map(|l| l.trim().to_string()));
+                extra.extend(stack.lines().skip(1).map(|l| clip(l.trim().to_string(), MAX_TRACE_CHARS)));
             }
         }
     }
@@ -494,6 +630,7 @@ fn parse_json(line: &str) -> Option<Record> {
 
     let message = parts.join(" ");
     let important = level >= Level::Warn || LOOKS_BAD.is_match(&message);
+    let message = clip(message, MAX_LINE_CHARS);
     Some(Record { date, time, level, message, extra, important, has_cause: false })
 }
 
@@ -552,12 +689,8 @@ fn hoist(records: &mut [Record]) -> Vec<String> {
 
     if !shared.is_empty() {
         for r in records.iter_mut() {
-            r.message = r
-                .message
-                .split_whitespace()
-                .filter(|t| !shared.iter().any(|s| s == t))
-                .collect::<Vec<_>>()
-                .join(" ");
+            r.message =
+                r.message.split_whitespace().filter(|t| !shared.iter().any(|s| s == t)).collect::<Vec<_>>().join(" ");
         }
     }
     shared
@@ -628,9 +761,9 @@ fn shared_edges(rows: &[Vec<&str>], column: usize) -> (usize, usize) {
         suffix = &suffix[suffix.len() - same..];
     }
 
-    let mut prefix_len = prefix.rfind(|c: char| !c.is_alphanumeric()).map_or(0, |i| {
-        i + prefix[i..].chars().next().map_or(0, char::len_utf8)
-    });
+    let mut prefix_len = prefix
+        .rfind(|c: char| !c.is_alphanumeric())
+        .map_or(0, |i| i + prefix[i..].chars().next().map_or(0, char::len_utf8));
     let kept = &prefix[..prefix_len];
     let mut before_separator = kept.chars().rev().skip(1);
     if kept.ends_with(['.', ':', ',']) && before_separator.next().is_some_and(|c| c.is_ascii_digit()) {
@@ -683,9 +816,7 @@ impl Slot {
         if self.non_numeric {
             return;
         }
-        let parsed = NUMBER_WITH_UNIT
-            .captures(value)
-            .and_then(|c| Some((c[1].parse::<f64>().ok()?, c[2].to_string())));
+        let parsed = NUMBER_WITH_UNIT.captures(value).and_then(|c| Some((c[1].parse::<f64>().ok()?, c[2].to_string())));
         match (parsed, &mut self.range) {
             (Some((n, unit)), None) => self.range = Some((n, n, unit)),
             (Some((n, unit)), Some((min, max, u))) if *u == unit => {
@@ -911,6 +1042,8 @@ impl Group {
             }
             message.push_str(part);
         }
+        // A little extra room keeps the note on a line that `clip` already cut.
+        let message = shorten(&message, MAX_LINE_CHARS + 40);
 
         let mut line = String::new();
         match (&self.first_seen, &self.last_seen) {
@@ -1117,12 +1250,88 @@ INFO user carol logged in";
     fn budget_keeps_errors_first() {
         let mut input = String::new();
         for i in 0..50 {
-            input.push_str(&format!("INFO unique-event-{} happened\n", "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".chars().nth(i).unwrap()));
+            input.push_str(&format!(
+                "INFO unique-event-{} happened\n",
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".chars().nth(i).unwrap()
+            ));
         }
         input.push_str("ERROR disk full on /var/lib/data\n");
         let out = compress(&input, &Options { max_entries: 10, ..Default::default() }).text;
         assert!(out.contains("ERROR disk full"), "{out}");
         assert!(out.contains("patterns omitted"), "{out}");
+    }
+
+    #[test]
+    fn one_huge_line_is_cut_and_later_errors_survive() {
+        let input = format!("2026-11-18T10:00:00Z INFO {}\n2026-11-18T10:00:01Z ERROR after it\n", "x".repeat(500_000));
+        let summary = compress(&input, &Options::default());
+        assert!(summary.text.chars().count() < MAX_LINE_CHARS + 500, "{}", summary.text.len());
+        assert!(summary.text.contains("more characters]"));
+        assert!(summary.text.contains("ERROR after it"));
+    }
+
+    #[test]
+    fn total_output_stays_small_and_errors_win() {
+        let mut input = String::new();
+        for i in 0..80 {
+            let words: String = (0..250).map(|n| format!("w{i}x{n}y ")).collect();
+            input.push_str(&format!("INFO event{i} {words}\n"));
+        }
+        input.push_str("ERROR the disk is full\n");
+        let out = compress(&input, &Options::default()).text;
+        assert!(out.chars().count() < MAX_ENTRY_CHARS + 1_000, "{}", out.len());
+        assert!(out.contains("ERROR the disk is full"));
+        assert!(out.contains("patterns omitted"));
+    }
+
+    #[test]
+    fn docker_json_logs_are_unwrapped() {
+        let input = r#"{"log":"2026-11-18T10:00:01Z ERROR db down host=a\n","stream":"stderr","time":"2026-11-18T10:00:09Z"}
+{"log":"worker started\n","stream":"stdout","time":"2026-11-18T10:00:10Z"}"#;
+        let out = run(input);
+        assert!(out.contains("levels: ERROR 1"), "{out}");
+        assert!(out.contains("10:00:01 ERROR db down host=a"), "{out}");
+        assert!(out.contains("10:00:10 worker started"), "{out}");
+        assert!(!out.contains("stream="), "{out}");
+    }
+
+    #[test]
+    fn containerd_logs_are_unwrapped() {
+        let out = run("2026-11-18T10:00:01.5Z stderr F ERROR boom\n2026-11-18T10:00:02.5Z stdout F INFO fine");
+        assert!(out.contains("10:00:01 ERROR boom"), "{out}");
+        assert!(out.contains("10:00:02 INFO  fine"), "{out}");
+    }
+
+    #[test]
+    fn kubectl_prefix_keeps_the_source_and_finds_the_level() {
+        let input = "\
+[pod/api-1/app] 2026-11-18T10:00:01Z ERROR db timeout
+[pod/api-2/app] 2026-11-18T10:00:02Z ERROR db timeout";
+        let out = run(input);
+        assert!(out.contains("levels: ERROR 2"), "{out}");
+        assert!(out.contains("10:00:01–10:00:02 ERROR [pod/api-{1|2}/app] db timeout ×2"), "{out}");
+    }
+
+    #[test]
+    fn compose_prefix_is_a_source_but_a_level_is_not() {
+        let out = run("api-1  | 2026-11-18T10:00:01Z WARN slow\nINFO | started");
+        assert!(out.contains("WARN  [api-1] slow"), "{out}");
+        assert!(!out.contains("[INFO]"), "{out}");
+    }
+
+    #[test]
+    fn access_logs_get_time_and_severity_from_status() {
+        let mut input = String::new();
+        for (minute, status) in [(1, 200), (2, 200), (3, 404), (4, 502)] {
+            input.push_str(&format!(
+                "10.0.0.1 - - [18/Nov/2026:10:{minute:02}:00 +0000] \"GET /orders HTTP/1.1\" {status} 12 \"-\" \"curl/8\"\n"
+            ));
+        }
+        let out = run(&input);
+        assert!(out.contains("levels: ERROR 1 · WARN 1 · INFO 2"), "{out}");
+        assert!(out.contains("10:04:00 ERROR GET /orders status=502"), "{out}");
+        assert!(out.contains("10:03:00 WARN  GET /orders status=404"), "{out}");
+        assert!(out.contains("2026-11-18"), "{out}");
     }
 
     #[test]

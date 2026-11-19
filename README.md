@@ -144,7 +144,7 @@ the clipboard: text in, text out.
 
 | step | what it does | example |
 |---|---|---|
-| **1. parse** | split into records: timestamp, level, message, stack-trace lines. Understands plain text, JSON (incl. pino), logfmt, klog, syslog | `2026-…Z ERROR db refused` → time `10:00:04`, level `ERROR`, message `db refused` |
+| **1. parse** | split into records: timestamp, level, message, stack-trace lines. Understands plain text, JSON (incl. pino), logfmt, klog, syslog, nginx/Apache access logs, and Docker, containerd, `kubectl --prefix` and Docker Compose wrappers | `2026-…Z ERROR db refused` → time `10:00:04`, level `ERROR`, message `db refused` |
 | **2. hoist** | what *every* line shares moves into the header once | `[pod/api-7d9f-x2k4]`, `service=orders` |
 | **3. mine** | [Drain](https://github.com/logpai/Drain3)-style template mining in `src/drain.rs`: whitespace tokens, masks for IDs, IPs, hex and numbers, a fixed-depth tree and a similarity check. Compact punctuation-heavy lines are split by character class | `user alice logged in`, `user bob logged in` → one template |
 | **4. group** | tokens that differ inside a template become slots, with count, time range and all slot values | `status=200`, `status=503` → `status=␁` |
@@ -161,7 +161,8 @@ Rules that keep the meaning:
 - **Known boilerplate is dropped**: Spring Boot's process id and thread name (`1 --- [nio-8080-exec-3]`).
 - **Exceptions join their error**: `ERROR request failed` followed by `java.lang.NullPointerException: …` (or a Python `ZeroDivisionError: …`) becomes one entry, `ERROR request failed → java.lang.NullPointerException: …`. Different exceptions stay separate entries.
 - **Stack traces print once** per group, with runs of framework frames (Spring, Tomcat, `node_modules`…) folded into `… 12 framework frames`.
-- **Nothing silently disappears**: if there are more than 80 patterns, the rarest low-severity ones are dropped and the output says how many lines were omitted.
+- **Nothing silently disappears**: if there are more than 80 patterns, or the entries would pass about 7,500 tokens, the lowest-priority ones are dropped and the output says how many lines were omitted. A line over 2,000 characters is cut and marked.
+- **Binary data is refused**: gzip files and other binary input are not sent to Claude. Decompress first with `gzip -dc app.log.gz | komp -`.
 
 ## Benchmarks
 

@@ -65,10 +65,7 @@ impl Report {
         if self.secrets + self.personal == 0 {
             return "[komp] privacy check: passed, nothing needed removing".to_string();
         }
-        format!(
-            "[komp] privacy check: removed {} secret(s) and {} personal detail(s)",
-            self.secrets, self.personal
-        )
+        format!("[komp] privacy check: removed {} secret(s) and {} personal detail(s)", self.secrets, self.personal)
     }
 }
 
@@ -83,11 +80,9 @@ pub struct Checked {
 /// not look like logs is refused, and the refusal never quotes the input.
 pub fn check(raw: &str, require_logs: bool) -> Result<Checked, String> {
     if require_logs && !looks_like_logs(raw) {
-        return Err(
-            "komp did not use this text because it does not look like logs, so none of it was shared. \
+        return Err("komp did not use this text because it does not look like logs, so none of it was shared. \
              Copy log output and try again."
-                .to_string(),
-        );
+            .to_string());
     }
     Ok(redact(raw))
 }
@@ -127,9 +122,7 @@ pub fn looks_like_logs(text: &str) -> bool {
 }
 
 fn is_log_line(line: &str) -> bool {
-    [&*LOG_TIME, &*LOG_LEVEL, &*LOG_KLOG, &*LOG_FIELD, &*LOG_JSON, &*LOG_TRACE]
-        .iter()
-        .any(|p| p.is_match(line))
+    [&*LOG_TIME, &*LOG_LEVEL, &*LOG_KLOG, &*LOG_FIELD, &*LOG_JSON, &*LOG_TRACE].iter().any(|p| p.is_match(line))
 }
 
 /// Replace secrets and personal data with markers.
@@ -164,19 +157,14 @@ pub fn redact(text: &str) -> Checked {
     out = replace(&SSN, &out, &mut report.personal, |_| Some("[redacted:id-number]".to_string()));
     out = replace(&EMAIL, &out, &mut report.personal, |_| Some("[redacted:email]".to_string()));
     out = replace(&IPV4, &out, &mut report.personal, |c| is_public_ipv4(c).then(|| "[redacted:ip]".to_string()));
-    out = replace(&IPV6, &out, &mut report.personal, |_| Some("[redacted:ip]".to_string()));
+    out = replace(&IPV6, &out, &mut report.personal, |c| is_ipv6(&c[0]).then(|| "[redacted:ip]".to_string()));
     out = replace(&PHONE, &out, &mut report.personal, |c| Some(format!("{}[redacted:phone]", &c[1])));
 
     Checked { text: out, report }
 }
 
 /// Run one pattern. `None` from `mask` leaves that match untouched.
-fn replace(
-    pattern: &Regex,
-    text: &str,
-    count: &mut usize,
-    mask: impl Fn(&Captures) -> Option<String>,
-) -> String {
+fn replace(pattern: &Regex, text: &str, count: &mut usize, mask: impl Fn(&Captures) -> Option<String>) -> String {
     pattern
         .replace_all(text, |c: &Captures| match mask(c) {
             // Already masked (the finished summary is checked again): not a new find.
@@ -218,6 +206,11 @@ fn is_public_ipv4(c: &Captures) -> bool {
         || (a == 169 && b == 254)
         || (a == 172 && (16..=31).contains(&b))
         || (a == 192 && b == 168))
+}
+
+/// A full address has eight groups or a `::`. This keeps `2026:10:00:00` in access logs.
+fn is_ipv6(candidate: &str) -> bool {
+    candidate.contains("::") || candidate.split(':').count() == 8
 }
 
 /// The checksum real card numbers satisfy; it avoids masking ordinary long IDs.
@@ -308,7 +301,8 @@ mod tests {
 
     #[test]
     fn removes_personal_data() {
-        let result = redact("user a.b+c@example.com from 8.8.8.8 card 4111 1111 1111 1111 ssn 123-45-6789 tel +919876543210");
+        let result =
+            redact("user a.b+c@example.com from 8.8.8.8 card 4111 1111 1111 1111 ssn 123-45-6789 tel +919876543210");
         for leaked in ["example.com", "8.8.8.8", "4111", "123-45-6789", "+919876543210"] {
             assert!(!result.text.contains(leaked), "{}", result.text);
         }
@@ -352,6 +346,16 @@ mod tests {
         let second = redact(&first.text);
         assert_eq!(second.text, first.text);
         assert_eq!(second.report, Report::default());
+    }
+
+    #[test]
+    fn redacts_real_ipv6_but_not_access_log_times() {
+        assert_eq!(clean("from 2001:db8::1 ok"), "from [redacted:ip] ok");
+        assert_eq!(clean("from 2001:db8:1:2:3:4:5:6 ok"), "from [redacted:ip] ok");
+        let line = "[18/Nov/2026:10:00:00 +0000]";
+        let result = redact(line);
+        assert_eq!(result.text, line);
+        assert_eq!(result.report, Report::default());
     }
 
     #[test]
