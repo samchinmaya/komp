@@ -67,6 +67,8 @@ The engineer copies the logs, types "check the logs I copied", and Claude calls
 комп, which reads the clipboard **itself**, on the laptop, and hands Claude only
 the summary.
 
+testing the vibe-coder
+
 ```
  engineer copies logs (Cmd+C)
           │
